@@ -1,0 +1,12 @@
+{
+  "name": "Pokedash",
+  "description": "A Pokemon like game for LiveCoding.",
+  "data": {
+    "game": "game.mjs",
+    "assets": "assets"
+  },
+  "interpreters": {
+    "php": "interpreters/php.php",
+    "ruby": "interpreters/ruby.rb"
+  }
+}
