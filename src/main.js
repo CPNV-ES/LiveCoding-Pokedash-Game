@@ -1,6 +1,3 @@
-import * as p5 from 'p5'
-import PokedashGame from './PokedashGame'
-
 class Game {
 
     constructor (el, assetsBasePath) {
