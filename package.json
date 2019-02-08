@@ -1,0 +1,21 @@
+{
+  "name": "livecoding-pokedash-game",
+  "version": "0.0.0",
+  "description": "A Pokemon like game for LiveCoding.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CPNV-ES/LiveCoding-Pokedash-Game.git"
+  },
+  "author": "Julien Richoz",
+  "devDependencies": {
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-merge-and-include-globally": "^2.1.14"
+  },
+  "dependencies": {
+    "p5": "^0.7.3"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
+  }
+}
