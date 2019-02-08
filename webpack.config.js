@@ -1,10 +1,16 @@
+const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally')
+
 module.exports = {
-  entry: './src/PokedashGame.js',
   resolve: {
-    extensions: ['.js']
+    extensions: ['.js', '.css']
   },
-  output: {
-    filename: 'main.mjs',
-    path: __dirname
-  }
+  plugins: [
+    new MergeIntoSingleFilePlugin({
+      files: {
+        'game.mjs': [
+          'node_modules/aproba/index.js'
+        ]
+      }
+    })
+  ]
 }

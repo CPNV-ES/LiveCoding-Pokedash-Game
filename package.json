@@ -8,8 +8,9 @@
   },
   "author": "Julien Richoz",
   "devDependencies": {
-    "webpack": "^4.29.0",
-    "webpack-cli": "^3.2.1"
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-merge-and-include-globally": "^2.1.14"
   },
   "dependencies": {
     "p5": "^0.7.3"
