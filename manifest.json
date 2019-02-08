@@ -2,7 +2,7 @@
   "name": "Pokedash",
   "description": "A Pokemon like game for LiveCoding.",
   "data": {
-    "game": "game.mjs",
+    "game": "dist/game.mjs",
     "assets": "assets"
   },
   "interpreters": {
