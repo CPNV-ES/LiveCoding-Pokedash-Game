@@ -8,17 +8,12 @@
   },
   "author": "Julien Richoz",
   "devDependencies": {
-    "script-loader": "^0.7.2",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3",
-    "webpack-merge-and-include-globally": "^2.1.14"
-  },
-  "dependencies": {
-    "p5": "^0.7.3",
     "rollup": "^1.1.2"
   },
+  "dependencies": {
+    "p5": "^0.7.3"
+  },
   "scripts": {
-    "build": "webpack --mode production",
-    "rollup": "rollup -c"
+    "build": "rollup -c --watch"
   }
 }
