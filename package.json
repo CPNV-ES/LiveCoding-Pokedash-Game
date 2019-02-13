@@ -14,9 +14,11 @@
     "webpack-merge-and-include-globally": "^2.1.14"
   },
   "dependencies": {
-    "p5": "^0.7.3"
+    "p5": "^0.7.3",
+    "rollup": "^1.1.2"
   },
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "rollup": "rollup -c"
   }
 }
