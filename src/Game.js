@@ -1,7 +1,13 @@
-class Game {
+import 'script-loader!p5/lib/p5.min.js'
+import 'script-loader!p5/lib/addons/p5.dom.min.js'
+
+console.warn('Game module loaded')
+
+export class Game {
 
   constructor(el, assetsBasePath) {
 
+    console.log('Game class called')
     this.el = el
     this.assetsBasePath = assetsBasePath
 
