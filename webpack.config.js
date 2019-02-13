@@ -4,7 +4,7 @@ const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 module.exports = {
   entry: './src/index.js',
   output: {
-    filename: 'game.mjs',
+    filename: 'gamet.mjs',
     path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
