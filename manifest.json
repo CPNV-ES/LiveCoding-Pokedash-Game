@@ -3,7 +3,8 @@
   "description": "A Pokemon like game for LiveCoding.",
   "data": {
     "libraries": [
-      { "cdn": false, "url": "node_modules/p5/lib/p5.min.js" }
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" },
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js" }
     ],
     "game": "dist/game.mjs",
     "assets": "assets"
