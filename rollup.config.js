@@ -4,7 +4,7 @@
 export default {
   input: 'src/Game.js',
   output: {
-    file: 'dist/game.mjs',
+    file: 'dist/game.js',
     format: 'esm'
   }
 };
