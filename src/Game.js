@@ -1,29 +1,25 @@
-import 'script-loader!p5/lib/p5.min.js'
-import 'script-loader!p5/lib/addons/p5.dom.min.js'
+import { TestClass } from './TestClass'
 
-console.warn('Game module loaded')
+console.log('Game module loaded')
 
 export class Game {
 
+  /**
+   * 
+   * @param {HTMLElement} el game base element
+   * @param {String} assetsBasePath 
+   */
   constructor(el, assetsBasePath) {
 
     console.log('Game class called')
     this.el = el
+    this.el.style.backgroundColor = 'red'
     this.assetsBasePath = assetsBasePath
 
-    this.p5 = new p5((sketch) => {
-      sketch.setup = this.setup(sketch)
-      sketch.draw = this.draw(sketch)
-      sketch.keyPressed = this.keyPressed()
-    }, el)
-  }
+    console.info(this.el)
+    console.info(this.assetsBasePath)
 
-  setup(sketch) {
-    sketch.createCanvas(this.el.offsetWidth, this.el.offsetHeight)
-  }
-
-  draw(sketch) {
-    sketch.background("#5E3F6B")
+    TestClass.toto()
   }
 
 }

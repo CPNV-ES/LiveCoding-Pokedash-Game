@@ -2,7 +2,11 @@
   "name": "Pokedash",
   "description": "A Pokemon like game for LiveCoding.",
   "data": {
-    "game": "dist/game.mjs",
+    "libraries": [
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" },
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js" }
+    ],
+    "game": "dist/game.js",
     "assets": "assets"
   },
   "interpreters": {
