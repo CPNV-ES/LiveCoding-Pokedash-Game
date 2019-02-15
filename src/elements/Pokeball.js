@@ -1,14 +1,14 @@
 import { MovableElement } from './MovableElement'
 
 export class Pokeball extends MovableElement{
-    constructor(sketch, x, y, img){
-        super(sketch, x, y, img)
+    constructor(game, x, y, img){
+        super(game, x, y, img)
         this.isObjective = true
     }
 
     action(information){
         console.log("bienvenue dans la méthode action de la classe Pokeball")
-        let game = PokedashGame
+        // let game = PokedashGame
         /*game.mapElement[this.posX][this.posY] = game.mapElement[game.playerPosX][game.playerPosY]
         game.mapElement[game.playerPosX][game.playerPosY] = new DynamicElement(Road, game.playerPosX*game.blockHeight, game.playerPosY*game.blockWidth, game.roadImg)
         Protagonist.pokeball += 1

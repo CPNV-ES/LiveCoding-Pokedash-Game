@@ -1,35 +1,35 @@
 export class Element{
-    constructor(sketch, x, y, img){
-        this.sketch = sketch // p5 sketch injected from the game class
+    constructor(game, x, y, img){
+        this.game = game // game injected from the game class
         this.x = x
         this.y = y
         this.img = img
-        this.posX = this.x / game.blockHeight
-        this.posY = this.y / game.blockWidth
+        this.posX = this.x / this.game.blockHeight
+        this.posY = this.y / this.game.blockWidth
     }
     
     // Move a sprite to a distance
     moveSprite(direction, distance){
         if (direction === 'left' || direction === LEFT_ARROW){
-            this.x -= game.blockWidth * distance
+            this.x -= this.game.blockWidth * distance
         }
 
         if (direction === 'right' || direction === RIGHT_ARROW){
-            this.x += game.blockWidth * distance
+            this.x += this.game.blockWidth * distance
         }
 
         if (direction === 'up' || direction === UP_ARROW){
-            this.y -= game.blockHeight * distance
+            this.y -= this.game.blockHeight * distance
         }
 
         if (direction === 'down' || direction === DOWN_ARROW){
-            this.y += game.blockHeight * distance
+            this.y += this.game.blockHeight * distance
         }
         redraw()
     }
 
     show(){
-        image(this.img, this.x, this.y)
+        this.game.sketch.image(this.img, this.x, this.y)
     }
 
    /* static loadSprite(){

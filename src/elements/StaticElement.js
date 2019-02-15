@@ -2,8 +2,8 @@ import { Element } from './Element'
 
 export class StaticElement extends Element {
 
-    constructor(sketch, x, y, img){
-        super(sketch, x, y, img)
+    constructor(game, x, y, img){
+        super(game, x, y, img)
     }
 }
 

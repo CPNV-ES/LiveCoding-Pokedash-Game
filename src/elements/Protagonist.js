@@ -1,8 +1,8 @@
 import { MovableElement } from './MovableElement'
 
 export class Protagonist extends MovableElement {
-    constructor(sketch, x, y, img){
-        super(sketch, x, y, img)
+    constructor(game, x, y, img){
+        super(game, x, y, img)
         this.isProtagonist = true
         this.pokeball = 0
     }
