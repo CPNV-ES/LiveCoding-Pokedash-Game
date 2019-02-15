@@ -4,11 +4,11 @@ import { terser } from "rollup-plugin-terser"
  */
 export default {
   input: 'src/Game.js',
-  plugins: [
+  /**plugins: [
     terser({
       mangle: false
     })
-  ],
+  ],*/
   output: {
     file: 'dist/game.js',
     format: 'esm'
