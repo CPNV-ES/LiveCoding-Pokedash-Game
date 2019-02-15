@@ -15,8 +15,8 @@ const classes = {
 }
 
 export class DynamicElement{
-    constructor (sketch, className, x, y, img){
-        return new classes[className](sketch, x, y, img)
+    constructor (game, className, x, y, img){
+        return new classes[className](game, x, y, img)
     }
 }
 
