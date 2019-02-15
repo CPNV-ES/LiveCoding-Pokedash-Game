@@ -1,4 +1,6 @@
-class Road extends MovableElement{
+import { MovableElement } from './MovableElement'
+
+export class Road extends MovableElement{
     constructor(x, y, img){
         super(x, y, img)
     }

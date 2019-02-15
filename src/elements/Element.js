@@ -1,4 +1,4 @@
-class Element{
+export class Element{
     constructor(x, y, img, isMovable){
         this.x = x
         this.y = y

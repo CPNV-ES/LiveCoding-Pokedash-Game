@@ -1,4 +1,6 @@
-class Door extends StaticElement{
+import { StaticElement } from './StaticElement'
+
+export class Door extends StaticElement{
     constructor(x, y, img){
         super(x, y, img)
         this.isOpen = false

@@ -1,4 +1,6 @@
-class Protagonist extends MovableElement{
+import { MovableElement } from './MovableElement'
+
+export class Protagonist extends MovableElement {
     constructor(x, y, img){
         super(x, y, img)
         this.isProtagonist = true

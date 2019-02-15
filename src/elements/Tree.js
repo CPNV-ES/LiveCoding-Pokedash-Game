@@ -1,4 +1,6 @@
-class Tree extends StaticElement{
+import { StaticElement } from './StaticElement'
+
+export class Tree extends StaticElement{
     constructor(x, y, img){
         super(x, y, img)
     }

@@ -1,4 +1,6 @@
-class Pokeball extends MovableElement{
+import { MovableElement } from './MovableElement'
+
+export class Pokeball extends MovableElement{
     constructor(x, y, img){
         super(x, y, img)
         this.isObjective = true

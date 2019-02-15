@@ -1,4 +1,6 @@
-class StaticElement extends Element {
+import { Element } from './Element'
+
+export class StaticElement extends Element {
     constructor(x, y, img, isMovable){
         super(x, y, img, isMovable=false)
     }

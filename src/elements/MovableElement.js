@@ -1,4 +1,6 @@
-class MovableElement extends Element {
+import { Element } from './Element'
+
+export class MovableElement extends Element {
     constructor(x, y, img, isMovable){
         super(x, y, img, isMovable=true)
     }
