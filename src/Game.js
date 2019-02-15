@@ -4,8 +4,6 @@ import tutorial from './maps/tutorial'
 
 export class Game {
 
-  mapName = "tutorial"
-
   /**
    * 
    * @param {HTMLElement} el game base element
@@ -19,6 +17,8 @@ export class Game {
     // Some shortcuts
     this.HEIGHT = this.el.offsetHeight
     this.WIDTH = this.el.offsetWidth
+
+    this.mapElement = []
 
     // Map p5 functions to our game functions
     let s = (sketch) => {
@@ -41,8 +41,9 @@ export class Game {
     // Example: Create this.protagonist and this.protagonistImg
     console.log("------------ PRELOAD() ------------")
     console.log("this.mapName: " + this.mapName)
-    for (let ele in [this.mapName].e){
-        let eName = [this.mapName].e[ele].name.toLowerCase()
+    console.log(tutorial)
+    for (let ele in tutorial.e){
+        let eName = tutorial.e[ele].name.toLowerCase()
         console.log("eName: "+eName)
 
         this[eName] = null//with ele = 0 -> this.protagonist = null
@@ -55,8 +56,8 @@ export class Game {
     // Define dimension of the map and of each block
     console.log("------------ SETUP() ------------")
     this.sketch.createCanvas(this.HEIGHT, this.WIDTH)
-    this.columns = [this.mapName].pattern.length    
-    this.rows = [this.mapName].pattern[0].length
+    this.columns = tutorial.pattern.length    
+    this.rows = tutorial.pattern[0].length
     this.blockHeight = this.sketch.floor(this.HEIGHT/this.rows)
     this.blockWidth = this.sketch.floor(this.WIDTH/this.columns)
     // new Element()
@@ -83,8 +84,8 @@ export class Game {
     for (let y = 0; y < this.columns; y++){
         for (let x = 0; x < this.rows; x++) {
             // Instantiate objects in the 2D array
-            let idElement = [this.mapName].pattern[y][x]
-            let element = [this.mapName].e[idElement].name
+            let idElement = tutorial.pattern[y][x]
+            let element = tutorial.e[idElement].name
             let elementImg = element.toLowerCase()+'Img'
             this.mapElement[x][y] = new DynamicElement(this, element, x*this.blockWidth, y*this.blockHeight, this[elementImg])
            
