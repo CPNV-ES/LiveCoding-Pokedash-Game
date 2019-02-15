@@ -86,7 +86,7 @@ export class Game {
             let idElement = [this.mapName].pattern[y][x]
             let element = [this.mapName].e[idElement].name
             let elementImg = element.toLowerCase()+'Img'
-            this.mapElement[x][y] = new DynamicElement(this.sketch, element, x*this.blockWidth, y*this.blockHeight, this[elementImg])
+            this.mapElement[x][y] = new DynamicElement(this, element, x*this.blockWidth, y*this.blockHeight, this[elementImg])
            
             // Récupère la position du joueur dans le tableau d'objet
             if(this.mapElement[x][y].isProtagonist) {
