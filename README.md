@@ -7,3 +7,23 @@
 - Libraries loading via external cdn
 - Rollup bundler configuration
 - A example game class
+
+## Setup for development
+
+```sh
+# Clone this repo
+git clone git@github.com:CPNV-ES/LiveCoding-Pokedash-Game.git
+
+# Install the dependencies
+npm i
+
+# Start the build tool (with hot reload)
+npm run dev
+
+# Build the game
+npm run build
+
+# Use a http server to access the game
+npm i -g http-server
+http-server -p 3333 --cors -c-1
+```
