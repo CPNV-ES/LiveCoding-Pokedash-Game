@@ -1,8 +1,8 @@
 import { MovableElement } from './MovableElement'
 
 export class Boulder extends MovableElement{
-    constructor(x, y, img){
-        super(x, y, img)
+    constructor(sketch, x, y, img){
+        super(sketch, x, y, img)
     }
 
     action(information){

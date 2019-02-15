@@ -1,9 +1,9 @@
 export class Element{
-    constructor(x, y, img, isMovable){
+    constructor(sketch, x, y, img){
+        this.sketch = sketch // p5 sketch injected from the game class
         this.x = x
         this.y = y
         this.img = img
-        this.isMovable = Boolean
         this.posX = this.x / game.blockHeight
         this.posY = this.y / game.blockWidth
     }

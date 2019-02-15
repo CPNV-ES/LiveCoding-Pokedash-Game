@@ -1,8 +1,9 @@
 import { Element } from './Element'
 
 export class StaticElement extends Element {
-    constructor(x, y, img, isMovable){
-        super(x, y, img, isMovable=false)
+
+    constructor(sketch, x, y, img){
+        super(sketch, x, y, img)
     }
 }
 

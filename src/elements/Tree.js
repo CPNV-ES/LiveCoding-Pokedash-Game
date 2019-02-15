@@ -1,8 +1,9 @@
 import { StaticElement } from './StaticElement'
 
 export class Tree extends StaticElement{
-    constructor(x, y, img){
-        super(x, y, img)
+
+    constructor(sketch, x, y, img){
+        super(sketch, x, y, img)
     }
 
     action(information){

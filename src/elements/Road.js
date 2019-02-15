@@ -1,9 +1,11 @@
 import { MovableElement } from './MovableElement'
 
 export class Road extends MovableElement{
-    constructor(x, y, img){
-        super(x, y, img)
+
+    constructor(sketch, x, y, img){
+        super(sketch, x, y, img)
     }
+    
     action(information){
         let temp = game.mapElement[this.posX][this.posY]
         let tempX = this.posX
