@@ -1,6 +1,8 @@
-class Door extends StaticElement{
-    constructor(x, y, img){
-        super(x, y, img)
+import { StaticElement } from './StaticElement'
+
+export class Door extends StaticElement{
+    constructor(game, x, y, img){
+        super(game, x, y, img)
         this.isOpen = false
     }
 
@@ -11,14 +13,14 @@ class Door extends StaticElement{
 
     open(){
         this.isOpen = true
-        this.img = loadImage("engine/pokedash/assets/openDoorImg.png")
-        redraw()
+        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/openDoorImg.png`)
+        this.game.sketch.redraw()
     }
 
     close(){
         this.isOpen = false
-        this.img = loadImage("engine/pokedash/assets/doorImg.png")
-        redraw()
+        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/doorImg.png`)
+        this.game.sketch.redraw()
     }
 }
 

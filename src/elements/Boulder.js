@@ -1,6 +1,8 @@
-class Boulder extends MovableElement{
-    constructor(x, y, img){
-        super(x, y, img)
+import { MovableElement } from './MovableElement'
+
+export class Boulder extends MovableElement{
+    constructor(game, x, y, img){
+        super(game, x, y, img)
     }
 
     action(information){

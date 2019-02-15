@@ -1,41 +1,44 @@
-class MovableElement extends Element {
-    constructor(x, y, img, isMovable){
-        super(x, y, img, isMovable=true)
+import { Element } from './Element'
+
+export class MovableElement extends Element {
+
+    constructor(game, x, y, img){
+        super(game, x, y, img)
     }
 
     moveRight(){
-        let temp = game.mapElement[this.posX+1][this.posY]
-        game.mapElement[this.posX+1][this.posY] = game.mapElement[this.posX][this.posY]
-        game.mapElement[this.posX][this.posY] = temp
+        let temp = this.game.mapElement[this.posX+1][this.posY]
+        this.game.mapElement[this.posX+1][this.posY] = this.game.mapElement[this.posX][this.posY]
+        this.game.mapElement[this.posX][this.posY] = temp
         this.posX += 1
-        this.x = this.x + game.blockWidth //For sprite drawing
-        console.log(game.mapElement[this.posX-1][this.posY] )
+        this.x = this.x + this.game.blockWidth //For sprite drawing
+        console.log(this.game.mapElement[this.posX-1][this.posY] )
         return true
     }
 
     moveLeft(){
-        this.x = this.x - game.blockWidth //For sprite drawing
-        let temp = game.mapElement[this.posX-1][this.posY]
-        game.mapElement[this.posX-1][this.posY] = game.mapElement[this.posX][this.posY]
-        game.mapElement[this.posX][this.posY] = temp
+        this.x = this.x - this.game.blockWidth //For sprite drawing
+        let temp = this.game.mapElement[this.posX-1][this.posY]
+        this.game.mapElement[this.posX-1][this.posY] = this.game.mapElement[this.posX][this.posY]
+        this.game.mapElement[this.posX][this.posY] = temp
         this.posX -=1
         return true
     }
     
     moveDown(){
-        this.y = this.y + game.blockHeight //For sprite drawing
-        let temp = game.mapElement[this.posX][this.posY+1]
-        game.mapElement[this.posX][this.posY+1] = game.mapElement[this.posX][this.posY]
-        game.mapElement[this.posX][this.posY] = temp
+        this.y = this.y + this.game.blockHeight //For sprite drawing
+        let temp = this.game.mapElement[this.posX][this.posY+1]
+        this.game.mapElement[this.posX][this.posY+1] = this.game.mapElement[this.posX][this.posY]
+        this.game.mapElement[this.posX][this.posY] = temp
         this.posY += 1
         return true
     }
 
     moveUp(){
-        this.y = this.y - game.blockHeight //For sprite drawing
-        let temp = game.mapElement[this.posX][this.posY-1]
-        game.mapElement[this.posX][this.posY-1] = game.mapElement[this.posX][this.posY]
-        game.mapElement[this.posX][this.posY] = temp
+        this.y = this.y - this.game.blockHeight //For sprite drawing
+        let temp = this.game.mapElement[this.posX][this.posY-1]
+        this.game.mapElement[this.posX][this.posY-1] = this.game.mapElement[this.posX][this.posY]
+        this.game.mapElement[this.posX][this.posY] = temp
         this.posY -=1
         return true     
     }
@@ -43,7 +46,7 @@ class MovableElement extends Element {
     /*testMove(comingFrom){
         //Testing limit of the screen
         if(x < 0 || y < 0) return false
-        if(x > game.WIDTH || y > game.HEIGHT) return false
+        if(x > this.game.WIDTH || y > this.game.HEIGHT) return false
 
         if(isStatic) return false
         if(isMovable) e.action(comingFrom)
@@ -53,31 +56,31 @@ class MovableElement extends Element {
 
     // !!!!!! TO DO / TO TEST : maybe need to change also the x and y so the sprite can move !!!!
     swapSprite(direction, distanceFrom, distanceTo){
-        let x = game.protagonist.posX
-        let y = game.protagonist.posY        
+        let x = this.game.protagonist.posX
+        let y = this.game.protagonist.posY        
         
         if (direction === 'right' || direction === RIGHT_ARROW){
-            let temp = game.mapElement[x + distanceFrom][y]
-            console.log(game.mapElement[x + distanceTo][y])
-           // this.game.mapElement[x + distanceFrom][y].x = 
-            game.mapElement[x + distanceFrom][y] = game.mapElement[x + distanceTo][y]
-            game.mapElement[x + distanceFrom][y] = temp   
+            let temp = this.game.mapElement[x + distanceFrom][y]
+            console.log(this.game.mapElement[x + distanceTo][y])
+           // this.this.game.mapElement[x + distanceFrom][y].x = 
+            this.game.mapElement[x + distanceFrom][y] = this.game.mapElement[x + distanceTo][y]
+            this.game.mapElement[x + distanceFrom][y] = temp   
         }
         if (direction === 'left' || direction === LEFT_ARROW){
-            let temp = game.mapElement[x - distanceFrom][y]
-            game.mapElement[x - distanceFrom][y] = game.mapElement[x - distanceTo][y]
-            game.mapElement[x - distanceFrom][y] = temp
+            let temp = this.game.mapElement[x - distanceFrom][y]
+            this.game.mapElement[x - distanceFrom][y] = this.game.mapElement[x - distanceTo][y]
+            this.game.mapElement[x - distanceFrom][y] = temp
         } 
         if (direction === 'down' || direction === DOWN_ARROW){
-            let temp = game.mapElement[x][y + distanceFrom]
-            game.mapElement[x][y + distanceFrom] = game.mapElement[x][y + distanceTo]
-            game.mapElement[x][y + distanceFrom] = temp
+            let temp = this.game.mapElement[x][y + distanceFrom]
+            this.game.mapElement[x][y + distanceFrom] = this.game.mapElement[x][y + distanceTo]
+            this.game.mapElement[x][y + distanceFrom] = temp
         }
         if (direction === 'up' || direction === UP_ARROW){
-            let temp = game.mapElement[x][y - distanceFrom]
-            game.mapElement[x][y - distanceFrom] = game.mapElement[x][y - distanceTo]
-            game.mapElement[x][y - distanceFrom] = temp
+            let temp = this.game.mapElement[x][y - distanceFrom]
+            this.game.mapElement[x][y - distanceFrom] = this.game.mapElement[x][y - distanceTo]
+            this.game.mapElement[x][y - distanceFrom] = temp
         }
-        console.log("x: " + game.protagonist.posX, "y: " +game.protagonist.posY)
+        console.log("x: " + this.game.protagonist.posX, "y: " +this.game.protagonist.posY)
     }
 }

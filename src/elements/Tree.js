@@ -1,6 +1,9 @@
-class Tree extends StaticElement{
-    constructor(x, y, img){
-        super(x, y, img)
+import { StaticElement } from './StaticElement'
+
+export class Tree extends StaticElement{
+
+    constructor(game, x, y, img){
+        super(game, x, y, img)
     }
 
     action(information){
