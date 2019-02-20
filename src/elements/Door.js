@@ -23,5 +23,3 @@ export class Door extends StaticElement{
         this.game.sketch.redraw()
     }
 }
-
-// TO DELETE IF NOT USED : module.exports = Door

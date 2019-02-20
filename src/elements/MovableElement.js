@@ -55,7 +55,7 @@ export class MovableElement extends Element {
     // Function so the player can swap between two sprites
 
     // !!!!!! TO DO / TO TEST : maybe need to change also the x and y so the sprite can move !!!!
-    swapSprite(direction, distanceFrom, distanceTo){
+    /*swapSprite(direction, distanceFrom, distanceTo){
         let x = this.game.protagonist.posX
         let y = this.game.protagonist.posY        
         
@@ -82,5 +82,5 @@ export class MovableElement extends Element {
             this.game.mapElement[x][y - distanceFrom] = temp
         }
         console.log("x: " + this.game.protagonist.posX, "y: " +this.game.protagonist.posY)
-    }
+    }*/
 }
