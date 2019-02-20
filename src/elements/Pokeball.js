@@ -16,6 +16,11 @@ export class Pokeball extends MovableElement{
         game.playerPosY = this.posY*/
         return true
     }
+
+    remove(){
+        //this = new Road()
+        //this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/roadImg.png`)
+    }
 }
 
 // TO DELETE IF NOT USED : module.exports = Pokeball
