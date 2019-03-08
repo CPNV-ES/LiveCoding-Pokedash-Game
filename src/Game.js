@@ -29,7 +29,7 @@ export class Game {
         this.objectives = 0
         this.level = 0
         this.mapElement = []
-
+        this.mapName = tutorial
         // Map p5 functions to our game functions
         let s = (sketch) => {
             // Allow to acces the p5 sketch into our game class
@@ -43,13 +43,12 @@ export class Game {
 
         // Initialize p5
         this.myp5 = new window.p5(s, this.el)
-
     }
 
     preload(mapName) {
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
-        if(mapName == undefined) mapName = tutorial
+        if (mapName == undefined) mapName = tutorial
         console.log("------------ PRELOAD() ------------")
         console.log(mapName)
         for (let ele in mapName.e) {
@@ -63,7 +62,7 @@ export class Game {
     }
 
     setup(mapName) {
-        if(mapName == undefined) mapName = tutorial
+        if (mapName == undefined) mapName = tutorial
         console.log("SSSSSSSSSS", mapName)
         // Define dimension of the map and of each block
         console.log("------------ SETUP() ------------")
@@ -82,13 +81,13 @@ export class Game {
             for (let x = 0; x < this.rows; x++) {
                 if (this.mapElement[x][y].constructor.name == 'Road') continue
                 else this.mapElement[x][y].show()
-            }
+            }  
         }
     }
 
     //Function to iterate through the pattern map to fill the array map
     iterateOverMap(mapName) {
-        if(mapName == undefined) mapName = tutorial
+        if (mapName == undefined) mapName = tutorial
         //Instantiate 2d array in mapElement
         for (let i = 0; i < this.rows; i++) {
             this.mapElement[i] = new Array(this.columns)
@@ -121,17 +120,20 @@ export class Game {
 
     // Functions for user
     getObjectives() {
-        return this.objectives
+        return this.objectives.toString()
     }
 
     takeObjective() {
         this.objectives -= 1
         this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg')
         //this.mapElement[this.pokeball.posX][this.pokeball.posY].remove()
+        return true
     }
-    isDoorOpen(){
+
+    isDoorOpen() {
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
+
     openDoor() {
         if (this.objectives != 0) throw "You can't open door while there is still existing objective"
         this.mapElement[this.door.posX][this.door.posY].open()
@@ -143,30 +145,31 @@ export class Game {
         return true
     }
 
-    nextLevel(){
-        if(!this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+    nextLevel() {
+        if (!this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         console.log("* * * * YOU WIN * * * *")
         this.level += 1
-        let mapName = null
-        switch(this.level){
+        switch (this.level) {
             case 1:
-                mapName = level1
-            break
+                this.mapName = level1
+    
+                break
 
             case 2:
-                mapName = level2
-            break
+                this.mapName = level2
+                break
 
             case 3:
-                mapName = level3
-            break
+                this.mapName = level3
+                break
 
             default:
-                mapName = tutorial
-            break
+                this.mapName = tutorial
+                break
         }
-        this.preload(mapName)
-        this.setup(mapName)
+        this.preload(this.mapName)
+        this.setup(this.mapName)
+        return true
     }
 
 
@@ -241,13 +244,14 @@ export class Game {
             this.mapElement[x][y - distanceTo] = temp
         }
         this.refreshPos()
+        return true
     }
 
     keyPressed() {
         let s = this.sketch
 
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-            
+
             let element = this.getElement(s.keyCode, 1)
             console.log("element: ", element)
             switch (element) {
@@ -270,11 +274,15 @@ export class Game {
                     break
 
                 case "Door":
-                    if(this.isDoorOpen()) this.nextLevel()
-                break
+                    if (this.isDoorOpen()) this.nextLevel()
+                    break
             }
         }
-
+        // Restart game if we press 'r'
+        if (s.keyCode == 82){
+            this.objectives = 0
+            this.setup(this.mapName)
+        }
         return true
     }
 
@@ -290,6 +298,12 @@ export class Game {
         }
     }
 
+    waitUntilKeyPressed() {
+        document.addEventListener('keypress', e => {
+            return e.keyCode
+        })
+    }
+
 
     /**
      * @param {string} command
@@ -297,6 +311,15 @@ export class Game {
      */
     executeGameCommand(command) {
         // Execute the command in your game and return the result
-        return true
+        JSON.parse(command)
+        this.moveLeft(copmmand.param)
+        return "le resultat de ta commande"
+        [
+            {
+                command: "moveLeft",
+                method: this.moveLeft()
+            }
+        ]
+        eval(command)
     }
 }
