@@ -1,6 +1,6 @@
 # LiveCoding-Pokedash-Game
 
-Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game)** at your disposal to create a playable game and find the way to the exit !  
+Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/functions.md)** at your disposal to create a playable game and find the way to the exit !  
 
 
 ## v0.2.0 changelog
@@ -8,7 +8,7 @@ Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game)** at 
 - Pokedash game now fully migrated from legacy LiveCoding platform
 
 ## Setup for development
-> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed
+> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/functions.md)** installed
 
 ### Installation
 ```sh

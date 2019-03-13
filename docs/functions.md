@@ -65,7 +65,7 @@ Here is a list of all the different element getElement() can returns :
 
     > The number of case from Pikachu you will target (Only >=0)
 ### Usage
-    getElement(keyCode, 1)
+    getElement(keyCode, 1);
 
 ### Examples
 Case: if **0** is the protagonist and the others numbers are elements :
@@ -125,7 +125,7 @@ _If **0** is the protagonist (Pikachu) and 1 the road:_
 ```php
 $element = getElement($keyCode, 1);
 if ($element == 'Road'){
-    swapSprite($keyCode, 0, 1)
+    swapSprite($keyCode, 0, 1);
 }
 ```
 |  |  |  
