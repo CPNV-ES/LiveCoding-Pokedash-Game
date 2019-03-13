@@ -21,7 +21,7 @@ List of elements :
 - 'Door'
 - 'Tree'
 
-## keyPressed (keyCode)
+## keyPressed()
 ### Description
 The keyPressed() function is called once every time a key is pressed. I keyCode for the key that was pressed is stored in the keyCode variable. 
 
@@ -38,7 +38,7 @@ if(keyPressed()){
 }
 ```
 
-## getElement (direction, distance)
+## <a name="getelement"></a>getElement(direction, distance)
 ### Description
 Return a string of an element from the protagonist.
 
@@ -88,7 +88,7 @@ Get the protagonist
 $element = getElement(keyCode, 0); // or getElement(keyCode, 2)
 // => $element = 0 (the protagonist)
 ```
-## swapSprite (direction, distanceFrom, distanceTo)
+## <a name="swapsprite"></a>swapSprite(direction, distanceFrom, distanceTo)
 ### Description
 The swapSprite function intervert two elements (or sprite) in the current map and will display them in the game. 
 
@@ -135,7 +135,7 @@ if ($element == 'Road'){
 
 
 
-## getObjectives () 
+## getObjectives() 
 ### Description
 When the game is initialised, there is a variable counting all the objectives. The getObjectives() function return all those objectives in a numerical string.
 
@@ -157,7 +157,7 @@ if(getObjectives() == 0) {
 }
 ```
 
-## takeObjective () 
+## takeObjective() 
 ### Description 
 The takeObjective() function decrement one objectif for all the actual objectives. It can't goes lower than 0. 
 
@@ -172,7 +172,7 @@ takeObjective();
 // pokeballLeft = 4
 ```
 
-## isDoorOpen ()
+## isDoorOpen()
 ### Description
 Return boolean if the door is open or not.
 ### Usage
@@ -186,7 +186,7 @@ if (isDoorOpen()){
 }
 ```
 
-## openDoor () 
+## openDoor() 
 ### Description
 Function to open the door and switch the sprite from a closeed door to an opened door. Warning: to open the door, you need to check if you got all the objectives !
 ### Usage
@@ -200,7 +200,7 @@ If we have all the objectives, we can open the door:
     }
 ```
 
-## closeDoor ()
+## closeDoor()
 ### Description
 Function to close the door and switch the sprite from an opened door to a closed door
 ### Usage
@@ -214,7 +214,7 @@ Count how many times we hit keyPressed() and close the door if it's >100
     }
 ```
 
-## nextLevel ()
+## nextLevel()
 ### Description
 Load the next level when you call this function
 ### Usage
