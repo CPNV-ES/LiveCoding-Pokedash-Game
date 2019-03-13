@@ -69,10 +69,11 @@ Here is a list of all the different element getElement() can returns :
 
 ### Examples
 Case: if **0** is the protagonist and the others numbers are elements :
-|  |  |  |
-|:---------:|-------------|----------:|
+
+|   |   |   |
+| - | - | - |
 | 2 | 1 | 3 |
-| 1 | **0** | 1 |
+| 1 | __0__ | 1 |
 | 2 | 3 | 2 |
 | 3 | 2 | 1 |
 
@@ -118,20 +119,21 @@ The swapSprite function intervert two elements (or sprite) in the current map an
 Swap sprite Pikachu and Road 
 
 _If **0** is the protagonist (Pikachu) and 1 the road:_
-|  |  |  
-|:---------:|-------------|
-| **0** | 1 |
-|  |  | 
+
+|   |   |
+| - | - |
+| __0__ | 1 |
+
 ```php
 $element = getElement($keyCode, 1);
 if ($element == 'Road'){
     swapSprite($keyCode, 0, 1);
 }
 ```
-|  |  |  
-|:---------:|-------------|
-| 1 | **0** |
-|  |  | 
+|   |   |
+| - | - |
+| 1 | __0__ |
+
 
 
 ## getObjectives() 
