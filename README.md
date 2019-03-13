@@ -8,7 +8,7 @@ Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/m
 - Pokedash game now fully migrated from legacy LiveCoding platform
 
 ## Setup for development
-> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/functions.md)** installed
+> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed
 
 ### Installation
 ```sh
