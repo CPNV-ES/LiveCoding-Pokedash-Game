@@ -215,7 +215,7 @@ Count how many times we hit keyPressed() and close the door if it's >100
     }
 ```
 
-## nextLevel() {
+## nextLevel()
 ### Description
 Load the next level when you call this function
 ### Usage
