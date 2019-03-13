@@ -63,7 +63,6 @@ export class Game {
 
     setup(mapName) {
         if (mapName == undefined) mapName = tutorial
-        console.log("SSSSSSSSSS", mapName)
         // Define dimension of the map and of each block
         console.log("------------ SETUP() ------------")
         this.sketch.createCanvas(this.HEIGHT, this.WIDTH)
@@ -249,7 +248,6 @@ export class Game {
 
     keyPressed() {
         let s = this.sketch
-
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
 
             let element = this.getElement(s.keyCode, 1)
@@ -320,6 +318,5 @@ export class Game {
                 method: this.moveLeft()
             }
         ]
-        eval(command)
     }
 }
