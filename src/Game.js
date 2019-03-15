@@ -30,6 +30,7 @@ export class Game {
         this.level = 0
         this.mapElement = []
         this.mapName = tutorial
+
         // Map p5 functions to our game functions
         let s = (sketch) => {
             // Allow to acces the p5 sketch into our game class
@@ -80,7 +81,7 @@ export class Game {
             for (let x = 0; x < this.rows; x++) {
                 if (this.mapElement[x][y].constructor.name == 'Road') continue
                 else this.mapElement[x][y].show()
-            }  
+            }
         }
     }
 
@@ -151,7 +152,7 @@ export class Game {
         switch (this.level) {
             case 1:
                 this.mapName = level1
-    
+
                 break
 
             case 2:
@@ -277,7 +278,7 @@ export class Game {
             }
         }
         // Restart game if we press 'r'
-        if (s.keyCode == 82){
+        if (s.keyCode == 82) {
             this.objectives = 0
             this.setup(this.mapName)
         }
@@ -297,8 +298,9 @@ export class Game {
     }
 
     waitUntilKeyPressed() {
-        document.addEventListener('keypress', e => {
-            return e.keyCode
+        console.log('Wait the user pres an arrow key !')
+        return new Promise(resolve => {
+            document.addEventListener('keyup', resolve, { once: true });
         })
     }
 
@@ -310,13 +312,31 @@ export class Game {
     executeGameCommand(command) {
         // Execute the command in your game and return the result
         JSON.parse(command)
-        this.moveLeft(copmmand.param)
-        return "le resultat de ta commande"
-        [
-            {
-                command: "moveLeft",
-                method: this.moveLeft()
-            }
-        ]
+        
+        switch (command) {
+            case 'getElement': 
+                return this.getElement(params[0], params[1]) // Return string of the element
+
+            case 'swapSprite':
+                return this.swapSprite(params[0]. params[1], params[2]) // Return true
+
+            case 'getObjectives':
+                return this.getObjectives() // Return numerical string
+
+            case 'takeObjective':
+                return this.takeObjective() // Return true
+
+            case 'isDoorOpen':
+                return this.isDoorOpen()    // Return true
+            
+            case 'openDoor':
+                return this.openDoor()  // Return true
+
+            case 'closeDoor':
+                return this.closeDoor() // Return true
+
+            case 'nextLevel':
+                return this.nextLevel() // Return true or false
+        }
     }
 }
