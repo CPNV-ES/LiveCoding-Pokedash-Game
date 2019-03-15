@@ -506,21 +506,25 @@ class Game {
 
     preload(mapName) {
         if(mapName) this.mapName = mapName;
-        else mapName = tutorial;
+        else this.mapName = tutorial;
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
         console.log("------------ PRELOAD() ------------");
-        console.log(mapName);
-        for (let ele in mapName.e) {
-            let eName = mapName.e[ele].name.toLowerCase();
+        console.log(this.mapName);
+        for (let ele in this.mapName.e) {
+            let eName = this.mapName.e[ele].name.toLowerCase();
             console.log("eName: " + eName);
 
-            this[eName] = null;//with ele = 0 -> this.protagonist = null
+            //create new Attribute (for example: this.protagonist)
+            this[eName] = null; 
+
+            // Not rendering the road (just the background). Easier to handle
             if (eName == 'road') {
-                this[eName + "Img"] = null; // Not rendering the road (just the background). Easier to handle
+                this[eName + "Img"] = null; 
                 continue
-            }
-            this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
+            }           
+            // Create new image attribute
+            this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
 
         // Load sound if there is none
@@ -529,21 +533,21 @@ class Game {
         }        
     }
 
-    setup(mapName) {
-        if (mapName == undefined) mapName = tutorial;
+    setup() {
+        if (this.mapName == undefined) this.mapName = tutorial;
         // Define dimension of the map and of each block
         console.log("------------ SETUP() ------------");
         this.sketch.createCanvas(this.HEIGHT, this.WIDTH);
-        this.columns = mapName.pattern.length;
-        this.rows = mapName.pattern[0].length;
+        this.columns = this.mapName.pattern.length;
+        this.rows = this.mapName.pattern[0].length;
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows);
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
 
         // Load background
-        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);
-
+        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);  
+        
         // new Element()
-        this.iterateOverMap(mapName);
+        this.iterateOverMap();
     }
 
     draw() {
@@ -557,8 +561,8 @@ class Game {
     }
 
     //Function to iterate through the pattern map to fill the array map
-    iterateOverMap(mapName) {
-        if (mapName == undefined) mapName = tutorial;
+    iterateOverMap() {
+        if (this.mapName == undefined) this.mapName = tutorial;
         //Instantiate 2d array in mapElement
         for (let i = 0; i < this.rows; i++) {
             this.mapElement[i] = new Array(this.columns);
@@ -567,8 +571,8 @@ class Game {
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
                 // Instantiate objects in the 2D array
-                let idElement = mapName.pattern[y][x];
-                let element = mapName.e[idElement].name;
+                let idElement = this.mapName.pattern[y][x];
+                let element = this.mapName.e[idElement].name;
                 let elementImg = element.toLowerCase() + 'Img';
                 this.mapElement[x][y] = new DynamicElement(this, element, x * this.blockWidth, y * this.blockHeight, this[elementImg]);
 
@@ -639,7 +643,7 @@ class Game {
                 break
         }
         this.preload(this.mapName);
-        this.setup(this.mapName);
+        this.setup();
         return true
     }
 
