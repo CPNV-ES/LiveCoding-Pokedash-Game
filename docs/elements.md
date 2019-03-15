@@ -1,5 +1,5 @@
 # Elements
-The function getElement(direction, distance) will return a string of one of those elements. You will have to handle each element differently. Here is a description of each element (there is 6 elements) and what are their constraints.
+The function getElement(direction, distance) will return a string of one of those elements. You will have to handle each element differently. Here is a description of each element (there are 6 elements) and what are their constraints.
 
 ## 1. Protagonist
 > getElement() -> return 'Protagonist'
