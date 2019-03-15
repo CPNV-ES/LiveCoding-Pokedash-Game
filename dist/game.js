@@ -517,12 +517,13 @@ class Game {
 
             this[eName] = null;//with ele = 0 -> this.protagonist = null
             if (eName == 'road') {
-                this[eName + "Img"] = null; //Not rendering the road (just the background). Easier to handle
+                this[eName + "Img"] = null; // Not rendering the road (just the background). Easier to handle
                 continue
             }
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
-        console.log("song: "+this.song);
+
+        // Load sound if there is none
         if(this.song == null){
             this.song = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`);
         }        
@@ -543,14 +544,6 @@ class Game {
 
         // new Element()
         this.iterateOverMap(mapName);
-
-        // Background sound <3
-        console.log(this.songPlaying);
-        if(!this.songPlaying){
-            this.song.play();
-            this.song.loop();
-            this.songPlaying = true;
-        }
     }
 
     draw() {
@@ -759,6 +752,18 @@ class Game {
         if (s.keyCode == 82) {
             this.objectives = 0;
             this.setup(this.mapName);
+        }
+
+        if(s.keyCode == 77){
+            console.log(this.songPlaying);
+            if(this.song.isPlaying()){
+                this.song.pause();
+                this.songPlaying = false;
+            }
+            else {
+                this.song.loop();
+                this.songPlaying = true;
+            }
         }
         return true
     }
