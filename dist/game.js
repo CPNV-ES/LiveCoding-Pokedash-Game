@@ -476,9 +476,6 @@ class Game {
         this.assetsBasePath = assetsBasePath;
 
         this.background = null;
-        this.song = null;
-        this.songPlaying = false; // temporary fix. P5.js sometimes set the playing to false while it's still playing ?
-
 
         // Some shortcuts
         this.HEIGHT = this.el.offsetHeight;
@@ -489,6 +486,21 @@ class Game {
         this.mapElement = [];
         this.mapName = tutorial;
 
+        // Get manually all music from folder
+        this.musicBasePath = 'music';
+        this.sounds = [
+            `${this.assetsBasePath}/${this.musicBasePath}/0.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/1.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/2.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/3.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/4.mp3`,
+            //`${this.assetsBasePath}/music/5.mp3`
+        ];
+        this.idx = 0; // Index to select a music file
+        this.musicLoaded = [];
+        this.musicPlaying = false;
+        this.volume = 1;
+
         // Map p5 functions to our game functions
         let s = (sketch) => {
             // Allow to acces the p5 sketch into our game class
@@ -497,15 +509,17 @@ class Game {
             sketch.setup = () => { this.setup(); };
             sketch.draw = () => { this.draw(); };
             sketch.keyPressed = () => { this.keyPressed(); };
-
+            sketch.keyTyped = () => { this.keyTyped(); };
         };
 
         // Initialize p5
         this.myp5 = new window.p5(s, this.el);
+
+
     }
 
     preload(mapName) {
-        if(mapName) this.mapName = mapName;
+        if (mapName) this.mapName = mapName;
         else this.mapName = tutorial;
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
@@ -516,21 +530,27 @@ class Game {
             console.log("eName: " + eName);
 
             //create new Attribute (for example: this.protagonist)
-            this[eName] = null; 
+            this[eName] = null;
 
             // Not rendering the road (just the background). Easier to handle
             if (eName == 'road') {
-                this[eName + "Img"] = null; 
+                this[eName + "Img"] = null;
                 continue
-            }           
+            }
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
 
+        this.sketch.shuffle(this.sounds, true);
+        for (let s of this.sounds) {
+            console.log('aaa' + s);
+            this.musicLoaded.push(this.sketch.loadSound(s));
+        }
+        console.log(this.musicLoaded);
         // Load sound if there is none
-        if(this.song == null){
-            this.song = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`);
-        }        
+        /* if(this.song == null){
+             this.song = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`)
+         }  */
     }
 
     setup() {
@@ -544,10 +564,10 @@ class Game {
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
 
         // Load background
-        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);  
-        
+        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);
         // new Element()
         this.iterateOverMap();
+
     }
 
     draw() {
@@ -627,7 +647,6 @@ class Game {
         switch (this.level) {
             case 1:
                 this.mapName = level1;
-
                 break
 
             case 2:
@@ -722,6 +741,57 @@ class Game {
         return true
     }
 
+    // To handle shift + key
+    keyTyped() {
+        switch (this.sketch.key) {
+            // Play ON/OFF the music
+            case 'M':
+                if (this.musicPlaying) {
+                    this.musicLoaded[this.idx].pause();
+                    console.log("Music paused");
+                    this.musicPlaying = false;
+                }
+                else {
+                    this.musicLoaded[this.idx].loop(0, 1, this.volume);
+                    console.log("Music started");
+                    this.musicPlaying = true;
+                }
+                break
+
+            // Play Next song 
+            case 'N':
+                this.musicLoaded[this.idx].stop();
+                this.idx += 1;
+                if (this.idx >= this.musicLoaded.length) this.idx = 0;
+                this.musicLoaded[this.idx].loop(0, 1, this.volume);
+                this.musicPlaying = true;
+                break
+
+            // Play Last song 
+            case 'B':
+                this.musicLoaded[this.idx].stop();
+                this.idx = this.idx - 1;
+                if (this.idx <= 0) this.idx = this.musicLoaded.length - 1;
+                this.musicLoaded[this.idx].loop(0, 1, this.volume);
+                this.musicPlaying = true;
+                break
+
+            // Increase the volume
+            case '+':
+                if(this.volume+0.1 >= 1) this.volume = 1;
+                else this.volume += 0.1;
+                this.musicLoaded[this.idx].setVolume(this.volume);
+                break
+
+            // Lower the volume
+            case '-':
+                if(this.volume-0.1 <=0) this.volume = 0;
+                else this.volume -= 0.1;
+                this.musicLoaded[this.idx].setVolume(this.volume);
+                break
+        }
+    }
+
     keyPressed() {
         let s = this.sketch;
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
@@ -758,18 +828,14 @@ class Game {
             this.setup(this.mapName);
         }
 
-        if(s.keyCode == 77){
-            console.log(this.songPlaying);
-            if(this.song.isPlaying()){
-                this.song.pause();
-                this.songPlaying = false;
-            }
-            else {
-                this.song.loop();
-                this.songPlaying = true;
-            }
-        }
         return true
+    }
+
+    playNext() {
+        if (this.idx == 4) this.idx = 0;
+        console.log("Next music incoming");
+        this.idx += 1;
+        this.musicLoaded[this.idx].play();
     }
 
     refreshPos() {
