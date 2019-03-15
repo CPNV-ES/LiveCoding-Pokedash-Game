@@ -23,7 +23,13 @@ List of elements :
 
 ## keyPressed()
 ### Description
-The keyPressed() function is called once every time a key is pressed. I keyCode for the key that was pressed is stored in the keyCode variable. 
+The keyPressed() function is called once every time a key is pressed. The keyPressed return a 'keyCode' int, representing a number of the key pressed.
+Example:
+
+- Left Arrow  -> 37
+- Up Arrow    -> 38
+- Right Arrow -> 39 
+- Down Arrow  -> 40
 
 ### Usage
     keyPressed();
