@@ -22,6 +22,9 @@ export class Game {
         this.el = el
         this.assetsBasePath = assetsBasePath
 
+        this.background = null
+        this.sound = null
+
         // Some shortcuts
         this.HEIGHT = this.el.offsetHeight
         this.WIDTH = this.el.offsetWidth
@@ -76,12 +79,20 @@ export class Game {
         this.rows = mapName.pattern[0].length
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows)
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns)
+
+        // Load background
+        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`)
+
+        // Load Song
+        this.sound = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`)
+
         // new Element()
         this.iterateOverMap(mapName)
+        this.song.play()
     }
 
     draw() {
-        this.sketch.background("#5E3F6B");
+        this.sketch.background('#77ff33')  //this.background
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
                 if (this.mapElement[x][y].constructor.name == 'Road') continue
