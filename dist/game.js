@@ -476,7 +476,9 @@ class Game {
         this.assetsBasePath = assetsBasePath;
 
         this.background = null;
-        this.sound = null;
+        this.song = null;
+        this.songPlaying = false; // temporary fix. P5.js sometimes set the playing to false while it's still playing ?
+
 
         // Some shortcuts
         this.HEIGHT = this.el.offsetHeight;
@@ -504,9 +506,9 @@ class Game {
 
     preload(mapName) {
         if(mapName) this.mapName = mapName;
+        else mapName = tutorial;
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
-        if (mapName == undefined) mapName = tutorial;
         console.log("------------ PRELOAD() ------------");
         console.log(mapName);
         for (let ele in mapName.e) {
@@ -518,9 +520,12 @@ class Game {
                 this[eName + "Img"] = null; //Not rendering the road (just the background). Easier to handle
                 continue
             }
-            console.log(mapName.template);
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
+        console.log("song: "+this.song);
+        if(this.song == null){
+            this.song = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`);
+        }        
     }
 
     setup(mapName) {
@@ -536,12 +541,16 @@ class Game {
         // Load background
         this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);
 
-        // Load Song
-        this.sound = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`);
-
         // new Element()
         this.iterateOverMap(mapName);
-        this.song.play();
+
+        // Background sound <3
+        console.log(this.songPlaying);
+        if(!this.songPlaying){
+            this.song.play();
+            this.song.loop();
+            this.songPlaying = true;
+        }
     }
 
     draw() {
