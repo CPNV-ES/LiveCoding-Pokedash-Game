@@ -29,7 +29,7 @@ export class Element{
     }
 
     show(){
-        this.game.sketch.image(this.img, this.x, this.y)
+        this.game.sketch.image(this.img, this.x, this.y, this.game.blockHeight, this.game.blockWidth)
     }
 
    /* static loadSprite(){
