@@ -13,13 +13,13 @@ export class Door extends StaticElement{
 
     open(){
         this.isOpen = true
-        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/openDoorImg.png`)
+        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/${this.game.mapName.template}/openDoorImg.png`)
         this.game.sketch.redraw()
     }
 
     close(){
         this.isOpen = false
-        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/doorImg.png`)
+        this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/${this.game.mapName.template}/doorImg.png`)
         this.game.sketch.redraw()
     }
 }

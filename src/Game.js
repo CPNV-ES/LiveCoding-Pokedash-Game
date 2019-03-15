@@ -47,6 +47,7 @@ export class Game {
     }
 
     preload(mapName) {
+        if(mapName) this.mapName = mapName
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
         if (mapName == undefined) mapName = tutorial
