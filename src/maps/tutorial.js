@@ -15,6 +15,8 @@ export default {
         4 = tree
         9 = road (case vide)
     */
+
+    template: 'pokemon',
    
     pattern: [
         [4,4,9,4,4,4,4,4,4,4,4,4,4,4,4,4],

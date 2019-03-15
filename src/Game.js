@@ -57,8 +57,12 @@ export class Game {
             console.log("eName: " + eName)
 
             this[eName] = null//with ele = 0 -> this.protagonist = null
-            if (eName == 'road') this[eName + "Img"] = null //Not rendering the road (just the background). Easier to handle
-            else this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
+            if (eName == 'road') {
+                this[eName + "Img"] = null //Not rendering the road (just the background). Easier to handle
+                continue
+            }
+            console.log(mapName.template)
+            this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
     }
 
