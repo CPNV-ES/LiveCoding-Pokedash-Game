@@ -4,7 +4,8 @@
   "data": {
     "libraries": [
       { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.min.js" },
-      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js" }
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.dom.min.js" },
+      { "cdn": true, "url": "https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/addons/p5.sound.min.js" }
     ],
     "game": "dist/game.js",
     "assets": "assets"
@@ -12,5 +13,17 @@
   "interpreters": {
     "php": "interpreters/php.php",
     "ruby": "interpreters/ruby.rb"
-  }
+  },
+  "instructions": [
+    {
+      "name": "Elements",
+      "description": "Les propriétés et contraintes des éléments.",
+      "path": "instructions/elements.md"
+    },
+    {
+      "name": "Fonctions",
+      "description": "Les fonctions à votre disposition.",
+      "path": "instructions/functions.md"
+    }
+  ]
 }
