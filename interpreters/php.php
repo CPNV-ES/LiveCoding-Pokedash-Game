@@ -67,7 +67,7 @@ function isDoorOpen(): bool
  */
 function getObjectives(): bool
 {
-    return Engine::send('getObjectives()');
+    return Engine::send('getObjectives');
 }
 
 /**
