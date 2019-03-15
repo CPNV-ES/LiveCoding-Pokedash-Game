@@ -466,9 +466,9 @@ class PushOutOfMapError extends CustomError{
 class Game {
 
     /**
-     * 
+     *
      * @param {HTMLElement} el game base element
-     * @param {String} assetsBasePath 
+     * @param {String} assetsBasePath
      */
     constructor(el, assetsBasePath) {
 
@@ -767,16 +767,17 @@ class Game {
      * @param {string} command
      * @return {string} command output
      */
-    executeGameCommand(command) {
+    async executeGameCommand(command) {
         // Execute the command in your game and return the result
-        JSON.parse(command);
-        
-        switch (command) {
-            case 'getElement': 
-                return this.getElement(params[0], params[1]) // Return string of the element
+        command = JSON.parse(command);
+
+        switch (command.action) {
+            case 'getElement':
+                return this.getElement(command.params[0], command.params[1]) // Return string of the element
 
             case 'swapSprite':
-                return this.swapSprite(params[0]. params[1], params[2]) // Return true
+                console.log('swapSprite case');
+                return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
             case 'getObjectives':
                 return this.getObjectives() // Return numerical string
@@ -786,7 +787,7 @@ class Game {
 
             case 'isDoorOpen':
                 return this.isDoorOpen()    // Return true
-            
+
             case 'openDoor':
                 return this.openDoor()  // Return true
 
