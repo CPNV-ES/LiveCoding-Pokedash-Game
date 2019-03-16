@@ -530,7 +530,7 @@ class Game {
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
-            this.idx = this.getMusic('pokemonGeneric.mp3');
+            this.idx = this.getMusicIndex('pokemonGeneric.mp3');
             this.firstLaunch = false;
         }
 
@@ -622,7 +622,7 @@ class Game {
         if (distanceFrom > distanceTo) {
             throw "Parameter 'distanceTo' has to be >= than 'distanceFrom'"
         }
-        if(distanceFrom >= this.rows || distanceTo >= this.rows) throw "Parameters cant be higher that the size of map"
+        if (distanceFrom >= this.rows || distanceTo >= this.rows) throw "Parameters cant be higher that the size of map"
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let s = this.sketch;
@@ -656,24 +656,24 @@ class Game {
     }
 
     // Get Max WIDTH of the map
-    getXMapSize(){
+    getXMapSize() {
         return this.columns
     }
 
     // Get MAX HEIGHT of the map
-    getYMapSize(){
+    getYMapSize() {
         return this.rows
     }
 
     // Get PosX of the protagonist
-    getPosX(){
+    getPosX() {
         return this.protagonist.posX
     }
     // Get PosY of the protagonist
-    getPosY(){
+    getPosY() {
         return this.protagonist.posY
     }
-    
+
     // Get all objectives on the current map
     getObjectives() {
         return this.objectives.toString()
@@ -702,7 +702,8 @@ class Game {
     }
 
     loadLevel(level) {
-        if (level >= 0 && level < 5) {
+        console.log(this.levels.length);
+        if (level >= 0 && level < this.levels.length) {
             this.level = level - 1;
             this.nextLevel();
             return true
@@ -714,41 +715,42 @@ class Game {
     nextLevel() {
         if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         this.level += 1;
-        if(this.level > this.levels.length) this.level = 0;
+
+        if (this.level >= this.levels.length) this.level = 0;
         this.mapName = this.levels[this.level];
         if (this.mapName.background != '' && (typeof this.mapName.background === 'string')) {
             this.background = this.mapName.background;
         }
         else this.background = this.DEFAULTBGCOLOR;
-        if(this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music);
+        if (this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music);
 
         // Launch config to reload next level map
         this.objectives = 0;
         this.preload(this.mapName);
         this.setup();
-        return true       
+        return true
     }
 
 
     //************************************* LEVEL GETTER/SETTER *************************************/
-    getCurrentLevelName(){
+    getCurrentLevelName() {
         return this.levels[this.level].name
     }
 
-    getLevelName(level){
-        if(level < this.levels.length)
-        for(const [index] of this.levels.entries()){
-            if(this.levels[index].name == this.levels[level].name) return this.levels[level].name
-        }
+    getLevelName(level) {
+        if (level < this.levels.length)
+            for (const [index] of this.levels.entries()) {
+                if (this.levels[index].name == this.levels[level].name) return this.levels[level].name
+            }
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/
 
     getCurrentMusic() {
-        return this.musicLoaded[this.index].url
+        return this.musicLoaded[this.idx].url
     }
 
-    getMusic(musicName) {
+    getMusicIndex(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -855,7 +857,7 @@ class Game {
                     this.swapSprite(s.keyCode, 0, 1);
                     if (this.getObjectives() == 0) {
                         this.openDoor();
-                        if(this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3');
+                        if (this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3');
                     }
                     break
 
