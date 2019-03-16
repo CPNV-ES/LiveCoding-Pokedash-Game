@@ -5,7 +5,6 @@ import level1 from './maps/level1'
 import level2 from './maps/level2'
 import level3 from './maps/level3'
 import { Road } from './elements/Road'
-import { CustomError } from './CustomError'
 import { ElementOutOfMapError } from './CustomError'
 import { PushOutOfMapError } from './CustomError'
 
@@ -19,6 +18,8 @@ export class Game {
      */
     constructor(el, assetsBasePath) {
 
+        this.setProduction = false // Set true when in production
+
         this.el = el
         this.assetsBasePath = assetsBasePath
 
@@ -29,6 +30,7 @@ export class Game {
         this.DEFAULTBGCOLOR = '#77ff33'
 
         this.background = this.DEFAULTBGCOLOR
+        this.firstLaunch = true
 
         // Game Logic
         this.objectives = 0
@@ -75,10 +77,9 @@ export class Game {
     preload(mapName) {
         if (mapName) this.mapName = mapName
         else this.mapName = tutorial
+
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
-        console.log("------------ PRELOAD() ------------")
-        console.log(this.mapName)
         for (let ele in this.mapName.e) {
             let eName = this.mapName.e[ele].name.toLowerCase()
             this[eName] = null
@@ -92,23 +93,31 @@ export class Game {
         }
 
         // Load Music
-        this.sketch.shuffle(this.sounds, true);
-        for (let s of this.sounds) {
-            this.musicLoaded.push(this.sketch.loadSound(s))
+        // Only load music at first launch because it loads all music at once
+        if(this.firstLaunch){
+            this.sketch.shuffle(this.sounds, true);
+            for (let s of this.sounds) {
+                this.musicLoaded.push(this.sketch.loadSound(s))
+            }
         }
     }
 
     setup() {
         if (this.mapName == undefined) this.mapName = tutorial
         // Define dimension of the map and of each block
-        console.log("------------ SETUP() ------------")
         this.sketch.createCanvas(this.HEIGHT, this.WIDTH)
         this.columns = this.mapName.pattern.length
         this.rows = this.mapName.pattern[0].length
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows)
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns)
         this.iterateOverMap()
-            if(this.mapName == tutorial) this.idx = this.getMusic('pokemonGeneric.mp3')
+
+        // Set Pokemon generic for the first launch
+        if(this.mapName == tutorial && this.firstLaunch) {
+            this.idx = this.getMusic('pokemonGeneric.mp3')
+            this.firstLaunch = false
+        }
+        
     }
 
     draw() {
@@ -160,7 +169,6 @@ export class Game {
     // Get a specific element from protagonist
     getElement(direction, distance, optionnal) {
         if (distance < 0) return false
-        this.setMusic('bonta')
         let x = this.protagonist.posX
         let y = this.protagonist.posY
         let element = null
@@ -259,34 +267,49 @@ export class Game {
         return true
     }
 
+    loadLevel(level){
+        if(level >= 0 && level < 4){
+            this.level = level-1
+            this.nextLevel()
+            return true
+        }
+        else throw "Level must be between 0 and 4"
+    }
+
     // Change level depending on your current level.
     nextLevel() {
-        if (!this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+        if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         console.log("* * * * YOU WIN * * * *")
         this.level += 1
         switch (this.level) {
-            case 3:
+            case 0:
+                this.mapName = tutorial
+                this.background = this.DEFAULTBGCOLOR               
+                break;
+            case 1:
                 this.mapName = level1
-                this.background = '#619b1f' // Green
+                this.background = '#619b1f'
                 this.setMusic('lostWoods.mp3')
                 break
-
             case 2:
                 this.mapName = level2
-                this.background = "#3a7eea" // Blue
+                this.background = '#3a7eea' // Blue
                 this.setMusic('nemo.mp3')
                 break
-
-            case 1:
+            case 3:
                 this.mapName = level3
-                this.background = this.DEFAULTBGCOLOR
+                this.background = this.DEFAULTBGCOLOR // Blue
                 break
-
             default:
                 this.mapName = tutorial
+                console.log(this.level)
+                if(this.level == 4){ // The music will load only once when you "finish" the game
+                    this.setMusic('pokemon.mp3') 
+                }
                 break
         }
         // Launch config to reload next level map
+        this.objectives = 0
         this.preload(this.mapName)
         this.setup()
         return true
@@ -310,6 +333,7 @@ export class Game {
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
+        console.log("hello " + musicName)
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -319,8 +343,7 @@ export class Game {
                     this.idx = index
                     this.musicLoaded[this.idx].loop()
                 }
-                else this.idx=index
-                
+                else this.idx=index             
             }
         }
     }
@@ -328,9 +351,11 @@ export class Game {
     // Key type to catch capslock character
     // Handle music navigation
     keyTyped() {
+       
         switch (this.sketch.key) {
             // Play ON/OFF the music
             case 'M':
+            console.log(this.musicPlaying)
                 if (this.musicPlaying) {
                     this.musicLoaded[this.idx].pause()
                     console.log("Music paused")
@@ -350,15 +375,19 @@ export class Game {
                 if (this.idx >= this.musicLoaded.length) this.idx = 0
                 this.musicLoaded[this.idx].loop(0, 1, this.volume)
                 this.musicPlaying = true
+                console.log(this.idx)
+                console.log(this.musicLoaded[this.idx])
                 break
 
             // Play Last song 
             case 'B':
                 this.musicLoaded[this.idx].stop()
                 this.idx = this.idx - 1
-                if (this.idx <= 0) this.idx = this.musicLoaded.length - 1
+                if (this.idx < 0) this.idx = this.musicLoaded.length - 1
                 this.musicLoaded[this.idx].loop(0, 1, this.volume)
                 this.musicPlaying = true
+                console.log(this.idx)
+                console.log(this.musicLoaded[this.idx])
                 break
 
             // Increase the volume
@@ -374,6 +403,15 @@ export class Game {
                 else this.volume -= 0.05
                 this.musicLoaded[this.idx].setVolume(this.volume)
                 break
+
+            // RESET Current game
+            case 'R':
+                this.objectives = 0
+                this.setup(this.mapName)
+                break;
+        }
+        if(!this.setProduction && this.sketch.key >= 0 && this.sketch.key <=3){
+            this.loadLevel(this.sketch.key)
         }
     }
 
@@ -386,7 +424,6 @@ export class Game {
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
 
             let element = this.getElement(s.keyCode, 1)
-            console.log("element: ", element)
             switch (element) {
                 case "Road":
                     this.swapSprite(s.keyCode, 0, 1)
@@ -411,12 +448,6 @@ export class Game {
                     break
             }
         }
-        // Restart game if we press 'r'
-        if (s.keyCode == 82) {
-            this.objectives = 0
-            this.setup(this.mapName)
-        }
-
         return true
     }
 
