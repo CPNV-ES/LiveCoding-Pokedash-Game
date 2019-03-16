@@ -94,7 +94,7 @@ export class Game {
 
         // Load Music
         // Only load music at first launch because it loads all music at once
-        if(this.firstLaunch){
+        if (this.firstLaunch) {
             this.sketch.shuffle(this.sounds, true);
             for (let s of this.sounds) {
                 this.musicLoaded.push(this.sketch.loadSound(s))
@@ -113,11 +113,11 @@ export class Game {
         this.iterateOverMap()
 
         // Set Pokemon generic for the first launch
-        if(this.mapName == tutorial && this.firstLaunch) {
+        if (this.mapName == tutorial && this.firstLaunch) {
             this.idx = this.getMusic('pokemonGeneric.mp3')
             this.firstLaunch = false
         }
-        
+
     }
 
     draw() {
@@ -238,6 +238,25 @@ export class Game {
         return true
     }
 
+    // Get Max WIDTH of the map
+    getXMapSize(){
+        return this.columns
+    }
+
+    // Get MAX HEIGHT of the map
+    getYMapSize(){
+        return this.rows
+    }
+
+    // Get PosX of the protagonist
+    getPosX(){
+        return this.protagonist.posX
+    }
+    // Get PosY of the protagonist
+    getPosY(){
+        return this.protagonist.posY
+    }
+    
     // Get all objectives on the current map
     getObjectives() {
         return this.objectives.toString()
@@ -265,9 +284,9 @@ export class Game {
         return true
     }
 
-    loadLevel(level){
-        if(level >= 0 && level < 4){
-            this.level = level-1
+    loadLevel(level) {
+        if (level >= 0 && level < 4) {
+            this.level = level - 1
             this.nextLevel()
             return true
         }
@@ -281,7 +300,7 @@ export class Game {
         switch (this.level) {
             case 0:
                 this.mapName = tutorial
-                this.background = this.DEFAULTBGCOLOR               
+                this.background = this.DEFAULTBGCOLOR
                 break;
             case 1:
                 this.mapName = level1
@@ -299,8 +318,8 @@ export class Game {
                 break
             default:
                 this.mapName = tutorial
-                if(this.level == 4){ // The music will load only once when you "finish" the game
-                    this.setMusic('pokemon.mp3') 
+                if (this.level == 4) { // The music will load only once when you "finish" the game
+                    this.setMusic('pokemon.mp3')
                 }
                 break
         }
@@ -318,7 +337,7 @@ export class Game {
         return this.musicLoaded[this.index].url
     }
 
-    getMusic(musicName){
+    getMusic(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -332,12 +351,12 @@ export class Game {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
-                if(this.musicPlaying){
+                if (this.musicPlaying) {
                     this.musicLoaded[this.idx].stop()
                     this.idx = index
                     this.musicLoaded[this.idx].loop()
                 }
-                else this.idx=index             
+                else this.idx = index
             }
         }
     }
@@ -345,7 +364,7 @@ export class Game {
     // Key type to catch capslock character
     // Handle music navigation
     keyTyped() {
-       
+
         switch (this.sketch.key) {
             // Play ON/OFF the music
             case 'M':
@@ -397,7 +416,7 @@ export class Game {
                 this.setup(this.mapName)
                 break;
         }
-        if(!this.setProduction && this.sketch.key >= 0 && this.sketch.key <=3){
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 3) {
             this.loadLevel(this.sketch.key)
         }
     }
@@ -409,7 +428,6 @@ export class Game {
     keyPressed() {
         let s = this.sketch
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-
             let element = this.getElement(s.keyCode, 1)
             switch (element) {
                 case "Road":
@@ -496,6 +514,18 @@ export class Game {
 
             case 'nextLevel':
                 return this.nextLevel() // Return true or false
+
+            case 'getXMapSize':
+                return this.getXMapSize() // Return Int
+
+            case 'getYMapSize':
+                return this.getYMapSize() // Return Int
+
+            case 'getPosX':
+                return this.getPosX()   // Return Int
+
+            case 'getPosY':
+                return this.getPosY()   // Return Int
         }
     }
 }

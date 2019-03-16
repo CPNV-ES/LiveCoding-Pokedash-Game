@@ -44,10 +44,26 @@ function nextLevel() {
     return Engine::send('nextLevel');
 }
 
+function getXMapSize(){
+    return Engine::Send('getXMapSize');
+}
+
+function getYMapSize(){
+    return Engine::Send('getYMapSize');
+}
+
+function getPosX(){
+    return Engine::Send('getPosX');
+}
+
+function getPosY(){
+    return Engine::Send('getPosY');
+}
+
 /**
  * Return true
  */
-function openDoor(): bool {
+function openDoor() {
     return Engine::send('openDoor');
 }
 /**
