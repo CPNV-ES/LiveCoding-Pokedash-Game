@@ -34,6 +34,14 @@ export class Game {
         this.firstLaunch = true
 
         // Game Logic
+        // Don't forget to Import the levels
+        this.levels = [
+            tutorial,
+            level1,
+            level2,
+            level3,
+            level4
+        ]
         this.objectives = 0
         this.level = 0
         this.mapElement = []
@@ -81,8 +89,6 @@ export class Game {
 
     preload(mapName) {
         if (mapName) this.mapName = mapName
-        else this.mapName = tutorial
-
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
         // Example: Create this.protagonist and this.protagonistImg
         for (let ele in this.mapName.e) {
@@ -95,7 +101,7 @@ export class Game {
             }
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
-            console.log(this.mapName)
+
         }
 
         // Load Music
@@ -303,49 +309,37 @@ export class Game {
     nextLevel() {
         if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         this.level += 1
-        console.log(this.level)
-        switch (this.level) {
-            case 0:
-                this.mapName = tutorial
-                this.background = this.DEFAULTBGCOLOR
-                break;
-            case 1:
-                this.mapName = level1
-                this.background = '#619b1f'
-                this.setMusic('lostWoods.mp3')
-                break
-            case 2:
-                this.mapName = level2
-                this.background = '#3a7eea' // Blue
-                this.setMusic('nemo.mp3')
-                break
-            case 3:
-                this.mapName = level3
-                this.background = this.DEFAULTBGCOLOR // Blue
-                break
-            case 4:
-                this.mapName = level4
-                this.background = '#23c63e'
-                this.setMusic('davide.mp3')
-                break
-            default:
-                this.mapName = tutorial
-                if (this.level == 5) { // The music will load only once when you "finish" the game
-                    this.setMusic('pokemon.mp3')
-                }
-                break
-        }
+        if(this.level > this.levels.length) this.level = 0
+        this.mapName = this.levels[this.level]
+        this.background = this.mapName.background
+        if(this.mapName.music != '' && this.mapName.music) this.setMusic(this.mapName.music)
+
         // Launch config to reload next level map
         this.objectives = 0
         this.preload(this.mapName)
         this.setup()
-        return true
+        return true       
     }
 
 
+    //************************************* LEVEL GETTER/SETTER *************************************/
+    getCurrentLevelName(){
+        return this.levels[this.level].name
+    }
+
+    getLevelName(level){
+        for(const [index] of this.levels.entries()){
+            if(this.levels[index].name == this.levels[level].name) return this.levels[level].name
+        }
+    }
+
+    setLevel(level){
+        this.level = level;
+    }
+
     //************************************* MUSIC FUNCTIONS *************************************/
 
-    getMusicPlaying() {
+    getCurrentMusic() {
         return this.musicLoaded[this.index].url
     }
 
@@ -376,7 +370,6 @@ export class Game {
     // Key type to catch capslock character
     // Handle music navigation
     keyTyped() {
-
         switch (this.sketch.key) {
             // Play ON/OFF the music
             case 'M':
