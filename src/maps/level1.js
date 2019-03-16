@@ -15,7 +15,10 @@ export default {
         4 = tree
         9 = road (case vide)
     */
+    name: 'level1',
     template: 'zelda',
+    background: '#619b1f',
+    music: 'lostWoods.mp3',
    
     pattern: [
         [0,3,9,9,9,9,1,9,9,4,4,1,1,4,1,4],

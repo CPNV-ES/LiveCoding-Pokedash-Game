@@ -19,7 +19,10 @@ export default {
     /*
         To check the template disponiblke, go in assets folder or create your own !
     */
+    name: 'level4',
     template: 'davide',
+    background: '#23c63e',
+    music: 'davide.mp3',
 
     pattern: [
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],

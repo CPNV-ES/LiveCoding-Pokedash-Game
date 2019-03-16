@@ -15,7 +15,10 @@ export default {
         4 = tree
         9 = road (case vide)
     */
+    name: 'level2',
     template: 'nemo',
+    background: '#3a7eea',
+    music: 'nemo.mp3',
    
     pattern: [
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],

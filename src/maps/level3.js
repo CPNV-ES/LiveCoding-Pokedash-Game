@@ -15,8 +15,10 @@ export default {
         4 = tree
         9 = road (case vide)
     */
-    
+    name: 'level3',
     template: 'pokemon',
+    background: '#77ff33',
+    music: '',
 
     pattern: [
         [9,9,9,9,9,4,4,4,4,4,4,4,4,4,4,4],
