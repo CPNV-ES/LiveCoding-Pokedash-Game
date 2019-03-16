@@ -31,113 +31,20 @@ class Element{
     show(){
         this.game.sketch.image(this.img, this.x, this.y, this.game.blockHeight, this.game.blockWidth);
     }
-
-   /* static loadSprite(){
-        return loadImage(`assets/${this.constructor.name.toLowerCase()}.jpg`)
-    }*/
 }
-
-// TO DELETE IF NOT USED : module.exports = Element
 
 class MovableElement extends Element {
 
     constructor(game, x, y, img){
         super(game, x, y, img);
     }
-
-    moveRight(){
-        let temp = this.game.mapElement[this.posX+1][this.posY];
-        this.game.mapElement[this.posX+1][this.posY] = this.game.mapElement[this.posX][this.posY];
-        this.game.mapElement[this.posX][this.posY] = temp;
-        this.posX += 1;
-        this.x = this.x + this.game.blockWidth; //For sprite drawing
-        console.log(this.game.mapElement[this.posX-1][this.posY] );
-        return true
-    }
-
-    moveLeft(){
-        this.x = this.x - this.game.blockWidth; //For sprite drawing
-        let temp = this.game.mapElement[this.posX-1][this.posY];
-        this.game.mapElement[this.posX-1][this.posY] = this.game.mapElement[this.posX][this.posY];
-        this.game.mapElement[this.posX][this.posY] = temp;
-        this.posX -=1;
-        return true
-    }
-    
-    moveDown(){
-        this.y = this.y + this.game.blockHeight; //For sprite drawing
-        let temp = this.game.mapElement[this.posX][this.posY+1];
-        this.game.mapElement[this.posX][this.posY+1] = this.game.mapElement[this.posX][this.posY];
-        this.game.mapElement[this.posX][this.posY] = temp;
-        this.posY += 1;
-        return true
-    }
-
-    moveUp(){
-        this.y = this.y - this.game.blockHeight; //For sprite drawing
-        let temp = this.game.mapElement[this.posX][this.posY-1];
-        this.game.mapElement[this.posX][this.posY-1] = this.game.mapElement[this.posX][this.posY];
-        this.game.mapElement[this.posX][this.posY] = temp;
-        this.posY -=1;
-        return true     
-    }
-
-    /*testMove(comingFrom){
-        //Testing limit of the screen
-        if(x < 0 || y < 0) return false
-        if(x > this.game.WIDTH || y > this.game.HEIGHT) return false
-
-        if(isStatic) return false
-        if(isMovable) e.action(comingFrom)
-    }*/
-
-    // Function so the player can swap between two sprites
-
-    // !!!!!! TO DO / TO TEST : maybe need to change also the x and y so the sprite can move !!!!
-    /*swapSprite(direction, distanceFrom, distanceTo){
-        let x = this.game.protagonist.posX
-        let y = this.game.protagonist.posY        
-        
-        if (direction === 'right' || direction === RIGHT_ARROW){
-            let temp = this.game.mapElement[x + distanceFrom][y]
-            console.log(this.game.mapElement[x + distanceTo][y])
-           // this.this.game.mapElement[x + distanceFrom][y].x = 
-            this.game.mapElement[x + distanceFrom][y] = this.game.mapElement[x + distanceTo][y]
-            this.game.mapElement[x + distanceFrom][y] = temp   
-        }
-        if (direction === 'left' || direction === LEFT_ARROW){
-            let temp = this.game.mapElement[x - distanceFrom][y]
-            this.game.mapElement[x - distanceFrom][y] = this.game.mapElement[x - distanceTo][y]
-            this.game.mapElement[x - distanceFrom][y] = temp
-        } 
-        if (direction === 'down' || direction === DOWN_ARROW){
-            let temp = this.game.mapElement[x][y + distanceFrom]
-            this.game.mapElement[x][y + distanceFrom] = this.game.mapElement[x][y + distanceTo]
-            this.game.mapElement[x][y + distanceFrom] = temp
-        }
-        if (direction === 'up' || direction === UP_ARROW){
-            let temp = this.game.mapElement[x][y - distanceFrom]
-            this.game.mapElement[x][y - distanceFrom] = this.game.mapElement[x][y - distanceTo]
-            this.game.mapElement[x][y - distanceFrom] = temp
-        }
-        console.log("x: " + this.game.protagonist.posX, "y: " +this.game.protagonist.posY)
-    }*/
 }
 
 class Boulder extends MovableElement{
     constructor(game, x, y, img){
         super(game, x, y, img);
     }
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Boulder");
-        console.log("Information: " + information);
-        return true
-    }
-
 }
-
-// TO DELETE IF NOT USED : module.exports = Boulder
 
 class StaticElement extends Element {
 
@@ -146,20 +53,13 @@ class StaticElement extends Element {
     }
 }
 
-// TO DELETE IF NOT USED : module.exports = StaticElement
-
 class Door extends StaticElement{
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isOpen = false;
         this.isDoor = true;
     }
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Door");
-        return true
-    }
-
+    
     open(){
         this.isOpen = true;
         this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/${this.game.mapName.template}/openDoorImg.png`);
@@ -179,19 +79,6 @@ class Protagonist extends MovableElement {
         this.isProtagonist = true;
         this.pokeball = 0;
     }
-    
-    //static LIFE = 3 
-    /*moveLeft(){
-        console.log("Protagonist move left")
-        console.log(game.blockWidth);
-        this.x = this.x - game.blockWidth;
-        return true;
-    }*/
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Protagonist");
-        return true
-    }
 }
 
 class Pokeball extends MovableElement{
@@ -199,65 +86,21 @@ class Pokeball extends MovableElement{
         super(game, x, y, img);
         this.isObjective = true;
     }
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Pokeball");
-        // let game = PokedashGame
-        /*game.mapElement[this.posX][this.posY] = game.mapElement[game.playerPosX][game.playerPosY]
-        game.mapElement[game.playerPosX][game.playerPosY] = new DynamicElement(Road, game.playerPosX*game.blockHeight, game.playerPosY*game.blockWidth, game.roadImg)
-        Protagonist.pokeball += 1
-        game.playerPosX = this.posX
-        game.playerPosY = this.posY*/
-        return true
-    }
-
-    remove(){
-        //this = new Road()
-        //this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/roadImg.png`)
-    }
 }
-
-// TO DELETE IF NOT USED : module.exports = Pokeball
 
 class Road extends MovableElement{
 
     constructor(game, x, y, img){
         super(game, x, y, img);
     }
-
-    action(information){
-        let temp = game.mapElement[this.posX][this.posY];
-        let tempX = this.posX;
-        let tempY = this.posY;
-        console.log(game.mapElement[this.posX][this.posY]);
-        game.mapElement[this.posX][this.posY] = game.mapElement[game.playerPosX][game.playerPosY];
-        game.mapElement[game.playerPosX][game.playerPosY].moveSprite(information);
-        game.mapElement[game.playerPosX][game.playerPosY] = temp;
-        this.posX = game.playerPosX;
-        this.posY = game.playerPosY;
-        game.playerPosX = tempX;
-        game.playerPosY = tempY;
-        
-       
-
-    }
 }
-
-// TO DELETE IF NOT USED : module.exports = Road
 
 class Tree extends StaticElement{
 
     constructor(game, x, y, img){
         super(game, x, y, img);
     }
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Tree");
-        return true
-    }
 }
-
-// TO DELETE IF NOT USED : module.exports = Tree
 
 const classes = {
     Boulder,

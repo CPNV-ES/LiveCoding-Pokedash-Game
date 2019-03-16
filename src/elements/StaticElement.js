@@ -6,5 +6,3 @@ export class StaticElement extends Element {
         super(game, x, y, img)
     }
 }
-
-// TO DELETE IF NOT USED : module.exports = StaticElement

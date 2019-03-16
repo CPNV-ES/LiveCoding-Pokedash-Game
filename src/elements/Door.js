@@ -6,12 +6,7 @@ export class Door extends StaticElement{
         this.isOpen = false
         this.isDoor = true
     }
-
-    action(information){
-        console.log("bienvenue dans la méthode action de la classe Door")
-        return true
-    }
-
+    
     open(){
         this.isOpen = true
         this.img = this.game.sketch.loadImage(`${this.game.assetsBasePath}/${this.game.mapName.template}/openDoorImg.png`)
