@@ -325,7 +325,7 @@ var level1 = {
         4 = tree
         9 = road (case vide)
     */
-    template: 'garfield',
+    template: 'zelda',
    
     pattern: [
         [0,3,9,9,9,9,9,9,9,4,4,1,1,4,1,4],
@@ -474,27 +474,28 @@ class Game {
 
         this.el = el;
         this.assetsBasePath = assetsBasePath;
-
-        this.background = null;
-
-        // Some shortcuts
+    
+        // Get height and width (shortcuts)
         this.HEIGHT = this.el.offsetHeight;
         this.WIDTH = this.el.offsetWidth;
+        
+        this.DEFAULTBG = '#77ff33';
 
+        // Game Logic
         this.objectives = 0;
         this.level = 0;
         this.mapElement = [];
         this.mapName = tutorial;
 
-        // Get manually all music from folder
+        // Sound Logic and library
         this.musicBasePath = 'music';
         this.sounds = [
-            `${this.assetsBasePath}/${this.musicBasePath}/0.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/1.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/2.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/3.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/4.mp3`,
-            //`${this.assetsBasePath}/music/5.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/bonta.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/incarnam.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
+            `${this.assetsBasePath}${this.musicBasePath}/nemo.mp3`
         ];
         this.idx = 0; // Index to select a music file
         this.musicLoaded = [];
@@ -527,12 +528,8 @@ class Game {
         console.log(this.mapName);
         for (let ele in this.mapName.e) {
             let eName = this.mapName.e[ele].name.toLowerCase();
-            console.log("eName: " + eName);
-
-            //create new Attribute (for example: this.protagonist)
             this[eName] = null;
-
-            // Not rendering the road (just the background). Easier to handle
+            // We don't display road image
             if (eName == 'road') {
                 this[eName + "Img"] = null;
                 continue
@@ -541,16 +538,13 @@ class Game {
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
 
+        // Load Music
         this.sketch.shuffle(this.sounds, true);
         for (let s of this.sounds) {
-            console.log('aaa' + s);
+            console.log(s);
             this.musicLoaded.push(this.sketch.loadSound(s));
         }
         console.log(this.musicLoaded);
-        // Load sound if there is none
-        /* if(this.song == null){
-             this.song = this.sketch.loadSound(`${this.assetsBasePath}/sound.mp3`)
-         }  */
     }
 
     setup() {
@@ -564,14 +558,14 @@ class Game {
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
 
         // Load background
-        this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`);
+       // this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`)
         // new Element()
         this.iterateOverMap();
 
     }
 
     draw() {
-        this.sketch.background('#77ff33');  //this.background
+        this.sketch.background(this.background);  
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
                 if (this.mapElement[x][y].constructor.name == 'Road') continue
@@ -647,14 +641,19 @@ class Game {
         switch (this.level) {
             case 1:
                 this.mapName = level1;
+                this.background = '#619b1f'; // Green
+                this.loadMusic('lostWoossds.mp3');
                 break
 
             case 2:
                 this.mapName = level2;
+                this.backgorund = "#3a7eea"; // Blue
+                this.loadMusic('nemo.mp3');
                 break
 
             case 3:
                 this.mapName = level3;
+                this.background = this.DEFAULTBG;
                 break
 
             default:
@@ -666,11 +665,26 @@ class Game {
         return true
     }
 
+    getMusic(){
+        return this.musicLoaded[this.index].url
+    }
+
+    // Function to load a music by his name. Need to put full name of music ('music1.mp3')
+    loadMusic(musicName){
+        for (const [index] of this.musicLoaded.entries()){
+            // If we find the music
+            if(this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`){
+                this.musicLoaded[this.idx].stop();
+                this.idx = index;
+                this.musicLoaded[this.idx].loop();
+            }
+        }
+    }
 
     // Get element from protagonist
     getElement(direction, distance, optionnal) {
         if (distance < 0) return false
-
+        this.loadMusic('bonta');
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let element = null;
@@ -778,15 +792,15 @@ class Game {
 
             // Increase the volume
             case '+':
-                if(this.volume+0.1 >= 1) this.volume = 1;
-                else this.volume += 0.1;
+                if(this.volume+0.05 >= 1) this.volume = 1;
+                else this.volume += 0.05;
                 this.musicLoaded[this.idx].setVolume(this.volume);
                 break
 
             // Lower the volume
             case '-':
-                if(this.volume-0.1 <=0) this.volume = 0;
-                else this.volume -= 0.1;
+                if(this.volume-0.05 <=0) this.volume = 0;
+                else this.volume -= 0.05;
                 this.musicLoaded[this.idx].setVolume(this.volume);
                 break
         }
