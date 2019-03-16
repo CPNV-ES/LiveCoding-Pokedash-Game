@@ -161,51 +161,31 @@ var tutorial = {
     }
 };
 
-var level1 = {
-    // ZELDA FIRST LEVEL
-    /* 
-        0 = PlayableCharacter
-        1 = pokeball (objectif)
-        2 = door
-        3 = boulder
-        4 = tree
-        9 = road (case vide)
-    */
-    name: 'level1',
-    template: 'zelda',
-    background: '#619b1f',
-    music: 'lostWoods.mp3',
-   
-    pattern: [
-        [0,3,9,9,9,9,1,9,9,4,4,1,1,4,1,4],
-        [9,3,9,9,4,4,4,4,9,4,4,1,1,4,9,4],
-        [4,9,4,4,9,9,9,4,9,9,3,9,4,1,9,1],
-        [1,3,9,3,9,9,9,1,4,3,4,9,4,1,3,1],
-        [4,9,4,4,4,4,4,9,4,9,4,9,9,4,9,4],
-        [1,9,9,9,3,9,9,9,3,9,4,9,9,9,9,4],
-        [4,4,9,9,9,4,9,4,4,1,4,4,4,9,9,4],
-        [4,9,4,9,4,9,9,4,9,9,9,9,4,9,9,9],
-        [9,9,4,4,9,9,4,4,1,3,1,9,4,4,3,9],
-        [9,4,4,4,9,4,4,4,3,2,3,9,4,9,9,9],
-        [9,9,4,4,9,3,9,4,1,3,1,9,4,9,9,9],
-        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,9],
-        [9,9,4,4,4,4,4,4,4,4,4,4,9,4,4,4],
-        [9,4,4,9,9,9,9,4,1,3,3,9,3,9,3,9],
-        [9,9,4,9,4,9,1,3,9,9,9,3,9,3,9,9],
-        [4,9,9,9,4,9,9,4,9,9,9,3,9,9,9,9]
-    ],
+class CustomError extends Error{
+    constructor (message){
+        super(message);
 
-    e: {
-        0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
-        2: Door, //There can be only one Door actually
-        3: Boulder,
-        4: Tree,
-        9: Road
+        this.constructor = CustomError;
+        this.__proto__ = CustomError.prototype;
+        this.message = message;
     }
-};
+}
 
-var level2 = {
+class ElementOutOfMapError extends CustomError{
+    constructor(message){
+        super(message);
+        this.message = "Can't get element out of map";
+    }
+}
+
+class PushOutOfMapError extends CustomError{
+    constructor(message){
+        super(message);
+        this.message = "Can't push an element out of map";
+    }
+}
+
+var nemo = {
     // NEMO OR DORI FIRST LEVEL
     /* 
         0 = PlayableCharacter
@@ -249,7 +229,7 @@ var level2 = {
     }
 };
 
-var level3 = {
+var pokemon1 = {
     // POKEMON LEVEL 2 
     /* 
         0 = PlayableCharacter
@@ -259,7 +239,7 @@ var level3 = {
         4 = tree
         9 = road (case vide)
     */
-    name: 'level3',
+    name: 'pokemon1',
     template: 'pokemon',
     background: '#77ff33',
     music: '',
@@ -293,7 +273,51 @@ var level3 = {
     }
 };
 
-var level4 = {
+var zeldaGreen = {
+    // ZELDA FIRST LEVEL
+    /* 
+        0 = PlayableCharacter
+        1 = pokeball (objectif)
+        2 = door
+        3 = boulder
+        4 = tree
+        9 = road (case vide)
+    */
+    name: 'zeldaGreen',
+    template: 'zelda',
+    background: '#619b1f',
+    music: 'lostWoods.mp3',
+   
+    pattern: [
+        [0,3,9,9,9,9,1,9,9,4,4,1,1,4,1,4],
+        [9,3,9,9,4,4,4,4,9,4,4,1,1,4,9,4],
+        [4,9,4,4,9,9,9,4,9,9,3,9,4,1,9,1],
+        [1,3,9,3,9,9,9,1,4,3,4,9,4,1,3,1],
+        [4,9,4,4,4,4,4,9,4,9,4,9,9,4,9,4],
+        [1,9,9,9,3,9,9,9,3,9,4,9,9,9,9,4],
+        [4,4,9,9,9,4,9,4,4,1,4,4,4,9,9,4],
+        [4,9,4,9,4,9,9,4,9,9,9,9,4,9,9,9],
+        [9,9,4,4,9,9,4,4,1,3,1,9,4,4,3,9],
+        [9,4,4,4,9,4,4,4,3,2,3,9,4,9,9,9],
+        [9,9,4,4,9,3,9,4,1,3,1,9,4,9,9,9],
+        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,9],
+        [9,9,4,4,4,4,4,4,4,4,4,4,9,4,4,4],
+        [9,4,4,9,9,9,9,4,1,3,3,9,3,9,3,9],
+        [9,9,4,9,4,9,1,3,9,9,9,3,9,3,9,9],
+        [4,9,9,9,4,9,9,4,9,9,9,3,9,9,9,9]
+    ],
+
+    e: {
+        0: Protagonist, //There can be only one protagonist in the pattern
+        1: Pokeball,
+        2: Door, //There can be only one Door actually
+        3: Boulder,
+        4: Tree,
+        9: Road
+    }
+};
+
+var davide = {
     // 
     /* 
         0 = PlayableCharacter
@@ -307,7 +331,7 @@ var level4 = {
     /*
         To check the template disponiblke, go in assets folder or create your own !
     */
-    name: 'level4',
+    name: 'davide',
     template: 'davide',
     background: '#23c63e',
     music: 'davide.mp3',
@@ -341,30 +365,6 @@ var level4 = {
     }
 };
 
-class CustomError extends Error{
-    constructor (message){
-        super(message);
-
-        this.constructor = CustomError;
-        this.__proto__ = CustomError.prototype;
-        this.message = message;
-    }
-}
-
-class ElementOutOfMapError extends CustomError{
-    constructor(message){
-        super(message);
-        this.message = "Can't get element out of map";
-    }
-}
-
-class PushOutOfMapError extends CustomError{
-    constructor(message){
-        super(message);
-        this.message = "Can't push an element out of map";
-    }
-}
-
 class Game {
 
     /**
@@ -390,12 +390,13 @@ class Game {
 
         // Game Logic
         // Don't forget to Import the levels
+        // Chose also the order of your level here
         this.levels = [
             tutorial,
-            level1,
-            level2,
-            level3,
-            level4
+            pokemon1,
+            nemo,
+            zeldaGreen,
+            davide
         ];
         this.objectives = 0;
         this.level = 0;
@@ -683,13 +684,10 @@ class Game {
     }
 
     getLevelName(level){
+        if(level < this.levels.length)
         for(const [index] of this.levels.entries()){
             if(this.levels[index].name == this.levels[level].name) return this.levels[level].name
         }
-    }
-
-    setLevel(level){
-        this.level = level;
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/

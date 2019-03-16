@@ -15,7 +15,7 @@ export default {
         4 = tree
         9 = road (case vide)
     */
-    name: 'level1',
+    name: 'zeldaGreen',
     template: 'zelda',
     background: '#619b1f',
     music: 'lostWoods.mp3',

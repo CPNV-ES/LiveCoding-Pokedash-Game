@@ -1,13 +1,14 @@
 import { DynamicElement } from './DynamicElement'
 
-import tutorial from './maps/tutorial'
-import level1 from './maps/level1'
-import level2 from './maps/level2'
-import level3 from './maps/level3'
-import level4 from './maps/level4'
+import tutorial from './maps/pokemonTutorial'
 import { Road } from './elements/Road'
 import { ElementOutOfMapError } from './CustomError'
 import { PushOutOfMapError } from './CustomError'
+import pokemonTutorial from './maps/pokemonTutorial';
+import nemo from './maps/nemo';
+import pokemon1 from './maps/pokemon1';
+import zeldaGreen from './maps/zeldaGreen';
+import davide from './maps/davide';
 
 
 export class Game {
@@ -35,12 +36,13 @@ export class Game {
 
         // Game Logic
         // Don't forget to Import the levels
+        // Chose also the order of your level here
         this.levels = [
-            tutorial,
-            level1,
-            level2,
-            level3,
-            level4
+            pokemonTutorial,
+            pokemon1,
+            nemo,
+            zeldaGreen,
+            davide
         ]
         this.objectives = 0
         this.level = 0
@@ -328,13 +330,10 @@ export class Game {
     }
 
     getLevelName(level){
+        if(level < this.levels.length)
         for(const [index] of this.levels.entries()){
             if(this.levels[index].name == this.levels[level].name) return this.levels[level].name
         }
-    }
-
-    setLevel(level){
-        this.level = level;
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/
