@@ -6,7 +6,7 @@ import { Road } from '../elements/Road'
 import { Tree } from '../elements/Tree'
 
 export default {
-    
+    // 
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)
@@ -14,6 +14,10 @@ export default {
         3 = boulder
         4 = tree
         9 = road (case vide)
+    */
+
+    /*
+        To check the template disponiblke, go in assets folder or create your own !
     */
     template: 'pokemon',
 

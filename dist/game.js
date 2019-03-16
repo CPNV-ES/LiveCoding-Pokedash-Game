@@ -118,7 +118,7 @@ class DynamicElement{
 }
 
 var tutorial = {
-    
+    // TUTORIAL LEVEL (POKEMON)
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)
@@ -160,7 +160,7 @@ var tutorial = {
 };
 
 var level1 = {
-    
+    // ZELDA FIRST LEVEL
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)
@@ -201,7 +201,7 @@ var level1 = {
 };
 
 var level2 = {
-    
+    // NEMO OR DORI FIRST LEVEL
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)
@@ -242,7 +242,7 @@ var level2 = {
 };
 
 var level3 = {
-    
+    // POKEMON LEVEL 2 
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)

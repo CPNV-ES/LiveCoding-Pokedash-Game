@@ -6,7 +6,7 @@ import { Road } from '../elements/Road'
 import { Tree } from '../elements/Tree'
 
 export default {
-    
+    // NEMO OR DORI FIRST LEVEL
     /* 
         0 = PlayableCharacter
         1 = pokeball (objectif)
