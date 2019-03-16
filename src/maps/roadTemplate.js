@@ -19,7 +19,10 @@ export default {
     /*
         To check the template disponiblke, go in assets folder or create your own !
     */
+    name: 'default',
     template: 'pokemon',
+    background: '#77ff33',
+    music: 'pokemonGeneric.mp3',
 
     pattern: [
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
