@@ -56,9 +56,7 @@ export class Game {
         // Sound Logic and library
         this.musicBasePath = 'music'
         this.sounds = [
-            `${this.assetsBasePath}/${this.musicBasePath}/bonta.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/incarnam.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
@@ -223,30 +221,31 @@ export class Game {
         if (distanceFrom > distanceTo) {
             throw "Parameter 'distanceTo' has to be >= than 'distanceFrom'"
         }
+        if(distanceFrom >= this.rows || distanceTo >= this.rows) throw "Parameters cant be higher that the size of map"
         let x = this.protagonist.posX
         let y = this.protagonist.posY
         let s = this.sketch
 
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom > this.columns - distanceTo) throw new PushOutOfMapError
+            if (x + distanceFrom >= this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y]
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y]
             this.mapElement[x + distanceTo][y] = temp
         }
         if (direction === 'left' || direction === s.LEFT_ARROW) {
-            if (x - distanceFrom <= 0) throw new PushOutOfMapError
+            if (x - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x - distanceFrom][y]
             this.mapElement[x - distanceFrom][y] = this.mapElement[x - distanceTo][y]
             this.mapElement[x - distanceTo][y] = temp
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceFrom > this.rows - distanceTo) throw new PushOutOfMapError
+            if (y + distanceTo > this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom]
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo]
             this.mapElement[x][y + distanceTo] = temp
         }
         if (direction === 'up' || direction === s.UP_ARROW) {
-            if (y - distanceFrom <= 0) throw new PushOutOfMapError
+            if (y - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x][y - distanceFrom]
             this.mapElement[x][y - distanceFrom] = this.mapElement[x][y - distanceTo]
             this.mapElement[x][y - distanceTo] = temp
