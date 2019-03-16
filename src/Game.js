@@ -9,6 +9,7 @@ import nemo from './maps/nemo';
 import pokemon1 from './maps/pokemon1';
 import zeldaGreen from './maps/zeldaGreen';
 import davide from './maps/davide';
+import testHeavyMap from './maps/testHeavyMap';
 
 
 export class Game {
@@ -42,6 +43,7 @@ export class Game {
             pokemon1,
             nemo,
             zeldaGreen,
+            testHeavyMap,
             davide
         ]
         this.objectives = 0
@@ -62,7 +64,8 @@ export class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
         ]
         this.idx = 0 // Index to select a music file
         this.musicLoaded = [] // Array to stock all the loaded and processes by p5 music
@@ -452,7 +455,7 @@ export class Game {
                     this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
                         this.openDoor()
-                        if(this.level == 4) this.setMusic('bonus.mp3')
+                        if(this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3')
                     }
                     break
 

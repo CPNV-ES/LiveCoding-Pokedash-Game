@@ -365,6 +365,54 @@ var davide = {
     }
 };
 
+var testHeavyMap = {
+    // 
+    /* 
+        0 = PlayableCharacter
+        1 = pokeball (objectif)
+        2 = door
+        3 = boulder
+        4 = tree
+        9 = road (case vide)
+    */
+
+    /*
+        To check the template disponiblke, go in assets folder or create your own !
+    */
+    name: 'testHeavyMap',
+    template: 'zeldaRed',
+    background: '#dd7a37',
+    music: 'zeldaRed.mp3',
+
+    pattern: [
+        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        [4,9,3,9,9,3,9,9,9,9,9,9,9,9,9,4],
+        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
+        [4,1,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,4,1,4,9,9,9,4,4,4,4,4,4,4,4],
+        [4,9,4,9,4,9,9,9,4,9,4,4,9,2,9,4],
+        [4,9,4,9,4,9,9,9,4,9,4,4,9,9,9,4],
+        [4,9,4,9,4,1,1,1,4,1,4,4,4,9,4,4],
+        [4,1,4,9,4,1,1,1,4,1,4,9,4,9,4,4],
+        [4,9,4,9,4,9,9,9,9,9,4,9,4,9,4,4],
+        [4,9,4,9,4,9,9,9,4,9,4,9,4,9,4,4],
+        [4,9,4,9,4,4,4,4,4,9,4,4,4,9,4,4],
+        [4,0,4,9,9,9,9,9,9,9,9,9,9,9,4,4],
+        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
+    ],
+
+    e: {
+        0: Protagonist, //There can be only one protagonist in the pattern
+        1: Pokeball,
+        2: Door, //There can be only one Door actually
+        3: Boulder,
+        4: Tree,
+        9: Road
+    }
+};
+
 class Game {
 
     /**
@@ -396,6 +444,7 @@ class Game {
             pokemon1,
             nemo,
             zeldaGreen,
+            testHeavyMap,
             davide
         ];
         this.objectives = 0;
@@ -416,7 +465,8 @@ class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
         ];
         this.idx = 0; // Index to select a music file
         this.musicLoaded = []; // Array to stock all the loaded and processes by p5 music
@@ -806,7 +856,7 @@ class Game {
                     this.swapSprite(s.keyCode, 0, 1);
                     if (this.getObjectives() == 0) {
                         this.openDoor();
-                        if(this.level == 4) this.setMusic('bonus.mp3');
+                        if(this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3');
                     }
                     break
 
