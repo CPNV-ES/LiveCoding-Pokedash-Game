@@ -345,7 +345,7 @@ export class Game {
     //************************************* MUSIC FUNCTIONS *************************************/
 
     getCurrentMusic() {
-        return this.musicLoaded[this.index].url
+        return this.musicLoaded[this.idx].url
     }
 
     getMusic(musicName) {
