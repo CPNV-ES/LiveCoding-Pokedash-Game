@@ -17,7 +17,7 @@ List of elements :
 - 'Protagonist'
 - 'Road'
 - 'Boulder'
-- 'Pokeball'
+- 'Objective'
 - 'Door'
 - 'Tree'
 
@@ -52,7 +52,7 @@ Here is a list of all the different element getElement() can returns :
 - 'Protagonist'
 - 'Road'
 - 'Boulder'
-- 'Pokeball'
+- 'Objective'
 - 'Door'
 - 'Tree'
 
@@ -153,8 +153,8 @@ When the game is initialised, there is a variable counting all the objectives. T
 #### Php 
 Store objectives in a variable : 
 ```php
-$pokeballLeft = getObjectives();
-echo($pokeballLeft); // Will return '5' if 5 objectives left
+$objectiveLeft = getObjectives();
+echo($objectiveLeft); // Will return '5' if 5 objectives left
 ```
 If no objectives left
 ```php
@@ -172,10 +172,10 @@ The takeObjective() function decrement one objectif for all the actual objective
 ### Example
 #### Php
 ```php
-$pokeballLeft = getObjectives();
-// pokeballLeft = 5
+$objectiveLeft = getObjectives();
+// objectiveLeft = 5
 takeObjective();
-// pokeballLeft = 4
+// objectiveLeft = 4
 ```
 
 ## isDoorOpen()

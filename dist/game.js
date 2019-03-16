@@ -77,11 +77,11 @@ class Protagonist extends MovableElement {
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isProtagonist = true;
-        this.pokeball = 0;
+        this.objective = 0;
     }
 }
 
-class Pokeball extends MovableElement{
+class Objective extends MovableElement{
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isObjective = true;
@@ -106,7 +106,7 @@ const classes = {
     Boulder,
     Door,
     Protagonist,
-    Pokeball,
+    Objective,
     Road,
     Tree
 };
@@ -121,7 +121,7 @@ var tutorial = {
     // TUTORIAL LEVEL (POKEMON)
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -153,7 +153,7 @@ var tutorial = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -189,7 +189,7 @@ var nemo = {
     // NEMO OR DORI FIRST LEVEL
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -221,7 +221,7 @@ var nemo = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -233,7 +233,7 @@ var pokemon1 = {
     // POKEMON LEVEL 2 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -265,7 +265,7 @@ var pokemon1 = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -277,7 +277,7 @@ var zeldaGreen = {
     // ZELDA FIRST LEVEL
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -309,7 +309,7 @@ var zeldaGreen = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -321,7 +321,7 @@ var davide = {
     // 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -357,7 +357,7 @@ var davide = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -369,7 +369,7 @@ var testHeavyMap = {
     // 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -405,7 +405,7 @@ var testHeavyMap = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -592,25 +592,25 @@ class Game {
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
             if (x < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x - distance][y];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'right' || direction === this.sketch.RIGHT_ARROW) {
             if (x >= this.columns - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x + distance][y];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'up' || direction === this.sketch.UP_ARROW) {
             if (y < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y - distance];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'down' || direction === this.sketch.DOWN_ARROW) {
             if (y >= this.rows - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y + distance];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
         else return null
 
@@ -682,7 +682,7 @@ class Game {
     // Take objective and replace it with a road sprite
     takeObjective() {
         this.objectives -= 1;
-        this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg');
+        this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg');
         return true
     }
 
@@ -852,7 +852,7 @@ class Game {
                     this.swapSprite(s.keyCode, 0, 1);
                     break
 
-                case "Pokeball":
+                case "Objective":
                     this.takeObjective();
                     this.swapSprite(s.keyCode, 0, 1);
                     if (this.getObjectives() == 0) {

@@ -4,7 +4,7 @@
 Pokedash is a game where the user has to code the logic of the game with a chosable programming language (php or ruby) to render a functionnable game.
 
 ## Goal
-The goal of the game is to take all the objectives (pokeball) to open a door to access the next level. You will certainly need to move boulder to access to the objectives/door.
+The goal of the game is to take all the objectives (objective) to open a door to access the next level. You will certainly need to move boulder to access to the objectives/door.
 
 ## Setup for development
 > Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed

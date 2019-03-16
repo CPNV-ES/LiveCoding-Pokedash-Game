@@ -79,7 +79,7 @@ function isDoorOpen() {
     return Engine::send('isDoorOpen');
 }
 /**
- * Return the number of pokeball in the current game
+ * Return the number of objective in the current game
  */
 function getObjectives() {
     return Engine::send('getObjectives()');

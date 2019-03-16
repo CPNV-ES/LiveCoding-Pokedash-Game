@@ -22,10 +22,10 @@ Road is an element where the protagonist can freely move on it, with no constrai
 ### Description
 Tree is a blocking element. You can move or do any action on it.
 
-## 4. Pokeball
-> getElement() -> return 'Pokeball'
+## 4. Objective
+> getElement() -> return 'Objective'
 ### Description
-Pokeball is an objective element. When you walk on it, you have to take it and say in your logic that you have taken one objective
+Objective is an objective element. When you walk on it, you have to take it and say in your logic that you have taken one objective
 ### Functions associated
 - getObjectives()
 - takeObjective()
@@ -34,7 +34,7 @@ Pokeball is an objective element. When you walk on it, you have to take it and s
 > getElement() -> return 'Boulder'
 
 ### Description
-Boulder is a movable element. You can push it but only if there is a Road behind. For example, you can't push a boulder if there is another boulder behind, or pokeball, or tree etc.
+Boulder is a movable element. You can push it but only if there is a Road behind. For example, you can't push a boulder if there is another boulder behind, or objective, or tree etc.
 
 ## 6. Door
 ### Description

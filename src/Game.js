@@ -191,25 +191,25 @@ export class Game {
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
             if (x < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x - distance][y]
-            if (element.isObjective) this.pokeball = element
+            if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'right' || direction === this.sketch.RIGHT_ARROW) {
             if (x >= this.columns - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x + distance][y]
-            if (element.isObjective) this.pokeball = element
+            if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'up' || direction === this.sketch.UP_ARROW) {
             if (y < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y - distance]
-            if (element.isObjective) this.pokeball = element
+            if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'down' || direction === this.sketch.DOWN_ARROW) {
             if (y >= this.rows - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y + distance]
-            if (element.isObjective) this.pokeball = element
+            if (element.isObjective) this.objective = element
         }
         else return null
 
@@ -281,7 +281,7 @@ export class Game {
     // Take objective and replace it with a road sprite
     takeObjective() {
         this.objectives -= 1
-        this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg')
+        this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
         return true
     }
 
@@ -451,7 +451,7 @@ export class Game {
                     this.swapSprite(s.keyCode, 0, 1)
                     break
 
-                case "Pokeball":
+                case "Objective":
                     this.takeObjective()
                     this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
