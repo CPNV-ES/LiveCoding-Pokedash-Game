@@ -366,25 +366,25 @@ var level2 = {
         4 = tree
         9 = road (case vide)
     */
-    template: 'pokemon',
+    template: 'nemo',
    
     pattern: [
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,2,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,0,1,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,4,9,9,9,4,9,9,9,4],
+        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
+        [4,4,9,9,9,9,9,2,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,9,9,0,1,9,9,9,9,4],
+        [4,4,4,4,9,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,9,9,4,4,4,1,9,9,4],
+        [4,9,9,9,9,9,9,9,9,4,9,4,9,9,9,4],
+        [4,9,9,9,9,9,9,9,9,4,4,4,9,9,9,4],
+        [4,3,3,9,9,9,3,9,9,9,4,9,9,9,9,4],
+        [4,1,3,9,9,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,1,9,9,9,9,1,9,9,9,9,9,9,9,4],
+        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
     ],
 
     e: {
@@ -474,12 +474,14 @@ class Game {
 
         this.el = el;
         this.assetsBasePath = assetsBasePath;
-    
+
         // Get height and width (shortcuts)
         this.HEIGHT = this.el.offsetHeight;
         this.WIDTH = this.el.offsetWidth;
-        
-        this.DEFAULTBG = '#77ff33';
+
+        this.DEFAULTBGCOLOR = '#77ff33';
+
+        this.background = this.DEFAULTBGCOLOR;
 
         // Game Logic
         this.objectives = 0;
@@ -495,10 +497,11 @@ class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/incarnam.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
-            `${this.assetsBasePath}${this.musicBasePath}/nemo.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`
         ];
         this.idx = 0; // Index to select a music file
-        this.musicLoaded = [];
+        this.musicLoaded = []; // Array to stock all the loaded and processes by p5 music
         this.musicPlaying = false;
         this.volume = 1;
 
@@ -518,6 +521,9 @@ class Game {
 
 
     }
+
+    //************************************* P5 FUNCTIONS *************************************/
+    // Initiation of assets loading and display
 
     preload(mapName) {
         if (mapName) this.mapName = mapName;
@@ -541,10 +547,8 @@ class Game {
         // Load Music
         this.sketch.shuffle(this.sounds, true);
         for (let s of this.sounds) {
-            console.log(s);
             this.musicLoaded.push(this.sketch.loadSound(s));
         }
-        console.log(this.musicLoaded);
     }
 
     setup() {
@@ -556,16 +560,12 @@ class Game {
         this.rows = this.mapName.pattern[0].length;
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows);
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
-
-        // Load background
-       // this.background = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/background.png`)
-        // new Element()
         this.iterateOverMap();
-
+            if(this.mapName == tutorial) this.idx = this.getMusic('pokemonGeneric.mp3');
     }
 
     draw() {
-        this.sketch.background(this.background);  
+        this.sketch.background(this.background);
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
                 if (this.mapElement[x][y].constructor.name == 'Road') continue
@@ -607,84 +607,13 @@ class Game {
         }
     }
 
-    // Functions for user
-    getObjectives() {
-        return this.objectives.toString()
-    }
 
-    takeObjective() {
-        this.objectives -= 1;
-        this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg');
-        //this.mapElement[this.pokeball.posX][this.pokeball.posY].remove()
-        return true
-    }
+    //************************************* USER FUNCTIONS *************************************/
 
-    isDoorOpen() {
-        return this.mapElement[this.door.posX][this.door.posY].isOpen
-    }
-
-    openDoor() {
-        if (this.objectives != 0) throw "You can't open door while there is still existing objective"
-        this.mapElement[this.door.posX][this.door.posY].open();
-        return true
-    }
-
-    closeDoor() {
-        this.mapElement[this.doorPosX][this.doorPosY].close();
-        return true
-    }
-
-    nextLevel() {
-        if (!this.isDoorOpen()) throw "LA PORTE EST FERMEE"
-        console.log("* * * * YOU WIN * * * *");
-        this.level += 1;
-        switch (this.level) {
-            case 1:
-                this.mapName = level1;
-                this.background = '#619b1f'; // Green
-                this.loadMusic('lostWoossds.mp3');
-                break
-
-            case 2:
-                this.mapName = level2;
-                this.backgorund = "#3a7eea"; // Blue
-                this.loadMusic('nemo.mp3');
-                break
-
-            case 3:
-                this.mapName = level3;
-                this.background = this.DEFAULTBG;
-                break
-
-            default:
-                this.mapName = tutorial;
-                break
-        }
-        this.preload(this.mapName);
-        this.setup();
-        return true
-    }
-
-    getMusic(){
-        return this.musicLoaded[this.index].url
-    }
-
-    // Function to load a music by his name. Need to put full name of music ('music1.mp3')
-    loadMusic(musicName){
-        for (const [index] of this.musicLoaded.entries()){
-            // If we find the music
-            if(this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`){
-                this.musicLoaded[this.idx].stop();
-                this.idx = index;
-                this.musicLoaded[this.idx].loop();
-            }
-        }
-    }
-
-    // Get element from protagonist
+    // Get a specific element from protagonist
     getElement(direction, distance, optionnal) {
         if (distance < 0) return false
-        this.loadMusic('bonta');
+        this.setMusic('bonta');
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let element = null;
@@ -719,6 +648,7 @@ class Game {
         return element.constructor.name.toString() // Return the name of the class's element in string
     }
 
+    // Swap 2 sprites
     swapSprite(direction, distanceFrom, distanceTo) {
         if (distanceFrom > distanceTo) {
             throw "Parameter 'distanceTo' has to be >= than 'distanceFrom'"
@@ -755,7 +685,101 @@ class Game {
         return true
     }
 
-    // To handle shift + key
+    // Get all objectives on the current map
+    getObjectives() {
+        return this.objectives.toString()
+    }
+
+    // Take objective and replace it with a road sprite
+    takeObjective() {
+        this.objectives -= 1;
+        this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg');
+        return true
+    }
+
+    isDoorOpen() {
+        return this.mapElement[this.door.posX][this.door.posY].isOpen
+    }
+
+    openDoor() {
+        if (this.objectives != 0) throw "You can't open door while there is still existing objective"
+        this.mapElement[this.door.posX][this.door.posY].open();
+        return true
+    }
+
+    closeDoor() {
+        this.mapElement[this.doorPosX][this.doorPosY].close();
+        return true
+    }
+
+    // Change level depending on your current level.
+    nextLevel() {
+        if (!this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+        console.log("* * * * YOU WIN * * * *");
+        this.level += 1;
+        switch (this.level) {
+            case 3:
+                this.mapName = level1;
+                this.background = '#619b1f'; // Green
+                this.setMusic('lostWoods.mp3');
+                break
+
+            case 2:
+                this.mapName = level2;
+                this.background = "#3a7eea"; // Blue
+                this.setMusic('nemo.mp3');
+                break
+
+            case 1:
+                this.mapName = level3;
+                this.background = this.DEFAULTBGCOLOR;
+                break
+
+            default:
+                this.mapName = tutorial;
+                break
+        }
+        // Launch config to reload next level map
+        this.preload(this.mapName);
+        this.setup();
+        return true
+    }
+
+
+    //************************************* MUSIC FUNCTIONS *************************************/
+
+    getMusicPlaying() {
+        return this.musicLoaded[this.index].url
+    }
+
+    getMusic(musicName){
+        for (const [index] of this.musicLoaded.entries()) {
+            // If we find the music
+            if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
+                return index
+            }
+        }
+    }
+
+    // Function to load a music by his name. Need to put full name of music ('music1.mp3')
+    setMusic(musicName) {
+        for (const [index] of this.musicLoaded.entries()) {
+            // If we find the music
+            if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
+                console.log("Found the music !");
+                if(this.musicPlaying){
+                    this.musicLoaded[this.idx].stop();
+                    this.idx = index;
+                    this.musicLoaded[this.idx].loop();
+                }
+                else this.idx=index;
+                
+            }
+        }
+    }
+
+    // Key type to catch capslock character
+    // Handle music navigation
     keyTyped() {
         switch (this.sketch.key) {
             // Play ON/OFF the music
@@ -792,20 +816,24 @@ class Game {
 
             // Increase the volume
             case '+':
-                if(this.volume+0.05 >= 1) this.volume = 1;
+                if (this.volume + 0.05 >= 1) this.volume = 1;
                 else this.volume += 0.05;
                 this.musicLoaded[this.idx].setVolume(this.volume);
                 break
 
             // Lower the volume
             case '-':
-                if(this.volume-0.05 <=0) this.volume = 0;
+                if (this.volume - 0.05 <= 0) this.volume = 0;
                 else this.volume -= 0.05;
                 this.musicLoaded[this.idx].setVolume(this.volume);
                 break
         }
     }
 
+
+    //************************************* GAME LOGIC  *************************************/
+
+    // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
         let s = this.sketch;
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
@@ -845,13 +873,8 @@ class Game {
         return true
     }
 
-    playNext() {
-        if (this.idx == 4) this.idx = 0;
-        console.log("Next music incoming");
-        this.idx += 1;
-        this.musicLoaded[this.idx].play();
-    }
 
+    // Refresh sprite when swapping two elements
     refreshPos() {
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
@@ -864,6 +887,7 @@ class Game {
         }
     }
 
+    // Wait for the user until he pressed a key
     waitUntilKeyPressed() {
         console.log('Wait the user pres an arrow key !');
         return new Promise(resolve => {
