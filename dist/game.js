@@ -241,7 +241,7 @@ var pokemon1 = {
     */
     name: 'pokemon1',
     template: 'pokemon',
-    background: '#77ff33',
+    background: '',
     music: '',
 
     pattern: [
@@ -667,8 +667,11 @@ class Game {
         this.level += 1;
         if(this.level > this.levels.length) this.level = 0;
         this.mapName = this.levels[this.level];
-        this.background = this.mapName.background;
-        if(this.mapName.music != '' && this.mapName.music) this.setMusic(this.mapName.music);
+        if (this.mapName.background != '' && (typeof this.mapName.background === 'string')) {
+            this.background = this.mapName.background;
+        }
+        else this.background = this.DEFAULTBGCOLOR;
+        if(this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music);
 
         // Launch config to reload next level map
         this.objectives = 0;

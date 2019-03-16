@@ -17,7 +17,7 @@ export default {
     */
     name: 'pokemon1',
     template: 'pokemon',
-    background: '#77ff33',
+    background: '',
     music: '',
 
     pattern: [
