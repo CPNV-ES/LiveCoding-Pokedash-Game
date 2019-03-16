@@ -4,6 +4,7 @@ export class Door extends StaticElement{
     constructor(game, x, y, img){
         super(game, x, y, img)
         this.isOpen = false
+        this.isDoor = true
     }
 
     action(information){
