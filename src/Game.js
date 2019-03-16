@@ -476,6 +476,9 @@ export class Game {
             case 'swapSprite':
                 return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
+            case 'loadLevel':
+                return this.loadLevel(command.params)
+
             case 'getObjectives':
                 return this.getObjectives() // Return numerical string
 

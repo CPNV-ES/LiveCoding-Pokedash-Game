@@ -28,12 +28,22 @@ function getElement($direction, int $distance) {
     return myEngine('getElement', [$direction, $distance]);
 }
 
+
+/**
+ * Return true
+ */
+function loadLevel($level){
+    if(!is_int($level)) throw new Exception('Level must be an int !');
+    return myEngine('loadLevel', $level);
+}
+
 /**
  * Return true
  */
 function nextLevel() {
     return Engine::send('nextLevel');
 }
+
 /**
  * Return true
  */
