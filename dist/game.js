@@ -127,7 +127,7 @@ var tutorial = {
         4 = tree
         9 = road (case vide)
     */
-    name: 'tutorial',
+    name: 'pokemonTutorial',
     template: 'pokemon',
     background: '#77ff33',
     music: 'pokemonGeneric.mp3',
@@ -195,7 +195,7 @@ var nemo = {
         4 = tree
         9 = road (case vide)
     */
-    name: 'level2',
+    name: 'nemo',
     template: 'nemo',
     background: '#3a7eea',
     music: 'nemo.mp3',
