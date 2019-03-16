@@ -15,7 +15,7 @@ export default {
         4 = tree
         9 = road (case vide)
     */
-    template: 'garfield',
+    template: 'zelda',
    
     pattern: [
         [0,3,9,9,9,9,9,9,9,4,4,1,1,4,1,4],
