@@ -4,6 +4,7 @@ import tutorial from './maps/tutorial'
 import level1 from './maps/level1'
 import level2 from './maps/level2'
 import level3 from './maps/level3'
+import level4 from './maps/level4'
 import { Road } from './elements/Road'
 import { ElementOutOfMapError } from './CustomError'
 import { PushOutOfMapError } from './CustomError'
@@ -38,6 +39,8 @@ export class Game {
         this.mapElement = []
         this.mapName = tutorial
 
+
+
         // Sound Logic and library
         this.musicBasePath = 'music'
         this.sounds = [
@@ -47,7 +50,9 @@ export class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`
         ]
         this.idx = 0 // Index to select a music file
         this.musicLoaded = [] // Array to stock all the loaded and processes by p5 music
@@ -90,6 +95,7 @@ export class Game {
             }
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
+            console.log(this.mapName)
         }
 
         // Load Music
@@ -285,7 +291,7 @@ export class Game {
     }
 
     loadLevel(level) {
-        if (level >= 0 && level < 4) {
+        if (level >= 0 && level < 5) {
             this.level = level - 1
             this.nextLevel()
             return true
@@ -297,6 +303,7 @@ export class Game {
     nextLevel() {
         if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         this.level += 1
+        console.log(this.level)
         switch (this.level) {
             case 0:
                 this.mapName = tutorial
@@ -316,9 +323,14 @@ export class Game {
                 this.mapName = level3
                 this.background = this.DEFAULTBGCOLOR // Blue
                 break
+            case 4:
+                this.mapName = level4
+                this.background = '#23c63e'
+                this.setMusic('davide.mp3')
+                break
             default:
                 this.mapName = tutorial
-                if (this.level == 4) { // The music will load only once when you "finish" the game
+                if (this.level == 5) { // The music will load only once when you "finish" the game
                     this.setMusic('pokemon.mp3')
                 }
                 break
@@ -416,7 +428,7 @@ export class Game {
                 this.setup(this.mapName)
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 3) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 4) {
             this.loadLevel(this.sketch.key)
         }
     }
@@ -445,6 +457,7 @@ export class Game {
                     this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
                         this.openDoor()
+                        if(this.level == 4) this.setMusic('bonus.mp3')
                     }
                     break
 

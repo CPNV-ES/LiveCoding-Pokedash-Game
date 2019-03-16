@@ -283,6 +283,51 @@ var level3 = {
     }
 };
 
+var level4 = {
+    // 
+    /* 
+        0 = PlayableCharacter
+        1 = pokeball (objectif)
+        2 = door
+        3 = boulder
+        4 = tree
+        9 = road (case vide)
+    */
+
+    /*
+        To check the template disponiblke, go in assets folder or create your own !
+    */
+    template: 'davide',
+
+    pattern: [
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,4,4,9,2,9,4,4,9,9,9,9],
+        [9,9,9,9,4,4,4,4,9,4,4,4,4,9,9,9],
+        [9,9,9,4,4,1,1,4,4,4,1,1,4,4,9,9],
+        [9,9,4,4,1,1,1,1,4,1,1,1,1,4,4,9],
+        [9,9,4,4,1,1,1,1,1,1,1,1,1,4,4,9],
+        [9,9,4,4,1,1,1,1,1,1,1,1,1,4,4,9],
+        [9,9,4,4,1,1,1,1,0,1,1,1,1,4,4,9],
+        [9,9,9,4,4,1,1,1,1,1,1,9,4,4,9,9],
+        [9,9,9,9,4,4,1,1,3,1,1,4,4,9,9,9],
+        [9,9,9,9,9,4,4,1,1,1,4,4,9,9,9,9],
+        [9,9,9,9,9,9,4,4,1,4,4,9,9,9,9,9],
+        [9,9,9,9,9,9,9,4,4,4,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,4,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+    ],
+
+    e: {
+        0: Protagonist, //There can be only one protagonist in the pattern
+        1: Pokeball,
+        2: Door, //There can be only one Door actually
+        3: Boulder,
+        4: Tree,
+        9: Road
+    }
+};
+
 class CustomError extends Error{
     constructor (message){
         super(message);
@@ -336,6 +381,8 @@ class Game {
         this.mapElement = [];
         this.mapName = tutorial;
 
+
+
         // Sound Logic and library
         this.musicBasePath = 'music';
         this.sounds = [
@@ -345,7 +392,9 @@ class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`
+            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
+            `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`
         ];
         this.idx = 0; // Index to select a music file
         this.musicLoaded = []; // Array to stock all the loaded and processes by p5 music
@@ -388,6 +437,7 @@ class Game {
             }
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
+            console.log(this.mapName);
         }
 
         // Load Music
@@ -583,7 +633,7 @@ class Game {
     }
 
     loadLevel(level) {
-        if (level >= 0 && level < 4) {
+        if (level >= 0 && level < 5) {
             this.level = level - 1;
             this.nextLevel();
             return true
@@ -595,6 +645,7 @@ class Game {
     nextLevel() {
         if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
         this.level += 1;
+        console.log(this.level);
         switch (this.level) {
             case 0:
                 this.mapName = tutorial;
@@ -614,9 +665,14 @@ class Game {
                 this.mapName = level3;
                 this.background = this.DEFAULTBGCOLOR; // Blue
                 break
+            case 4:
+                this.mapName = level4;
+                this.background = '#23c63e';
+                this.setMusic('davide.mp3');
+                break
             default:
                 this.mapName = tutorial;
-                if (this.level == 4) { // The music will load only once when you "finish" the game
+                if (this.level == 5) { // The music will load only once when you "finish" the game
                     this.setMusic('pokemon.mp3');
                 }
                 break
@@ -714,7 +770,7 @@ class Game {
                 this.setup(this.mapName);
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 3) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 4) {
             this.loadLevel(this.sketch.key);
         }
     }
@@ -743,6 +799,7 @@ class Game {
                     this.swapSprite(s.keyCode, 0, 1);
                     if (this.getObjectives() == 0) {
                         this.openDoor();
+                        if(this.level == 4) this.setMusic('bonus.mp3');
                     }
                     break
 
