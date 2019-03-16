@@ -152,6 +152,7 @@ class Door extends StaticElement{
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isOpen = false;
+        this.isDoor = true;
     }
 
     action(information){
@@ -591,7 +592,8 @@ class Game {
         for (let i = 0; i < this.rows; i++) {
             this.mapElement[i] = new Array(this.columns);
         }
-        console.log("------------ ITERATEOVERMAP() ------------");
+
+        // Iterate over map to add element
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
                 // Instantiate objects in the 2D array
@@ -610,7 +612,7 @@ class Game {
                     this.objectives += 1;
                 }
 
-                if (this.mapElement[x][y].constructor.name == "Door") {
+                if (this.mapElement[x][y].isDoor) {
                     this.door = this.mapElement[x][y];
                 }
             }
@@ -621,7 +623,7 @@ class Game {
     //************************************* USER FUNCTIONS *************************************/
 
     // Get a specific element from protagonist
-    getElement(direction, distance, optionnal) {
+    getElement(direction, distance) {
         if (distance < 0) return false
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
@@ -650,9 +652,6 @@ class Game {
             if (element.isObjective) this.pokeball = element;
         }
         else return null
-
-
-        if (optionnal == 'admin') return element
 
         return element.constructor.name.toString() // Return the name of the class's element in string
     }
@@ -733,7 +732,6 @@ class Game {
     // Change level depending on your current level.
     nextLevel() {
         if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
-        console.log("* * * * YOU WIN * * * *");
         this.level += 1;
         switch (this.level) {
             case 0:
@@ -756,7 +754,6 @@ class Game {
                 break
             default:
                 this.mapName = tutorial;
-                console.log(this.level);
                 if(this.level == 4){ // The music will load only once when you "finish" the game
                     this.setMusic('pokemon.mp3'); 
                 }
@@ -787,11 +784,9 @@ class Game {
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
-        console.log("hello " + musicName);
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
-                console.log("Found the music !");
                 if(this.musicPlaying){
                     this.musicLoaded[this.idx].stop();
                     this.idx = index;
@@ -809,15 +804,12 @@ class Game {
         switch (this.sketch.key) {
             // Play ON/OFF the music
             case 'M':
-            console.log(this.musicPlaying);
                 if (this.musicPlaying) {
                     this.musicLoaded[this.idx].pause();
-                    console.log("Music paused");
                     this.musicPlaying = false;
                 }
                 else {
                     this.musicLoaded[this.idx].loop(0, 1, this.volume);
-                    console.log("Music started");
                     this.musicPlaying = true;
                 }
                 break
@@ -829,8 +821,6 @@ class Game {
                 if (this.idx >= this.musicLoaded.length) this.idx = 0;
                 this.musicLoaded[this.idx].loop(0, 1, this.volume);
                 this.musicPlaying = true;
-                console.log(this.idx);
-                console.log(this.musicLoaded[this.idx]);
                 break
 
             // Play Last song 
@@ -840,8 +830,6 @@ class Game {
                 if (this.idx < 0) this.idx = this.musicLoaded.length - 1;
                 this.musicLoaded[this.idx].loop(0, 1, this.volume);
                 this.musicPlaying = true;
-                console.log(this.idx);
-                console.log(this.musicLoaded[this.idx]);
                 break
 
             // Increase the volume
@@ -941,7 +929,6 @@ class Game {
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
 
             case 'swapSprite':
-                console.log('swapSprite case');
                 return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
             case 'getObjectives':
