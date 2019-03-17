@@ -227,7 +227,7 @@ export class Game {
         let s = this.sketch
 
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom >= this.columns - distanceTo) throw new PushOutOfMapError
+            if (x + distanceFrom > this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y]
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y]
             this.mapElement[x + distanceTo][y] = temp
@@ -239,7 +239,7 @@ export class Game {
             this.mapElement[x - distanceTo][y] = temp
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceTo > this.rows - distanceTo) throw new PushOutOfMapError
+            if (y + distanceFrom > this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom]
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo]
             this.mapElement[x][y + distanceTo] = temp
@@ -459,7 +459,10 @@ export class Game {
                     this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
                         this.openDoor()
-                        if (this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3')
+                        if (this.getCurrentLevelName() == 'davide'){
+                            this.setMusic('bonus.mp3')
+                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`)
+                        } 
                     }
                     break
 
