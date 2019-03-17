@@ -82,7 +82,7 @@ function isDoorOpen() {
  * Return the number of objective in the current game
  */
 function getObjectives() {
-    return Engine::send('getObjectives()');
+    return Engine::send('getObjectives');
 }
 /**
  * Take objective in game, return true
@@ -93,6 +93,26 @@ function takeObjective() {
 
 function waitUntilKeyPressed() {
     return Engine::send('waitUntilKeyPressed');
+}
+
+function getCurrentLevelName(){
+    return Engine::send('getCurrentLevelName');
+}
+
+function getLevelName($level){
+    return myEngine('getLevelName', $level);
+}
+
+function getCurrentMusic(){
+    return Engine::send('getCurrentMusic');
+}
+
+function getMusicIndex(){
+    return Engine::send('getMusicIndex');
+}
+
+function setMusic($musicName){
+    return myEngine('setMusic', $musicName);
 }
 
 ?>
