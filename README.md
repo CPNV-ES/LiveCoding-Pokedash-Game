@@ -48,6 +48,10 @@ Once in the page, change the Github loader (on the upper right) with the Pokedas
 
 - Pokedash game now fully migrated from legacy LiveCoding platform
 
+## v0.3.0 changelog
+
+- Game playable. Integration of music and key events. Multiple levels.
+
 ## Start Coding
 
 ## Elements
