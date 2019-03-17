@@ -19,10 +19,11 @@ List of functions :
 
 ### Level
 - [nextLevel()](#nextlevel)
-
 - [loadLevel(level)](#loadlevel)
 - [getCurrentLevelName()](#getcurrentlevelname)
 - [getLevelName(level)](#getlevelname)
+- [getNbLevels()](#getnblevels)
+
 ### Position
 - [getXMapSize()](#getxmapsize)
 - [getYMapSize()](#getymapsize)
@@ -32,6 +33,7 @@ List of functions :
 ### Music
 - [getCurrentMusic()](#getcurrentmusic)
 - [getMusicIndex()](#getmusicindex)
+- [getNbMusics()](#getnbmusics)
 - [setMusic(musicName)](#setmusic)
 
 
@@ -199,9 +201,11 @@ takeObjective();
 // objectiveLeft = 4
 ```
 
+# Door
 ## isDoorOpen()
 ### Description
 Return boolean if the door is open or not.
+
 ### Usage
     isDoorOpen();
 
@@ -216,8 +220,10 @@ if (isDoorOpen()){
 ## openDoor() 
 ### Description
 Function to open the door and switch the sprite from a closeed door to an opened door. Warning: to open the door, you need to check if you got all the objectives !
+
 ### Usage
     openDoor();
+    
 ### Example
 #### Php
 If we have all the objectives, we can open the door:
@@ -230,8 +236,10 @@ If we have all the objectives, we can open the door:
 ## closeDoor()
 ### Description
 Function to close the door and switch the sprite from an opened door to a closed door
+
 ### Usage
     closeDoor();
+    
 ### Example
 #### Php
 Count how many times we hit keyPressed() and close the door if it's >100
@@ -239,6 +247,20 @@ Count how many times we hit keyPressed() and close the door if it's >100
     if($countMovement >= 100){
         closeDoor();
     }
+```
+
+# Level
+## getlevel()
+### Description
+Get the current level (int)
+
+### Usage
+    getLevel();
+### Example
+#### Php
+```php
+Get the current level
+$currentLevel = getLevel();
 ```
 
 ## nextLevel()
@@ -253,4 +275,79 @@ Go to next level
 if(isDoorOpen()){
     nextLevel();
 }
+```
+
+## <a name="loadlevel"></a>loadLevel(level)
+### Description
+Load the given level in paramaeters. Goes from 0 to max level of the game.
+### Usage
+    loadLevel(5);
+### Example
+#### Php
+Load next level
+```php
+$currentLevel = getLevel();
+loadLevel($currentLevel + 1);
+```
+
+## getCurrentLevelName()
+### Description
+Return the level name (url string). Normally not a very useful function.
+
+### Usage
+    getCurrentLevelName();
+    
+### Example
+#### Php
+If the level is Zelda, put another logic
+```php
+if(getCurrentLevelName() == 'zelda') {
+    // Some game logic here
+}
+```
+
+## <a name="getlevelname"></a>getLevelName(level)
+### Description
+Return the name of a level (url string) given in parameter (int). Normally not a very useful function
+### Usage
+    getLevelName(4);
+    
+### Example
+#### Php
+Just to have an idea about the name level. 
+```php
+    $nameLevel1 = getLevelName(1);
+```
+
+# Music
+## getCurrentMusic()
+### Description
+Return a string url of the current song playing
+### Example
+#### Php
+``` php
+    $whatIsThisMusic = getCurrentMusic();
+    echo($whatIsThisMusic);
+```
+
+## <a name="getmusicindex"></a>getMusicIndex(musicName)
+### description
+Return the index of the music given in parameter (string). The index changes randomly at the preload time.
+
+### Example
+#### Php
+```php
+echo(getMusicIndex('zelda'));
+## => 5
+```
+
+## <a name="setmusic"></a>setMusic(musicName)
+### Description
+You can change a music when you give an existing song in the parameter (string).
+
+### Example
+#### Php
+```php
+setMusic('zelda');
+## => Will start playing zelda
 ```
