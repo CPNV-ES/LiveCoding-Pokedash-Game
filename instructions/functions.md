@@ -3,15 +3,37 @@ Documentation in progress
 
 ## Resume
 List of functions :
+### Movement
 - [keyPressed()](#keypressed)
 - [getElement(direction, distance)](#getelement)
 - [swapSprite(direction, distanceFrom, distanceTo)](#swapsprite)
+
+### Objectives
 - [getObjectives()](#getobjectives)
 - [takeObjective()](#takeobjective)
+
+### Door
 - [isDoorOpen()](#isdooropen)
 - [openDoor()](#opendoor)
 - [closeDoor()](#closedoor)
+
+### Level
 - [nextLevel()](#nextlevel)
+
+- [loadLevel(level)](#loadlevel)
+- [getCurrentLevelName()](#getcurrentlevelname)
+- [getLevelName(level)](#getlevelname)
+### Position
+- [getXMapSize()](#getxmapsize)
+- [getYMapSize()](#getymapsize)
+- [getPosX()](#getposx)
+- [getPosY()](#getposy)
+
+### Music
+- [getCurrentMusic()](#getcurrentmusic)
+- [getMusicIndex()](#getmusicindex)
+- [setMusic(musicName)](#setmusic)
+
 
 List of elements : 
 - 'Protagonist'
@@ -21,6 +43,7 @@ List of elements :
 - 'Door'
 - 'Tree'
 
+# Movement
 ## keyPressed()
 ### Description
 The keyPressed() function is called once every time a key is pressed. The keyPressed return a 'keyCode' int, representing a number of the key pressed.
@@ -56,7 +79,6 @@ Here is a list of all the different element getElement() can returns :
 - 'Door'
 - 'Tree'
 
-
 ### Arguments
 * direction: int or specific string
     
@@ -69,6 +91,7 @@ Here is a list of all the different element getElement() can returns :
 * distance : int    
 
     > The number of case from Pikachu you will target (Only >=0)
+
 ### Usage
     getElement(keyCode, 1);
 
@@ -83,7 +106,6 @@ Case: if **0** is the protagonist and the others numbers are elements :
 | 3 | 2 | 1 |
 
 #### Php
-
 Get an element 2 case below the protagonist 
 ```php
 $element = getElement('down', 2); // or getElement(keyCode, 2)
@@ -94,6 +116,7 @@ Get the protagonist
 $element = getElement(keyCode, 0); // or getElement(keyCode, 2)
 // => $element = 0 (the protagonist)
 ```
+
 ## <a name="swapsprite"></a>swapSprite(direction, distanceFrom, distanceTo)
 ### Description
 The swapSprite function intervert two elements (or sprite) in the current map and will display them in the game. 
@@ -119,7 +142,6 @@ The swapSprite function intervert two elements (or sprite) in the current map an
     swapSprite(0, 1);
 
 ### Examples 
-
 #### php
 Swap sprite Pikachu and Road 
 
@@ -140,14 +162,13 @@ if ($element == 'Road'){
 | 1 | __0__ |
 
 
-
+# Objective 
 ## getObjectives() 
 ### Description
 When the game is initialised, there is a variable counting all the objectives. The getObjectives() function return all those objectives in a numerical string.
 
 ### Usage
     getObjectives()
-
 
 ### Examples
 #### Php 
