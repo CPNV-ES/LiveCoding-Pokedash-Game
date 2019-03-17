@@ -16,6 +16,11 @@
   },
   "instructions": [
     {
+      "name": "Objectifs",
+      "description": "Les objectifs du jeu.",
+      "path": "instructions/gameObjective.md"
+    },
+    {
       "name": "Elements",
       "description": "Les propriétés et contraintes des éléments.",
       "path": "instructions/elements.md"
@@ -24,6 +29,11 @@
       "name": "Fonctions",
       "description": "Les fonctions à votre disposition.",
       "path": "instructions/functions.md"
+    },
+    {
+      "name": "Events",
+      "description": "Les événements du clavier à votre disposition.",
+      "path": "instructions/keyEvents.md"
     }
   ]
 }
