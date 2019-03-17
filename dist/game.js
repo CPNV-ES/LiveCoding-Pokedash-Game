@@ -831,7 +831,7 @@ class Game {
                 this.setup(this.mapName);
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 4) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length-1) {
             this.loadLevel(this.sketch.key);
         }
     }
