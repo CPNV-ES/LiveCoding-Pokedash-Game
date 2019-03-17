@@ -708,7 +708,7 @@ class Game {
             this.nextLevel();
             return true
         }
-        else throw "Level must be between 0 and 4"
+        else throw "Level doesn't exist"
     }
 
     // Change level depending on your current level.
@@ -742,6 +742,7 @@ class Game {
             for (const [index] of this.levels.entries()) {
                 if (this.levels[index].name == this.levels[level].name) return this.levels[level].name
             }
+        return false
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/
@@ -757,6 +758,7 @@ class Game {
                 return index
             }
         }
+        return false
     }
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
@@ -772,6 +774,7 @@ class Game {
                 else this.idx = index;
             }
         }
+        return true
     }
 
     // Key type to catch capslock character
@@ -901,33 +904,48 @@ class Game {
         command = JSON.parse(command);
 
         switch (command.action) {
+            // Movement
+            case 'keyPressed':
+                return this.keyPressed()
+
             case 'getElement':
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
 
             case 'swapSprite':
                 return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
+            // Objectives   
+            case 'getObjectives':
+                return this.getObjectives() // Return numerical string
+            
+            case 'takeObjective':
+                return this.takeObjective() // Return true
+            
+            // Door
+            case 'isDoorOpen':
+                return this.isDoorOpen()    // Return true
+            
+            case 'openDoor':
+                return this.openDoor()  // Return true
+            
+            case 'closeDoor':
+                return this.closeDoor() // Return true
+            
+            // Level
+            case 'nextLevel':
+                return this.nextLevel() // Return true or false
+            
             case 'loadLevel':
                 return this.loadLevel(command.params)
 
-            case 'getObjectives':
-                return this.getObjectives() // Return numerical string
+            case 'getCurrentLevelName':
+                return this.getCurrentLevelName() // Return Int
 
-            case 'takeObjective':
-                return this.takeObjective() // Return true
+            case 'getLevelName': 
+                return this.getLevelName() // Return string
 
-            case 'isDoorOpen':
-                return this.isDoorOpen()    // Return true
 
-            case 'openDoor':
-                return this.openDoor()  // Return true
-
-            case 'closeDoor':
-                return this.closeDoor() // Return true
-
-            case 'nextLevel':
-                return this.nextLevel() // Return true or false
-
+            // Position
             case 'getXMapSize':
                 return this.getXMapSize() // Return Int
 
@@ -939,6 +957,16 @@ class Game {
 
             case 'getPosY':
                 return this.getPosY()   // Return Int
+
+            // Music
+            case 'getCurrentMusic':
+                return this.getCurrentMusic() // Return string
+
+            case 'getMusicIndex':
+                return this.getMusicIndex() // Return Int
+
+            case 'setMusic':
+                return this.setMusic(command.params) // Return true
         }
     }
 }

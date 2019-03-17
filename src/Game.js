@@ -503,33 +503,48 @@ export class Game {
         command = JSON.parse(command)
 
         switch (command.action) {
+            // Movement
+            case 'keyPressed':
+                return this.keyPressed()
+
             case 'getElement':
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
 
             case 'swapSprite':
                 return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
+            // Objectives   
+            case 'getObjectives':
+                return this.getObjectives() // Return numerical string
+            
+            case 'takeObjective':
+                return this.takeObjective() // Return true
+            
+            // Door
+            case 'isDoorOpen':
+                return this.isDoorOpen()    // Return true
+            
+            case 'openDoor':
+                return this.openDoor()  // Return true
+            
+            case 'closeDoor':
+                return this.closeDoor() // Return true
+            
+            // Level
+            case 'nextLevel':
+                return this.nextLevel() // Return true or false
+            
             case 'loadLevel':
                 return this.loadLevel(command.params)
 
-            case 'getObjectives':
-                return this.getObjectives() // Return numerical string
+            case 'getCurrentLevelName':
+                return this.getCurrentLevelName() // Return Int
 
-            case 'takeObjective':
-                return this.takeObjective() // Return true
+            case 'getLevelName': 
+                return this.getLevelName() // Return string
 
-            case 'isDoorOpen':
-                return this.isDoorOpen()    // Return true
 
-            case 'openDoor':
-                return this.openDoor()  // Return true
-
-            case 'closeDoor':
-                return this.closeDoor() // Return true
-
-            case 'nextLevel':
-                return this.nextLevel() // Return true or false
-
+            // Position
             case 'getXMapSize':
                 return this.getXMapSize() // Return Int
 
@@ -542,12 +557,7 @@ export class Game {
             case 'getPosY':
                 return this.getPosY()   // Return Int
 
-            case 'getCurrentLevelName':
-                return this.getCurrentLevelName() // Return Int
-
-            case 'getLevelName': 
-                return this.getLevelName() // Return string
-
+            // Music
             case 'getCurrentMusic':
                 return this.getCurrentMusic() // Return string
 
