@@ -307,7 +307,7 @@ export class Game {
             this.nextLevel()
             return true
         }
-        else throw "Level must be between 0 and 4"
+        else throw "Level doesn't exist"
     }
 
     // Change level depending on your current level.
@@ -341,6 +341,7 @@ export class Game {
             for (const [index] of this.levels.entries()) {
                 if (this.levels[index].name == this.levels[level].name) return this.levels[level].name
             }
+        return false
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/
@@ -356,6 +357,7 @@ export class Game {
                 return index
             }
         }
+        return false
     }
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
@@ -371,6 +373,7 @@ export class Game {
                 else this.idx = index
             }
         }
+        return true
     }
 
     // Key type to catch capslock character
@@ -538,6 +541,21 @@ export class Game {
 
             case 'getPosY':
                 return this.getPosY()   // Return Int
+
+            case 'getCurrentLevelName':
+                return this.getCurrentLevelName() // Return Int
+
+            case 'getLevelName': 
+                return this.getLevelName() // Return string
+
+            case 'getCurrentMusic':
+                return this.getCurrentMusic() // Return string
+
+            case 'getMusicIndex':
+                return this.getMusicIndex() // Return Int
+
+            case 'setMusic':
+                return this.setMusic(command.params) // Return true
         }
     }
 }
