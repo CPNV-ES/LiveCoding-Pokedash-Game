@@ -44,14 +44,6 @@ You can run the game from [LiveCoding.io](https://cpnv-es.github.io/LiveCoding/)
 
 Once in the page, change the Github loader (on the upper right) with the Pokedash Game : `CPNV-ES/LiveCoding-Pokedash-Game@master`
 
-## v0.2.0 changelog
-
-- Pokedash game now fully migrated from legacy LiveCoding platform
-
-## v0.3.0 changelog
-
-- Game playable. Integration of music and key events. Multiple levels.
-
 ## Start Coding
 
 ## Elements
@@ -79,3 +71,12 @@ You move with 'keyCode' direction. If there is a 'Road' element, use the functio
 
 ### Code Examples
 [Here](#) are some hints if you are blocked (incoming soon).
+
+## Changelog
+### v0.2.0 changelog
+
+- Pokedash game now fully migrated from legacy LiveCoding platform
+
+### v0.3.0 changelog
+
+- Game playable. Integration of music and key events. Multiple levels.
