@@ -91,10 +91,6 @@ function takeObjective() {
     return Engine::send('takeObjective');
 }
 
-function waitUntilKeyPressed() {
-    return Engine::send('waitUntilKeyPressed');
-}
-
 function getCurrentLevelName(){
     return Engine::send('getCurrentLevelName');
 }
@@ -113,6 +109,15 @@ function getMusicIndex(){
 
 function setMusic($musicName){
     return myEngine('setMusic', $musicName);
+}
+
+function waitUntilKeyPressed() {
+    $keyCode = Engine::send(
+        json_encode([
+            "action" => "waitUntilKeyPressed"
+        ])
+    );
+    return $keyCode;
 }
 
 ?>
