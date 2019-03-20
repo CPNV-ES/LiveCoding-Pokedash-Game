@@ -420,13 +420,13 @@ class Game {
      * @param {HTMLElement} el game base element
      * @param {String} assetsBasePath
      */
-    constructor(el, assetsBasePath) {
+    constructor({element, assetsBasePath, console}) {
 
         this.setProduction = false; // Set true when in production
 
-        this.el = el;
+        this.el = element;
         this.assetsBasePath = assetsBasePath;
-
+        this.console = console;
         // Get height and width (shortcuts)
         this.HEIGHT = this.el.offsetHeight;
         this.WIDTH = this.el.offsetWidth;
@@ -507,6 +507,7 @@ class Game {
 
         // Load Music
         // Only load music at first launch because it loads all music at once
+        this.console.log(this.firstLaunch);
         if (this.firstLaunch) {
             this.sketch.shuffle(this.sounds, true);
             for (let s of this.sounds) {
@@ -527,7 +528,7 @@ class Game {
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
-            this.idx = this.getMusicIndex('pokemonGeneric.mp3');
+            if(this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3');
             this.firstLaunch = false;
         }
 
@@ -761,6 +762,7 @@ class Game {
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
+        this.console.log("s"+this.musicLoaded);
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -786,6 +788,8 @@ class Game {
                     this.musicPlaying = false;
                 }
                 else {
+                    console.log(this.musicLoaded[0]);
+                    console.log(this.idx);
                     this.musicLoaded[this.idx].loop(0, 1, this.volume);
                     this.musicPlaying = true;
                 }
