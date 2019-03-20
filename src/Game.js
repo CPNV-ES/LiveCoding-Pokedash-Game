@@ -223,8 +223,9 @@ export class Game {
         let y = this.protagonist.posY
         let s = this.sketch
 
+        
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom > this.columns - distanceTo) throw new PushOutOfMapError
+            if (x + distanceFrom >= this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y]
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y]
             this.mapElement[x + distanceTo][y] = temp
@@ -236,7 +237,7 @@ export class Game {
             this.mapElement[x - distanceTo][y] = temp
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceFrom > this.rows - distanceTo) throw new PushOutOfMapError
+            if (y + distanceFrom >= this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom]
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo]
             this.mapElement[x][y + distanceTo] = temp
@@ -487,7 +488,7 @@ export class Game {
 
     // Wait for the user until he pressed a key
     waitUntilKeyPressed() {
-        console.log('Wait the user pres an arrow key !')
+        console.log('Wait the user to press an arrow key !')
         return new Promise(resolve => {
             document.addEventListener('keyup', resolve, { once: true });
         })
@@ -504,8 +505,11 @@ export class Game {
 
         switch (command.action) {
             // Movement
-            case 'keyPressed':
-                return this.keyPressed()
+            case 'waitUntilKeyPressed':
+                let tutu = await this.waitUntilKeyPressed()
+                console.log('OHHH A KEY PRESSED !!!')
+                console.log(tutu.keyCode)
+                return tutu.keyCode
 
             case 'getElement':
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
