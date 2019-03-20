@@ -420,7 +420,7 @@ class Game {
      * @param {HTMLElement} el game base element
      * @param {String} assetsBasePath
      */
-    constructor({element, assetsBasePath, console}) {
+    constructor({ element, assetsBasePath, console }) {
 
         this.setProduction = false; // Set true when in production
 
@@ -528,7 +528,7 @@ class Game {
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
-            if(this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3');
+            if (this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3');
             this.firstLaunch = false;
         }
 
@@ -581,28 +581,29 @@ class Game {
     //************************************* USER FUNCTIONS *************************************/
 
     // Check Array Limit
-    isInMap(posX, posY, mapXSize, mapYSize, dir, distance){
-        switch(dir){
+    isInMap(posX, posY, mapXSize, mapYSize, dir, distance) {
+        switch (dir) {
             // LEFT
             case 37:
-                if(posX - distance < 0 ) return false
+                if (posX - distance < 0) return false
                 return true
             // UP
             case 38:
-                if(posY - distance < 0 ) return false
+                if (posY - distance < 0) return false
                 return true
 
             // RIGHT
             case 39:
-                if(posX >= mapXSize - distance) return false
+                if (posX >= mapXSize - distance) return false
                 return true
 
             // DOWN
             case 40:
-                if(posY >= mapYSize - distance) return false
-                return true            
+                if (posY >= mapYSize - distance) return false
+                return true
         }
-        return true
+        console.warn('key code is not between 37 and 40');
+        return false
     }
 
     // Get a specific element from protagonist
@@ -611,12 +612,12 @@ class Game {
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let element = null;
-        if(!this.isInMap(x, y, this.columns, this.rows, direction, distance)){ 
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distance)) {
             throw new ElementOutOfMapError
             // You can avoid processus to stop if you remplace the throw error with the code below
             //this.console.error("Can't get element out of map !")
             //return false
-        } 
+        }
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
             element = this.mapElement[x - distance][y];
             if (element.isObjective) this.objective = element;
@@ -651,7 +652,8 @@ class Game {
         let y = this.protagonist.posY;
         let s = this.sketch;
 
-        if(!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
+
             throw new SwapOutOfMapError
             // You can avoid processus to stop if you remplace the throw error with the code below
             //this.console.error("Can't swap element out of map !")
@@ -714,7 +716,7 @@ class Game {
     }
 
     isDoorOpen() {
-        console.log("isDoorOpen? "+this.mapElement[this.door.posX][this.door.posY].isOpen);
+        console.log("isDoorOpen? " + this.mapElement[this.door.posX][this.door.posY].isOpen);
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
 
@@ -798,7 +800,7 @@ class Game {
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
-        this.console.log("s"+this.musicLoaded);
+        this.console.log("s" + this.musicLoaded);
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -869,7 +871,7 @@ class Game {
                 this.setup(this.mapName);
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length-1) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length - 1) {
             this.loadLevel(this.sketch.key);
         }
     }
@@ -947,14 +949,12 @@ class Game {
         switch (command.action) {
             // Check map limit
             case 'isInMap':
-                console.log("Are you in map my frrriiend ?");
+                console.log("in map? : " + this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5]));
                 return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
 
             // Movement
             case 'waitUntilKeyPressed':
                 let tutu = await this.waitUntilKeyPressed();
-                console.log('OHHH A KEY PRESSED !!!');
-                console.log(tutu.keyCode);
                 return tutu.keyCode
 
             case 'getElement':
@@ -966,35 +966,35 @@ class Game {
             // Objectives   
             case 'getObjectives':
                 return this.getObjectives() // Return numerical string
-            
+
             case 'takeObjective':
                 return this.takeObjective() // Return true
-            
+
             // Door
             case 'isDoorOpen':
                 return this.isDoorOpen()    // Return true
-            
+
             case 'openDoor':
                 return this.openDoor()  // Return true
-            
+
             case 'closeDoor':
                 return this.closeDoor() // Return true
-            
+
             // Level
             case 'nextLevel':
-                if(this.setProduction && !this.isDoorOpen()){
+                if (this.setProduction && !this.isDoorOpen()) {
                     this.console.warning("Can't access next level");
                     return false
                 }
                 return this.nextLevel() // Return true or false
-            
+
             case 'loadLevel':
                 return this.loadLevel(command.params)
 
             case 'getCurrentLevelName':
                 return this.getCurrentLevelName() // Return Int
 
-            case 'getLevelName': 
+            case 'getLevelName':
                 return this.getLevelName() // Return string
 
 
