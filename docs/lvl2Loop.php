@@ -49,12 +49,12 @@ while(checkFreeSide($direction, getPosX(), getPosY()) >= 37 && checkFreeSide($st
 
 function checkFreeSide($dir, $x, $y){
     for($i=0; $i>=3; $i++){
-        if(isInMap($x, $y, LIMX, LIMY, $dir, DIST) == 'false'){
-            return false;
-        }
+        if(isInMap($x, $y, LIMX, LIMY, $dir, DIST) == 'false') continue;
+        
         $element = getElement($dir, DIST);
         if($element == 'Road' || $element == 'Objective' || $element == 'Door') return $dir;
         $dir ++;
         if($dir > 40) $dir = 37;
     }
+    return false;
 }
