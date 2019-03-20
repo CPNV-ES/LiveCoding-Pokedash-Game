@@ -178,10 +178,10 @@ class ElementOutOfMapError extends CustomError{
     }
 }
 
-class PushOutOfMapError extends CustomError{
+class SwapOutOfMapError extends CustomError{
     constructor(message){
         super(message);
-        this.message = "Can't push an element out of map";
+        this.message = "Can't swap an element out of map";
     }
 }
 
@@ -578,8 +578,32 @@ class Game {
         }
     }
 
-
     //************************************* USER FUNCTIONS *************************************/
+
+    // Check Array Limit
+    isInMap(posX, posY, mapXSize, mapYSize, dir, distance){
+        switch(dir){
+            // LEFT
+            case 37:
+                if(posX - distance < 0 ) return false
+                return true
+            // UP
+            case 38:
+                if(posY - distance < 0 ) return false
+                return true
+
+            // RIGHT
+            case 39:
+                if(posX >= mapXSize - distance) return false
+                return true
+
+            // DOWN
+            case 40:
+                if(posY >= mapYSize - distance) return false
+                return true            
+        }
+        return true
+    }
 
     // Get a specific element from protagonist
     getElement(direction, distance) {
@@ -587,26 +611,28 @@ class Game {
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let element = null;
+        if(!this.isInMap(x, y, this.columns, this.rows, direction, distance)){ 
+            throw new ElementOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            //this.console.error("Can't get element out of map !")
+            //return false
+        } 
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
-            if (x < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x - distance][y];
             if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'right' || direction === this.sketch.RIGHT_ARROW) {
-            if (x >= this.columns - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x + distance][y];
             if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'up' || direction === this.sketch.UP_ARROW) {
-            if (y < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y - distance];
             if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'down' || direction === this.sketch.DOWN_ARROW) {
-            if (y >= this.rows - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y + distance];
             if (element.isObjective) this.objective = element;
         }
@@ -625,27 +651,29 @@ class Game {
         let y = this.protagonist.posY;
         let s = this.sketch;
 
-        
+        if(!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
+            throw new SwapOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            //this.console.error("Can't swap element out of map !")
+            //return false
+        }
+
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom >= this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y];
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y];
             this.mapElement[x + distanceTo][y] = temp;
         }
         if (direction === 'left' || direction === s.LEFT_ARROW) {
-            if (x - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x - distanceFrom][y];
             this.mapElement[x - distanceFrom][y] = this.mapElement[x - distanceTo][y];
             this.mapElement[x - distanceTo][y] = temp;
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceFrom >= this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom];
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo];
             this.mapElement[x][y + distanceTo] = temp;
         }
         if (direction === 'up' || direction === s.UP_ARROW) {
-            if (y - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x][y - distanceFrom];
             this.mapElement[x][y - distanceFrom] = this.mapElement[x][y - distanceTo];
             this.mapElement[x][y - distanceTo] = temp;
@@ -686,11 +714,15 @@ class Game {
     }
 
     isDoorOpen() {
+        console.log("isDoorOpen? "+this.mapElement[this.door.posX][this.door.posY].isOpen);
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
 
     openDoor() {
-        if (this.objectives != 0) throw "You can't open door while there is still existing objective"
+        if (this.objectives != 0) {
+            this.console.warning("You can't open door while there is still existing objective");
+            return false
+        }
         this.mapElement[this.door.posX][this.door.posY].open();
         return true
     }
@@ -712,7 +744,11 @@ class Game {
 
     // Change level depending on your current level.
     nextLevel() {
-        if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+        console.log("Why are you here ? " + this.isDoorOpen());
+        if (this.setProduction && !this.isDoorOpen()) {
+            this.console.warning("You can't access the next level, the door is close.. Why ?");
+            return false
+        }
         this.level += 1;
 
         if (this.level >= this.levels.length) this.level = 0;
@@ -909,6 +945,11 @@ class Game {
         command = JSON.parse(command);
 
         switch (command.action) {
+            // Check map limit
+            case 'isInMap':
+                console.log("Are you in map my frrriiend ?");
+                return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
+
             // Movement
             case 'waitUntilKeyPressed':
                 let tutu = await this.waitUntilKeyPressed();
@@ -941,6 +982,10 @@ class Game {
             
             // Level
             case 'nextLevel':
+                if(this.setProduction && !this.isDoorOpen()){
+                    this.console.warning("Can't access next level");
+                    return false
+                }
                 return this.nextLevel() // Return true or false
             
             case 'loadLevel':
