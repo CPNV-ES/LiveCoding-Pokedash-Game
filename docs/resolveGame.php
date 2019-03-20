@@ -1,44 +1,45 @@
 <?php
-// IN PROGRESS
+
 while(true){
     $x = getPosX();
     $y = getPosY();
     $limX = getXMapSize();
     $limY = getYMapSize();
     $dir = (int)waitUntilKeyPressed();
+    $dist = 1; //distance to check from the protagonist
 
-    $element = getElement($dir, 1);
-    $element=str_replace("\n","", $element);
+    
     $objectiveLeft = (int)getObjectives();
-    switch($element){
+    if(isInMap($x, $y, $limX, $limY, $dir, $dist) == 'true'){ //isInMap($x, $y, $limX, $limY, $dir, 1)
+        $element = getElement($dir, $dist);
+        switch($element){
             case 'Road':
-            swapSprite($dir, 0, 2);
+                swapSprite($dir, 0, $dist);
             break;
-        case 'Boulder':
-            if (str_replace("\n", "", getElement($dir, 2)) != "Road") break;
-            swapSprite($dir, 1, 2);
-            swapSprite($dir, 0, 1);
-            break;
-        case 'Objective':
-            takeObjective();
-            swapSprite($dir, 0, 1);
-            $objectiveLeft -= 1;
-            if($objectiveLeft == 0){
-                openDoor();
-            }
-            break;
+            
+            case 'Boulder':
+                if(isInMap($x, $y, $limX, $limY, $dir, $dist+1) == 'true'){
+                    if (getElement($dir, $dist + 1) != "Road") break;
+                    swapSprite($dir, $dist, $dist + 1);
+                    swapSprite($dir, 0, $dist);
+                }
+                break;
 
-        case 'Door':
-            if(isDoorOpen()) nextLevel();
-            break;
+            case 'Objective':
+                takeObjective();
+                swapSprite($dir, 0, $dist);
+                $objectiveLeft -= 1;
+                if($objectiveLeft == 0){
+                    openDoor();
+                }
+                break;
+
+            case 'Door':
+                if(isDoorOpen()){
+                    nextLevel();
+                }
+                break;
+        }
     }
 }
-
-
-
-
-/*for($i = 0; $i<=3; $i++){
-    swapSprite('up', 0, 1);
-}*/
-
 
