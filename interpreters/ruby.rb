@@ -18,51 +18,51 @@ def load_level(level)
 
 
 def next_level
-    return Engine.send('nextLevel')
+    return my_engine('nextLevel', None)
 
 
 def get_x_map_size
-    return Engine.send('getXMapSize')
+    return my_engine('getXMapSize', None)
 
 
 def get_y_map_size
-    return Engine.send('getYMapSize')
+    return my_engine('getYMapSize', None)
 
 def get_pos_x
-    return Engine.send('getPosX')
+    return my_engine('getPosX', None)
 
 def get_pos_y
-    return Engine.send('getPosY')
+    return my_engine('getPosY', None)
 
 def open_door
-    return Engine.send('openDoor')
+    return my_engine('openDoor', None)
 
 def close_door
-    return Engine.send('closeDoor')
+    return my_engine('closeDoor', None)
 
 def is_door_open
-    return Engine.send('isDoorOpen')
+    return my_engine('isDoorOpen', None)
 
 def get_objectives
-    return Engine.send('getObjectives')
+    return my_engine('getObjectives', None)
 
 def take_objective
-    return Engine.send('takeObjective')
+    return my_engine('takeObjective', None)
 
 def wait_until_key_pressed
-    return Engine.send('waitUntilKeyPressed')
+    return my_engine('waitUntilKeyPressed', None)
 
 def get_current_level_name
-    return Engine.send('getCurrentLevelName')
+    return my_engine('getCurrentLevelName', None)
 
 def get_level_name(level)
     return my_engine('getLevelName', level)
 
 def get_current_music
-    return Engine.send('getCurrentMusic')
+    return my_engine('getCurrentMusic', None)
 
 def get_music_index
-    return Engine.send('getMusicIndex')
+    return my_engine('getMusicIndex', None)
 
 def set_music(musicName)
     return my_engine('setMusic', musicName)
