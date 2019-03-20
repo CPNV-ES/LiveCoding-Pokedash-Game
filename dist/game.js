@@ -838,37 +838,37 @@ class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
-        let s = this.sketch;
+        /*let s = this.sketch
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-            let element = this.getElement(s.keyCode, 1);
+            let element = this.getElement(s.keyCode, 1)
             switch (element) {
                 case "Road":
-                    this.swapSprite(s.keyCode, 0, 1);
+                    this.swapSprite(s.keyCode, 0, 1)
                     break
 
                 case "Boulder":
                     if (this.getElement(s.keyCode, 2) != "Road") break
-                    this.swapSprite(s.keyCode, 1, 2);
-                    this.swapSprite(s.keyCode, 0, 1);
+                    this.swapSprite(s.keyCode, 1, 2)
+                    this.swapSprite(s.keyCode, 0, 1)
                     break
 
                 case "Objective":
-                    this.takeObjective();
-                    this.swapSprite(s.keyCode, 0, 1);
+                    this.takeObjective()
+                    this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
-                        this.openDoor();
+                        this.openDoor()
                         if (this.getCurrentLevelName() == 'davide'){
-                            this.setMusic('bonus.mp3');
-                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`);
+                            this.setMusic('bonus.mp3')
+                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`)
                         } 
                     }
                     break
 
                 case "Door":
-                    if (this.isDoorOpen()) this.nextLevel();
+                    if (this.isDoorOpen()) this.nextLevel()
                     break
             }
-        }
+        }*/
         return true
     }
 

@@ -437,7 +437,7 @@ export class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
-        let s = this.sketch
+        /*let s = this.sketch
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
             let element = this.getElement(s.keyCode, 1)
             switch (element) {
@@ -467,7 +467,7 @@ export class Game {
                     if (this.isDoorOpen()) this.nextLevel()
                     break
             }
-        }
+        }*/
         return true
     }
 
