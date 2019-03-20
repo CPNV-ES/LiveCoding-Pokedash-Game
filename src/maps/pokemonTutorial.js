@@ -18,7 +18,7 @@ export default {
     name: 'pokemonTutorial',
     template: 'pokemon',
     background: '#77ff33',
-    music: 'pokemonGeneric.mp3',
+    music: 'pokemon.mp3',
    
     pattern: [
         [9,9,9,4,4,4,4,4,4,4,4,4,4,4,4,4],

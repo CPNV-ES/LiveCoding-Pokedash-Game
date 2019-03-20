@@ -18,7 +18,7 @@ export default {
     name: 'nemo',
     template: 'nemo',
     background: '#3a7eea',
-    music: 'nemo.mp3',
+    music: '',
    
     pattern: [
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],

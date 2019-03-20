@@ -130,7 +130,7 @@ var tutorial = {
     name: 'pokemonTutorial',
     template: 'pokemon',
     background: '#77ff33',
-    music: 'pokemonGeneric.mp3',
+    music: 'pokemon.mp3',
    
     pattern: [
         [9,9,9,4,4,4,4,4,4,4,4,4,4,4,4,4],
@@ -198,7 +198,7 @@ var nemo = {
     name: 'nemo',
     template: 'nemo',
     background: '#3a7eea',
-    music: 'nemo.mp3',
+    music: '',
    
     pattern: [
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
@@ -459,9 +459,6 @@ class Game {
         this.sounds = [
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`

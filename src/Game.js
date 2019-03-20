@@ -58,9 +58,6 @@ export class Game {
         this.sounds = [
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
