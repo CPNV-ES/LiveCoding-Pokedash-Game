@@ -15,9 +15,9 @@ export class ElementOutOfMapError extends CustomError{
     }
 }
 
-export class PushOutOfMapError extends CustomError{
+export class SwapOutOfMapError extends CustomError{
     constructor(message){
         super(message)
-        this.message = "Can't push an element out of map"
+        this.message = "Can't swap an element out of map"
     }
 }

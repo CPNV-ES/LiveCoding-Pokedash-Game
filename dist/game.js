@@ -77,11 +77,11 @@ class Protagonist extends MovableElement {
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isProtagonist = true;
-        this.pokeball = 0;
+        this.objective = 0;
     }
 }
 
-class Pokeball extends MovableElement{
+class Objective extends MovableElement{
     constructor(game, x, y, img){
         super(game, x, y, img);
         this.isObjective = true;
@@ -106,7 +106,7 @@ const classes = {
     Boulder,
     Door,
     Protagonist,
-    Pokeball,
+    Objective,
     Road,
     Tree
 };
@@ -121,7 +121,7 @@ var tutorial = {
     // TUTORIAL LEVEL (POKEMON)
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -130,30 +130,30 @@ var tutorial = {
     name: 'pokemonTutorial',
     template: 'pokemon',
     background: '#77ff33',
-    music: 'pokemonGeneric.mp3',
+    music: 'pokemon.mp3',
    
     pattern: [
-        [4,4,9,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        [9,9,9,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,9,9,3,3,1,3,4,9,9,9,9,9,9,4],
         [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,9,1,1,1,3,9,9,9,9,9,3,9,9,9],
+        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
+        [4,9,9,9,9,9,9,2,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,0,9,9,9,9,9,9,9,4],
         [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,1,9,2,9,3,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,1,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,0,9,4,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,4,4,4,4,4,4,4,4,9,4,4,4,4,4,4]
+        [4,9,9,9,9,9,9,3,9,9,9,9,1,9,9,4],
+        [4,9,4,4,9,9,3,3,3,9,9,1,1,1,9,4],
+        [4,9,4,4,9,9,9,3,9,9,9,9,1,9,9,4],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
+        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
     ],
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -178,10 +178,10 @@ class ElementOutOfMapError extends CustomError{
     }
 }
 
-class PushOutOfMapError extends CustomError{
+class SwapOutOfMapError extends CustomError{
     constructor(message){
         super(message);
-        this.message = "Can't push an element out of map";
+        this.message = "Can't swap an element out of map";
     }
 }
 
@@ -189,7 +189,7 @@ var nemo = {
     // NEMO OR DORI FIRST LEVEL
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -198,30 +198,30 @@ var nemo = {
     name: 'nemo',
     template: 'nemo',
     background: '#3a7eea',
-    music: 'nemo.mp3',
+    music: '',
    
     pattern: [
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
-        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,4,9,9,9,4,9,9,9,4],
-        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,4,9,9,9,9,9,9,9,4],
-        [4,4,9,9,9,9,9,2,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,0,1,9,9,9,9,4],
-        [4,4,4,4,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,4,4,4,1,9,9,4],
-        [4,9,9,9,9,9,9,9,9,4,9,4,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,4,4,4,9,9,9,4],
-        [4,3,3,9,9,9,3,9,9,9,4,9,9,9,9,4],
-        [4,1,3,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,1,9,9,9,9,1,9,9,9,9,9,9,9,4],
+        [4,9,9,4,1,9,9,9,4,9,9,9,9,9,9,4],
+        [4,9,9,4,4,9,4,9,4,9,9,9,9,9,3,9],
+        [4,9,9,3,9,9,9,9,4,9,3,3,3,3,9,4],
+        [4,9,9,9,3,4,4,9,4,9,3,1,9,9,3,9],
+        [4,9,9,9,9,4,9,9,4,9,3,1,9,3,9,4],
+        [4,4,9,9,9,9,4,2,4,9,3,3,3,3,1,4],
+        [4,9,9,9,4,9,9,9,4,0,1,9,9,3,3,4],
+        [4,4,4,4,4,9,9,9,9,9,9,9,9,9,9,4],
+        [4,9,9,9,9,9,9,9,9,4,4,4,1,4,4,4],
+        [4,9,9,9,9,9,9,9,9,4,1,4,9,9,9,4],
+        [4,9,9,9,9,9,9,9,9,4,9,4,4,4,9,4],
+        [4,3,3,9,9,9,3,9,9,4,9,4,9,3,9,4],
+        [4,1,3,9,3,9,9,9,9,4,9,9,3,9,9,4],
+        [4,9,1,9,3,9,9,1,3,1,9,9,9,3,9,4],
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
     ],
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -233,7 +233,7 @@ var pokemon1 = {
     // POKEMON LEVEL 2 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -245,27 +245,27 @@ var pokemon1 = {
     music: '',
 
     pattern: [
-        [9,9,9,9,9,4,4,4,4,4,4,4,4,4,4,4],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,1,9,2,9,3,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,1,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,0,9,4,9,9,4],
-        [4,9,9,9,9,9,9,9,9,9,9,9,9,9,9,4],
-        [4,4,4,4,4,4,4,4,4,9,4,4,4,4,4,4]
+        [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,2],
+        [1,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4],
+        [9,4,9,1,9,1,9,1,9,1,9,1,9,1,9,4],
+        [1,4,1,4,3,4,4,4,4,4,4,4,4,4,1,4],
+        [9,4,9,4,9,1,9,1,9,1,9,1,9,3,9,4],
+        [1,4,1,4,1,4,4,4,4,4,4,4,1,4,1,4],
+        [9,4,9,4,9,4,9,1,9,1,9,3,9,4,9,4],
+        [1,4,1,4,1,4,1,3,4,4,1,4,1,4,1,4],
+        [9,4,9,4,9,3,9,1,0,4,9,4,9,4,9,4],
+        [1,4,1,4,1,4,4,4,4,4,1,4,1,4,1,4],
+        [9,4,9,4,9,1,9,1,9,1,9,4,9,4,9,4],
+        [1,4,1,4,4,4,4,4,4,4,3,4,1,4,1,4],
+        [9,3,9,1,9,1,9,1,9,1,9,1,9,4,9,4],
+        [1,4,4,4,4,4,4,4,4,4,4,4,3,4,1,4],
+        [9,1,9,1,9,1,9,1,9,1,9,1,9,1,9,4],
+        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
     ],
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -277,7 +277,7 @@ var zeldaGreen = {
     // ZELDA FIRST LEVEL
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -309,7 +309,7 @@ var zeldaGreen = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -321,7 +321,7 @@ var davide = {
     // 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -357,7 +357,7 @@ var davide = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -369,7 +369,7 @@ var testHeavyMap = {
     // 
     /* 
         0 = PlayableCharacter
-        1 = pokeball (objectif)
+        1 = objective (objectif)
         2 = door
         3 = boulder
         4 = tree
@@ -385,19 +385,19 @@ var testHeavyMap = {
     music: 'zeldaRed.mp3',
 
     pattern: [
-        [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],
-        [4,9,3,9,9,3,9,9,9,9,9,9,9,9,9,4],
-        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
-        [4,1,4,9,4,9,9,9,9,9,9,9,9,9,9,4],
-        [4,9,4,1,4,9,9,9,4,4,4,4,4,4,4,4],
-        [4,9,4,9,4,9,9,9,4,9,4,4,9,2,9,4],
-        [4,9,4,9,4,9,9,9,4,9,4,4,9,9,9,4],
-        [4,9,4,9,4,1,1,1,4,1,4,4,4,9,4,4],
+        [4,4,4,4,4,4,4,4,4,1,4,4,4,4,4,4],
+        [4,9,3,1,3,1,1,3,1,9,9,9,9,3,9,4],
+        [4,9,9,9,4,1,1,3,1,3,9,3,9,3,9,4],
+        [4,9,4,9,4,1,9,9,3,9,3,9,3,4,1,4],
+        [4,9,4,9,4,3,9,3,9,3,9,9,9,3,9,9],
+        [4,1,4,9,4,9,3,9,3,9,1,9,1,3,4,4],
+        [4,9,4,1,4,3,9,3,4,4,4,4,4,9,3,4],
+        [4,9,4,9,4,9,9,9,3,9,4,4,9,4,9,4],
+        [4,9,4,9,4,3,4,3,4,9,4,4,9,2,9,4],
+        [4,9,4,9,4,1,3,1,4,1,4,4,4,9,4,4],
         [4,1,4,9,4,1,1,1,4,1,4,9,4,9,4,4],
-        [4,9,4,9,4,9,9,9,9,9,4,9,4,9,4,4],
-        [4,9,4,9,4,9,9,9,4,9,4,9,4,9,4,4],
+        [4,9,4,9,4,9,3,9,9,9,4,9,4,9,4,4],
+        [4,9,4,9,4,3,9,9,4,9,4,9,4,9,4,4],
         [4,9,4,9,4,4,4,4,4,9,4,4,4,9,4,4],
         [4,0,4,9,9,9,9,9,9,9,9,9,9,9,4,4],
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
@@ -405,7 +405,7 @@ var testHeavyMap = {
 
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
-        1: Pokeball,
+        1: Objective,
         2: Door, //There can be only one Door actually
         3: Boulder,
         4: Tree,
@@ -420,13 +420,13 @@ class Game {
      * @param {HTMLElement} el game base element
      * @param {String} assetsBasePath
      */
-    constructor(el, assetsBasePath) {
+    constructor({ element, assetsBasePath, console }) {
 
         this.setProduction = false; // Set true when in production
 
-        this.el = el;
+        this.el = element;
         this.assetsBasePath = assetsBasePath;
-
+        this.console = console;
         // Get height and width (shortcuts)
         this.HEIGHT = this.el.offsetHeight;
         this.WIDTH = this.el.offsetWidth;
@@ -457,13 +457,8 @@ class Game {
         // Sound Logic and library
         this.musicBasePath = 'music';
         this.sounds = [
-            `${this.assetsBasePath}/${this.musicBasePath}/bonta.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/incarnam.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
@@ -512,6 +507,7 @@ class Game {
 
         // Load Music
         // Only load music at first launch because it loads all music at once
+        this.console.log(this.firstLaunch);
         if (this.firstLaunch) {
             this.sketch.shuffle(this.sounds, true);
             for (let s of this.sounds) {
@@ -532,7 +528,7 @@ class Game {
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
-            this.idx = this.getMusic('pokemonGeneric.mp3');
+            if (this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3');
             this.firstLaunch = false;
         }
 
@@ -582,8 +578,33 @@ class Game {
         }
     }
 
-
     //************************************* USER FUNCTIONS *************************************/
+
+    // Check Array Limit
+    isInMap(posX, posY, mapXSize, mapYSize, dir, distance) {
+        switch (dir) {
+            // LEFT
+            case 37:
+                if (posX - distance < 0) return false
+                return true
+            // UP
+            case 38:
+                if (posY - distance < 0) return false
+                return true
+
+            // RIGHT
+            case 39:
+                if (posX >= mapXSize - distance) return false
+                return true
+
+            // DOWN
+            case 40:
+                if (posY >= mapYSize - distance) return false
+                return true
+        }
+        console.warn('key code is not between 37 and 40');
+        return false
+    }
 
     // Get a specific element from protagonist
     getElement(direction, distance) {
@@ -591,28 +612,30 @@ class Game {
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let element = null;
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distance)) {
+            throw new ElementOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            //this.console.error("Can't get element out of map !")
+            //return false
+        }
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
-            if (x < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x - distance][y];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'right' || direction === this.sketch.RIGHT_ARROW) {
-            if (x >= this.columns - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x + distance][y];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'up' || direction === this.sketch.UP_ARROW) {
-            if (y < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y - distance];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
 
         else if (direction === 'down' || direction === this.sketch.DOWN_ARROW) {
-            if (y >= this.rows - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y + distance];
-            if (element.isObjective) this.pokeball = element;
+            if (element.isObjective) this.objective = element;
         }
         else return null
 
@@ -624,30 +647,35 @@ class Game {
         if (distanceFrom > distanceTo) {
             throw "Parameter 'distanceTo' has to be >= than 'distanceFrom'"
         }
+        if (distanceFrom >= this.rows || distanceTo >= this.rows) throw "Parameters cant be higher that the size of map"
         let x = this.protagonist.posX;
         let y = this.protagonist.posY;
         let s = this.sketch;
 
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
+
+            throw new SwapOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            //this.console.error("Can't swap element out of map !")
+            //return false
+        }
+
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom > this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y];
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y];
             this.mapElement[x + distanceTo][y] = temp;
         }
         if (direction === 'left' || direction === s.LEFT_ARROW) {
-            if (x - distanceFrom <= 0) throw new PushOutOfMapError
             let temp = this.mapElement[x - distanceFrom][y];
             this.mapElement[x - distanceFrom][y] = this.mapElement[x - distanceTo][y];
             this.mapElement[x - distanceTo][y] = temp;
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceFrom > this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom];
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo];
             this.mapElement[x][y + distanceTo] = temp;
         }
         if (direction === 'up' || direction === s.UP_ARROW) {
-            if (y - distanceFrom <= 0) throw new PushOutOfMapError
             let temp = this.mapElement[x][y - distanceFrom];
             this.mapElement[x][y - distanceFrom] = this.mapElement[x][y - distanceTo];
             this.mapElement[x][y - distanceTo] = temp;
@@ -657,24 +685,24 @@ class Game {
     }
 
     // Get Max WIDTH of the map
-    getXMapSize(){
+    getXMapSize() {
         return this.columns
     }
 
     // Get MAX HEIGHT of the map
-    getYMapSize(){
+    getYMapSize() {
         return this.rows
     }
 
     // Get PosX of the protagonist
-    getPosX(){
+    getPosX() {
         return this.protagonist.posX
     }
     // Get PosY of the protagonist
-    getPosY(){
+    getPosY() {
         return this.protagonist.posY
     }
-    
+
     // Get all objectives on the current map
     getObjectives() {
         return this.objectives.toString()
@@ -683,16 +711,20 @@ class Game {
     // Take objective and replace it with a road sprite
     takeObjective() {
         this.objectives -= 1;
-        this.mapElement[this.pokeball.posX][this.pokeball.posY] = new Road(this, this.pokeball.x, this.pokeball.y, 'roadImg');
+        this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg');
         return true
     }
 
     isDoorOpen() {
+        console.log("isDoorOpen? " + this.mapElement[this.door.posX][this.door.posY].isOpen);
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
 
     openDoor() {
-        if (this.objectives != 0) throw "You can't open door while there is still existing objective"
+        if (this.objectives != 0) {
+            this.console.warning("You can't open door while there is still existing objective");
+            return false
+        }
         this.mapElement[this.door.posX][this.door.posY].open();
         return true
     }
@@ -703,63 +735,72 @@ class Game {
     }
 
     loadLevel(level) {
-        if (level >= 0 && level < 5) {
+        console.log(this.levels.length);
+        if (level >= 0 && level < this.levels.length) {
             this.level = level - 1;
             this.nextLevel();
             return true
         }
-        else throw "Level must be between 0 and 4"
+        else throw "Level doesn't exist"
     }
 
     // Change level depending on your current level.
     nextLevel() {
-        if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+        console.log("Why are you here ? " + this.isDoorOpen());
+        if (this.setProduction && !this.isDoorOpen()) {
+            this.console.warning("You can't access the next level, the door is close.. Why ?");
+            return false
+        }
         this.level += 1;
-        if(this.level > this.levels.length) this.level = 0;
+
+        if (this.level >= this.levels.length) this.level = 0;
         this.mapName = this.levels[this.level];
         if (this.mapName.background != '' && (typeof this.mapName.background === 'string')) {
             this.background = this.mapName.background;
         }
         else this.background = this.DEFAULTBGCOLOR;
-        if(this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music);
+        if (this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music);
 
         // Launch config to reload next level map
         this.objectives = 0;
         this.preload(this.mapName);
         this.setup();
-        return true       
+        return true
     }
 
 
     //************************************* LEVEL GETTER/SETTER *************************************/
-    getCurrentLevelName(){
+    getCurrentLevelName() {
         return this.levels[this.level].name
     }
 
-    getLevelName(level){
-        if(level < this.levels.length)
-        for(const [index] of this.levels.entries()){
-            if(this.levels[index].name == this.levels[level].name) return this.levels[level].name
-        }
+    getLevelName(level) {
+        if (level < this.levels.length)
+            for (const [index] of this.levels.entries()) {
+                if (this.levels[index].name == this.levels[level].name) return this.levels[level].name
+            }
+        return false
     }
 
     //************************************* MUSIC FUNCTIONS *************************************/
 
     getCurrentMusic() {
-        return this.musicLoaded[this.index].url
+        return this.musicLoaded[this.idx].url
     }
 
-    getMusic(musicName) {
+    getMusicIndex(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
                 return index
             }
         }
+        return false
     }
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
+        this.console.log("s" + this.musicLoaded);
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -771,6 +812,7 @@ class Game {
                 else this.idx = index;
             }
         }
+        return true
     }
 
     // Key type to catch capslock character
@@ -784,6 +826,8 @@ class Game {
                     this.musicPlaying = false;
                 }
                 else {
+                    console.log(this.musicLoaded[0]);
+                    console.log(this.idx);
                     this.musicLoaded[this.idx].loop(0, 1, this.volume);
                     this.musicPlaying = true;
                 }
@@ -827,7 +871,7 @@ class Game {
                 this.setup(this.mapName);
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= 4) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length - 1) {
             this.loadLevel(this.sketch.key);
         }
     }
@@ -837,34 +881,37 @@ class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
-        let s = this.sketch;
+        /*let s = this.sketch
         if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-            let element = this.getElement(s.keyCode, 1);
+            let element = this.getElement(s.keyCode, 1)
             switch (element) {
                 case "Road":
-                    this.swapSprite(s.keyCode, 0, 1);
+                    this.swapSprite(s.keyCode, 0, 1)
                     break
 
                 case "Boulder":
                     if (this.getElement(s.keyCode, 2) != "Road") break
-                    this.swapSprite(s.keyCode, 1, 2);
-                    this.swapSprite(s.keyCode, 0, 1);
+                    this.swapSprite(s.keyCode, 1, 2)
+                    this.swapSprite(s.keyCode, 0, 1)
                     break
 
-                case "Pokeball":
-                    this.takeObjective();
-                    this.swapSprite(s.keyCode, 0, 1);
+                case "Objective":
+                    this.takeObjective()
+                    this.swapSprite(s.keyCode, 0, 1)
                     if (this.getObjectives() == 0) {
-                        this.openDoor();
-                        if(this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3');
+                        this.openDoor()
+                        if (this.getCurrentLevelName() == 'davide'){
+                            this.setMusic('bonus.mp3')
+                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`)
+                        } 
                     }
                     break
 
                 case "Door":
-                    if (this.isDoorOpen()) this.nextLevel();
+                    if (this.isDoorOpen()) this.nextLevel()
                     break
             }
-        }
+        }*/
         return true
     }
 
@@ -884,7 +931,7 @@ class Game {
 
     // Wait for the user until he pressed a key
     waitUntilKeyPressed() {
-        console.log('Wait the user pres an arrow key !');
+        console.log('Wait the user to press an arrow key !');
         return new Promise(resolve => {
             document.addEventListener('keyup', resolve, { once: true });
         })
@@ -900,21 +947,30 @@ class Game {
         command = JSON.parse(command);
 
         switch (command.action) {
+            // Check map limit
+            case 'isInMap':
+                console.log("in map? : " + this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5]));
+                return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
+
+            // Movement
+            case 'waitUntilKeyPressed':
+                let tutu = await this.waitUntilKeyPressed();
+                return tutu.keyCode
+
             case 'getElement':
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
 
             case 'swapSprite':
                 return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
 
-            case 'loadLevel':
-                return this.loadLevel(command.params)
-
+            // Objectives   
             case 'getObjectives':
                 return this.getObjectives() // Return numerical string
 
             case 'takeObjective':
                 return this.takeObjective() // Return true
 
+            // Door
             case 'isDoorOpen':
                 return this.isDoorOpen()    // Return true
 
@@ -924,9 +980,25 @@ class Game {
             case 'closeDoor':
                 return this.closeDoor() // Return true
 
+            // Level
             case 'nextLevel':
+                if (this.setProduction && !this.isDoorOpen()) {
+                    this.console.warning("Can't access next level");
+                    return false
+                }
                 return this.nextLevel() // Return true or false
 
+            case 'loadLevel':
+                return this.loadLevel(command.params)
+
+            case 'getCurrentLevelName':
+                return this.getCurrentLevelName() // Return Int
+
+            case 'getLevelName':
+                return this.getLevelName() // Return string
+
+
+            // Position
             case 'getXMapSize':
                 return this.getXMapSize() // Return Int
 
@@ -938,6 +1010,16 @@ class Game {
 
             case 'getPosY':
                 return this.getPosY()   // Return Int
+
+            // Music
+            case 'getCurrentMusic':
+                return this.getCurrentMusic() // Return string
+
+            case 'getMusicIndex':
+                return this.getMusicIndex() // Return Int
+
+            case 'setMusic':
+                return this.setMusic(command.params) // Return true
         }
     }
 }
