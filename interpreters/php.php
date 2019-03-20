@@ -20,6 +20,10 @@ function swapSprite ($dir, $from, $to) {
     return $response;*/
 }
 
+function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){
+    return myEngine('isInMap', [$posX, $posY, $mapXSize, $mapYSize, $dir, $distance]);
+}
+
 /**
  * Return the name of the element
  */
