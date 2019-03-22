@@ -5,6 +5,11 @@ def my_engine (method, param)
     return response;
 end
 
+def is_in_map(pos_x, pos_y, get_x_map_size, get_y_map_size, direction, distance)
+    return my_engine('isInMap', [pos_x, pos_y, get_x_map_size, get_y_map_size, direction, distance])
+end
+
+
 def swap_sprite (dir, from, to)
     return my_engine('swapSprite', [dir, from, to])
 end
