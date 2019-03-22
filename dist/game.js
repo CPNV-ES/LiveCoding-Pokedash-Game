@@ -161,30 +161,6 @@ var tutorial = {
     }
 };
 
-class CustomError extends Error{
-    constructor (message){
-        super(message);
-
-        this.constructor = CustomError;
-        this.__proto__ = CustomError.prototype;
-        this.message = message;
-    }
-}
-
-class ElementOutOfMapError extends CustomError{
-    constructor(message){
-        super(message);
-        this.message = "Can't get element out of map";
-    }
-}
-
-class SwapOutOfMapError extends CustomError{
-    constructor(message){
-        super(message);
-        this.message = "Can't swap an element out of map";
-    }
-}
-
 var nemo = {
     // NEMO OR DORI FIRST LEVEL
     /* 
@@ -507,7 +483,6 @@ class Game {
 
         // Load Music
         // Only load music at first launch because it loads all music at once
-        this.console.log(this.firstLaunch);
         if (this.firstLaunch) {
             this.sketch.shuffle(this.sounds, true);
             for (let s of this.sounds) {
@@ -613,10 +588,10 @@ class Game {
         let y = this.protagonist.posY;
         let element = null;
         if (!this.isInMap(x, y, this.columns, this.rows, direction, distance)) {
-            throw new ElementOutOfMapError
+            //throw new ElementOutOfMapError
             // You can avoid processus to stop if you remplace the throw error with the code below
-            //this.console.error("Can't get element out of map !")
-            //return false
+            this.console.error("Can't get element out of map !");
+            return false
         }
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
             element = this.mapElement[x - distance][y];
@@ -654,10 +629,10 @@ class Game {
 
         if (!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
 
-            throw new SwapOutOfMapError
+            //throw new SwapOutOfMapError
             // You can avoid processus to stop if you remplace the throw error with the code below
-            //this.console.error("Can't swap element out of map !")
-            //return false
+            this.console.error("Can't swap element out of map !");
+            return false
         }
 
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
@@ -716,7 +691,6 @@ class Game {
     }
 
     isDoorOpen() {
-        console.log("isDoorOpen? " + this.mapElement[this.door.posX][this.door.posY].isOpen);
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
 
@@ -735,7 +709,6 @@ class Game {
     }
 
     loadLevel(level) {
-        console.log(this.levels.length);
         if (level >= 0 && level < this.levels.length) {
             this.level = level - 1;
             this.nextLevel();
@@ -746,7 +719,6 @@ class Game {
 
     // Change level depending on your current level.
     nextLevel() {
-        console.log("Why are you here ? " + this.isDoorOpen());
         if (this.setProduction && !this.isDoorOpen()) {
             this.console.warning("You can't access the next level, the door is close.. Why ?");
             return false
@@ -765,6 +737,11 @@ class Game {
         this.objectives = 0;
         this.preload(this.mapName);
         this.setup();
+        return true
+    }
+
+    writeConsole(value){
+        this.console.log(value.toString());
         return true
     }
 
@@ -800,7 +777,6 @@ class Game {
 
     // Function to load a music by his name. Need to put full name of music ('music1.mp3')
     setMusic(musicName) {
-        this.console.log("s" + this.musicLoaded);
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
             if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
@@ -826,8 +802,6 @@ class Game {
                     this.musicPlaying = false;
                 }
                 else {
-                    console.log(this.musicLoaded[0]);
-                    console.log(this.idx);
                     this.musicLoaded[this.idx].loop(0, 1, this.volume);
                     this.musicPlaying = true;
                 }
@@ -949,7 +923,6 @@ class Game {
         switch (command.action) {
             // Check map limit
             case 'isInMap':
-                console.log("in map? : " + this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5]));
                 return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
 
             // Movement
@@ -1020,6 +993,9 @@ class Game {
 
             case 'setMusic':
                 return this.setMusic(command.params) // Return true
+
+            case 'writeConsole':
+                return this.writeConsole(command.params)
         }
     }
 }
