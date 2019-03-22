@@ -11,13 +11,6 @@ function myEngine ($method, $params){
 
 function swapSprite ($dir, $from, $to) {
     return myEngine('swapSprite', [$dir, $from, $to]);
-   /* $response = Engine::send(
-        json_encode([
-            "action" => "swapSprite",
-            "params" => [$dir, $from, $to]
-        ])
-    );
-    return $response;*/
 }
 
 function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){

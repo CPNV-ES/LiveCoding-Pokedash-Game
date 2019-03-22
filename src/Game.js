@@ -9,7 +9,7 @@ import nemo from './maps/nemo';
 import pokemon1 from './maps/pokemon1';
 import zeldaGreen from './maps/zeldaGreen';
 import davide from './maps/davide';
-import testHeavyMap from './maps/testHeavyMap';
+import zeldaRed from './maps/zeldaRed';
 
 
 export class Game {
@@ -20,7 +20,7 @@ export class Game {
      */
     constructor({ element, assetsBasePath, console }) {
 
-        this.debugMode = true // Set false in production
+        this.debugMode = false // Set true to use arroy keys and load level with number key
 
         this.el = element
         this.assetsBasePath = assetsBasePath
@@ -42,19 +42,17 @@ export class Game {
             pokemon1,
             nemo,
             zeldaGreen,
-            testHeavyMap,
+            zeldaRed,
             davide
         ]
         this.objectives = 0
         this.level = 0
-        this.mapElement = []
         this.mapName = tutorial
-
-
+        this.mapElement = [] // 2d array to stock all the elements of the game
 
         // Sound Logic and library
         this.musicBasePath = 'music'
-        this.sounds = [
+        this.musics = [
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
@@ -65,7 +63,7 @@ export class Game {
         this.idx = 0 // Index to select a music file
         this.musicLoaded = [] // Array to stock all the loaded and processes by p5 music
         this.musicPlaying = false
-        this.volume = 1
+        this.volume = 1 // Volume goes from 0 to 1. 1 represent the sound's level you have set on your computer
 
         // Map p5 functions to our game functions
         let s = (sketch) => {
@@ -80,13 +78,14 @@ export class Game {
 
         // Initialize p5
         this.myp5 = new window.p5(s, this.el)
-
-
     }
 
     //************************************* P5 FUNCTIONS *************************************/
-    // Initiation of assets loading and display
+    /**
+     * You can find the p5 documentation here: https://p5js.org/
+     */
 
+    // Initiation of assets loading and display
     preload(mapName) {
         if (mapName) this.mapName = mapName
         // Create PokedashGame's classes attribute amongst element found in the map to load in param
@@ -101,19 +100,19 @@ export class Game {
             }
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
-
         }
 
         // Load Music
-        // Only load music at first launch because it loads all music at once
+        // Only load music at first launch to avoid reloading music each time we change a level
         if (this.firstLaunch) {
-            this.sketch.shuffle(this.sounds, true);
-            for (let s of this.sounds) {
-                this.musicLoaded.push(this.sketch.loadSound(s))
+            this.sketch.shuffle(this.musics, true);
+            for (let m of this.musics) {
+                this.musicLoaded.push(this.sketch.loadSound(m))
             }
         }
     }
 
+    // Create canvas and height of element
     setup() {
         if (this.mapName == undefined) this.mapName = tutorial
         // Define dimension of the map and of each block
@@ -129,9 +128,9 @@ export class Game {
             if (this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3')
             this.firstLaunch = false
         }
-
     }
 
+    // Draw the assets
     draw() {
         this.sketch.background(this.background)
         for (let y = 0; y < this.columns; y++) {
@@ -176,9 +175,33 @@ export class Game {
         }
     }
 
-    //************************************* USER FUNCTIONS *************************************/
+    /**
+     * --------------------------------- GAME MAP FUNCTIONS ---------------------------------
+     * --------------------------------------------------------------------------------------
+     */
 
-    // Check Array Limit
+    //************* MAP POSITIONS AND LIMITS *************
+    // Get Max WIDTH of the map
+    getXMapSize() {
+        return this.columns
+    }
+
+    // Get MAX HEIGHT of the map
+    getYMapSize() {
+        return this.rows
+    }
+
+    // Get PosX of the protagonist
+    getPosX() {
+        return this.protagonist.posX
+    }
+
+    // Get PosY of the protagonist
+    getPosY() {
+        return this.protagonist.posY
+    }
+
+    // Check if the distance selected from the protagonist is in the map array
     isInMap(posX, posY, mapXSize, mapYSize, dir, distance) {
         switch (dir) {
             // LEFT
@@ -200,10 +223,10 @@ export class Game {
                 if (posY >= mapYSize - distance) return false
                 return true
         }
-        console.warn('key code is not between 37 and 40')
         return false
     }
 
+    //************* MOVEMENT *************
     // Get a specific element from protagonist
     getElement(direction, distance) {
         if (distance < 0) return false
@@ -212,7 +235,7 @@ export class Game {
         let element = null
         if (!this.isInMap(x, y, this.columns, this.rows, direction, distance)) {
             //throw new ElementOutOfMapError
-            // You can avoid processus to stop if you remplace the throw error with the code below
+            // You can avoid processus to stop if you remplace the throw error with the code below : 
             this.console.error("Can't get element out of map !")
             return false
         }
@@ -253,7 +276,7 @@ export class Game {
         if (!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
 
             //throw new SwapOutOfMapError
-            // You can avoid processus to stop if you remplace the throw error with the code below
+            // You can avoid processus to stop if you remplace the throw error with the code below :
             this.console.error("Can't swap an element out of map !")
             return false
         }
@@ -282,25 +305,7 @@ export class Game {
         return true
     }
 
-    // Get Max WIDTH of the map
-    getXMapSize() {
-        return this.columns
-    }
-
-    // Get MAX HEIGHT of the map
-    getYMapSize() {
-        return this.rows
-    }
-
-    // Get PosX of the protagonist
-    getPosX() {
-        return this.protagonist.posX
-    }
-    // Get PosY of the protagonist
-    getPosY() {
-        return this.protagonist.posY
-    }
-
+    //************* OBJECTIVES *************
     // Get all objectives on the current map
     getObjectives() {
         return this.objectives.toString()
@@ -321,6 +326,7 @@ export class Game {
         return false
     }
 
+    //************* DOOR *************
     isDoorOpen() {
         return this.mapElement[this.door.posX][this.door.posY].isOpen
     }
@@ -342,6 +348,8 @@ export class Game {
         return false
     }
 
+    //************* LEVEL *************
+    //Load a specific level
     loadLevel(level) {
         if (level >= 0 && level < this.levels.length) {
             this.level = level - 1
@@ -354,7 +362,7 @@ export class Game {
         }
     }
 
-    // Change level depending on your current level.
+    // Load the next level
     nextLevel() {
         if (!this.debugMode && !this.isDoorOpen()) {
             this.console.warning("You can't access the next level, the door is closed.. Why ?")
@@ -377,17 +385,12 @@ export class Game {
         return true
     }
 
-    writeConsole(value) {
-        this.console.log(value.toString())
-        return true
-    }
-
-
-    //************************************* LEVEL GETTER/SETTER *************************************/
+    // Get the current level name in string
     getCurrentLevelName() {
         return this.levels[this.level].name
     }
 
+    // Get the name of a specific level (int)
     getLevelName(level) {
         if (level < this.levels.length)
             for (const [index] of this.levels.entries()) {
@@ -396,12 +399,17 @@ export class Game {
         return false
     }
 
-    //************************************* MUSIC FUNCTIONS *************************************/
-
+    //************************************* MUSIC *************************************/$
+    // Get the current music name
     getCurrentMusic() {
-        return this.musicLoaded[this.idx].url
+        if (!this.music) return false
+        if (this.musicExists(this.idx)) return this.splitMusicUrl(this.idx)
     }
 
+    // Get the name of a track 
+    getMusicName(index) {
+        if (this.musicExists(index)) return this.splitMusicUrl(index)
+    }
 
     getMusicIndex(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
@@ -413,24 +421,56 @@ export class Game {
         return false
     }
 
-    // Function to load a music by his name. Need to put full name of music ('music1.mp3')
+    // Load a music by his name ('music.mp3')
     setMusic(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
-            if (this.musicLoaded[index].url == `${this.assetsBasePath}/${this.musicBasePath}/${musicName}`) {
+
+            if (this.splitMusicUrl(index) == musicName) {
                 if (this.musicPlaying) {
                     this.musicLoaded[this.idx].stop()
                     this.idx = index
                     this.musicLoaded[this.idx].loop()
+                    return true
                 }
-                else this.idx = index
+                else {
+                    this.idx = index
+                    return true
+                }
             }
+        }
+        this.console.warning("This music does not exist in our library")
+        return false
+    }
+
+    // ------- Functions not disponible for the user in php or ruby. Tools music functions
+    // Music verification functions
+    musicExists(index) {
+        if (index >= this.musicLoaded.length || index < 0) {
+            this.console.error("The music doesn't exists ! There is only " + this.musicLoaded.length + " musics.")
+            return false
         }
         return true
     }
+    splitMusicUrl(index) {
+        //Check the music exists in the library
+        if (this.musicExists(index)) {
+            let musicName = this.musicLoaded[index].url.split("/");
+            return musicName[musicName.length - 1];
+        }
+    }
+
+    //************************************* KEY EVENTS  *************************************/
+    // Wait for the user until he pressed a key. Return a keycode
+    waitUntilKeyPressed() {
+        console.log('Wait the user to press an arrow key !')
+        return new Promise(resolve => {
+            document.addEventListener('keyup', resolve, { once: true });
+        })
+    }
 
     // Key type to catch capslock character
-    // Handle music navigation
+    // Handle music navigation and restart level
     keyTyped() {
         switch (this.sketch.key) {
             // Play ON/OFF the music
@@ -488,17 +528,13 @@ export class Game {
         }
     }
 
-
-    //************************************* GAME LOGIC  *************************************/
-
-    // To remove before pushing production: the user has to code it in php or ruby
+    // Not disponible for the user in php or ruby
+    // User can use the keyboard with a functionnable game in debug mode.
     keyPressed() {
-        let s = this.sketch
-
-        // User can use the keyboard in debug mode
         if (this.debugMode) {
+            let s = this.sketch
             if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-                if(!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 1)) return false
+                if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 1)) return false
                 let element = this.getElement(s.keyCode, 1)
                 switch (element) {
                     case "Road":
@@ -506,8 +542,8 @@ export class Game {
                         break
 
                     case "Boulder":
-                        if(!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 2)) break
-                        if(this.getElement(s.keyCode, 2) != "Road") break
+                        if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 2)) break
+                        if (this.getElement(s.keyCode, 2) != "Road") break
                         this.swapSprite(s.keyCode, 1, 2)
                         this.swapSprite(s.keyCode, 0, 1)
                         break
@@ -525,16 +561,18 @@ export class Game {
                         if (this.isDoorOpen()) this.nextLevel()
                         break
                 }
-
             }
-
         }
-
         return true
     }
 
+    // ******** CONSOLE *********
+    writeConsole(value) {
+        this.console.log(value.toString())
+        return true
+    }
 
-    // Refresh sprite when swapping two elements
+    // Refresh sprite when swapping two elements. Not disponible for the user
     refreshPos() {
         for (let y = 0; y < this.columns; y++) {
             for (let x = 0; x < this.rows; x++) {
@@ -547,16 +585,9 @@ export class Game {
         }
     }
 
-    // Wait for the user until he pressed a key
-    waitUntilKeyPressed() {
-        console.log('Wait the user to press an arrow key !')
-        return new Promise(resolve => {
-            document.addEventListener('keyup', resolve, { once: true });
-        })
-    }
-
-
     /**
+     * Execute php or ruby functions got in response from the server to execute them lolally
+     * 
      * @param {string} command
      * @return {string} command output
      */
@@ -613,7 +644,6 @@ export class Game {
 
             case 'getLevelName':
                 return this.getLevelName() // Return string
-
 
             // Position
             case 'getXMapSize':

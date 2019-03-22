@@ -19,7 +19,7 @@ export default {
     /*
         To check the template disponiblke, go in assets folder or create your own !
     */
-    name: 'testHeavyMap',
+    name: 'zeldaRed',
     template: 'zeldaRed',
     background: '#dd7a37',
     music: 'zeldaRed.mp3',
@@ -37,7 +37,7 @@ export default {
         [4,9,4,9,4,1,3,1,4,1,4,4,4,9,4,4],
         [4,1,4,9,4,1,1,1,4,1,4,9,4,9,4,4],
         [4,9,4,9,4,9,3,9,9,9,4,9,4,9,4,4],
-        [4,9,4,9,4,3,9,9,4,9,4,9,4,9,4,4],
+        [4,9,4,9,4,3,9,3,4,9,4,9,4,9,4,4],
         [4,9,4,9,4,4,4,4,4,9,4,4,4,9,4,4],
         [4,0,4,9,9,9,9,9,9,9,9,9,9,9,4,4],
         [4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4]
