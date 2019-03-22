@@ -8,22 +8,22 @@ import { Tree } from '../elements/Tree'
 export default {
     // 
     /* 
-        0 = PlayableCharacter
-        1 = objective (objectif)
+        0 = playableCharacter
+        1 = objective 
         2 = door
         3 = boulder
         4 = tree
-        9 = road (case vide)
+        9 = road (empty element)
+    
+        To check the templates and musics disponible, check the assets folder or create your own assets.
     */
 
-    /*
-        To check the template disponiblke, go in assets folder or create your own !
-    */
-    name: 'default',
-    template: 'pokemon',
-    background: '#77ff33',
-    music: 'pokemonGeneric.mp3',
+    name: 'default',    // name of the map
+    template: 'pokemon',    // the asset's template
+    background: '#77ff33',  // the background color
+    music: 'pokemon.mp3',   // the level music
 
+    // Represent the game map with each element
     pattern: [
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
@@ -43,6 +43,7 @@ export default {
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
     ],
 
+    // Element of the map
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
         1: Objective,
