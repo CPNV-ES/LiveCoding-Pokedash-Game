@@ -20,7 +20,7 @@ export class Game {
      */
     constructor({ element, assetsBasePath, console }) {
 
-        this.setProduction = true // Set true when in production
+        this.debugMode = true // Set false in production
 
         this.el = element
         this.assetsBasePath = assetsBasePath
@@ -243,9 +243,9 @@ export class Game {
     // Swap 2 sprites
     swapSprite(direction, distanceFrom, distanceTo) {
         if (distanceFrom > distanceTo) {
-            throw "Parameter 'distanceTo' has to be >= than 'distanceFrom'"
+            throw new Error("Parameter 'distanceTo' has to be >= than 'distanceFrom'")
         }
-        if (distanceFrom >= this.rows || distanceTo >= this.rows) throw "Parameters cant be higher that the size of map"
+        if (distanceFrom >= this.rows || distanceTo >= this.rows) throw new Error("Parameters cant be higher that the size of map")
         let x = this.protagonist.posX
         let y = this.protagonist.posY
         let s = this.sketch
@@ -254,7 +254,7 @@ export class Game {
 
             //throw new SwapOutOfMapError
             // You can avoid processus to stop if you remplace the throw error with the code below
-            this.console.error("Can't swap element out of map !")
+            this.console.error("Can't swap an element out of map !")
             return false
         }
 
@@ -308,7 +308,7 @@ export class Game {
 
     // Take objective and replace it with a road sprite
     takeObjective() {
-        try{
+        try {
             this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
             this.objectives -= 1
             this.objective.posX = null
@@ -316,8 +316,8 @@ export class Game {
             return true
         }
         catch{
-            this.console.warning('No objective at this position')
-        } 
+            this.console.warning('No objective at this position.')
+        }
         return false
     }
 
@@ -327,7 +327,7 @@ export class Game {
 
     openDoor() {
         if (this.objectives != 0) {
-            this.console.warning("You can't open door while there is still existing objective")
+            this.console.warning("You can't open the door while there are still objectives left")
             return false
         }
         this.mapElement[this.door.posX][this.door.posY].open()
@@ -335,7 +335,7 @@ export class Game {
     }
 
     closeDoor() {
-        if(!this.mapElement[this.door.posX][this.door.posY].isOpen){
+        if (this.mapElement[this.door.posX][this.door.posY].isOpen) {
             this.mapElement[this.door.posX][this.door.posY].close()
             return true
         }
@@ -348,13 +348,16 @@ export class Game {
             this.nextLevel()
             return true
         }
-        else throw "Level doesn't exist"
+        else {
+            this.console.error("This level doesn't exist")
+            return false
+        }
     }
 
     // Change level depending on your current level.
     nextLevel() {
-        if (this.setProduction && !this.isDoorOpen()) {
-            this.console.warning("You can't access the next level, the door is close.. Why ?")
+        if (!this.debugMode && !this.isDoorOpen()) {
+            this.console.warning("You can't access the next level, the door is closed.. Why ?")
             return false
         }
         this.level += 1
@@ -374,7 +377,7 @@ export class Game {
         return true
     }
 
-    writeConsole(value){
+    writeConsole(value) {
         this.console.log(value.toString())
         return true
     }
@@ -480,7 +483,7 @@ export class Game {
                 this.setup(this.mapName)
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length - 1) {
+        if (this.debugMode && this.sketch.key >= 0 && this.sketch.key <= this.levels.length - 1) {
             this.loadLevel(this.sketch.key)
         }
     }
@@ -490,6 +493,43 @@ export class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
+        let s = this.sketch
+
+        // User can use the keyboard in debug mode
+        if (this.debugMode) {
+            if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
+                if(!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 1)) return false
+                let element = this.getElement(s.keyCode, 1)
+                switch (element) {
+                    case "Road":
+                        this.swapSprite(s.keyCode, 0, 1)
+                        break
+
+                    case "Boulder":
+                        if(!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 2)) break
+                        if(this.getElement(s.keyCode, 2) != "Road") break
+                        this.swapSprite(s.keyCode, 1, 2)
+                        this.swapSprite(s.keyCode, 0, 1)
+                        break
+
+                    case "Objective":
+                        this.takeObjective()
+                        this.swapSprite(s.keyCode, 0, 1)
+                        if (this.getObjectives() == 0) {
+                            this.openDoor()
+                            if (this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3')
+                        }
+                        break
+
+                    case "Door":
+                        if (this.isDoorOpen()) this.nextLevel()
+                        break
+                }
+
+            }
+
+        }
+
         return true
     }
 
@@ -559,8 +599,8 @@ export class Game {
 
             // Level
             case 'nextLevel':
-                if (this.setProduction && !this.isDoorOpen()) {
-                    this.console.warning("Can't access next level")
+                if (!this.debugMode && !this.isDoorOpen()) {
+                    this.console.warning("Can't access to the next level")
                     return false
                 }
                 return this.nextLevel() // Return true or false
