@@ -44,12 +44,9 @@ You can run the game from [cpnv-es.github.io/LiveCoding](https://cpnv-es.github.
 
 Once in the page, change the Github loader (on the upper right) with the Pokedash Game : `CPNV-ES/LiveCoding-Pokedash-Game@master`
 
-## v1.0.0 changelog
+## v1.0.1 changelog
 
-- First functionnable version of Pokedash-Game
-- Code your functions in php or ruby
-
-## Start Coding
+- Can use keys arrow in debug mode
 
 ## Elements
 Pokedash game is generated in a 2D array. Each case of the array represents a specific element. 
