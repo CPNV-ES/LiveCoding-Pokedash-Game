@@ -18,9 +18,6 @@ $limY = getYMapSize();
 // Set a distance to do an action from the protagonist (example: move 1 case)
 $dist = 1;
 
-// Get all the objectives of the current map
-$objectiveLeft = (int)getObjectives();
-
 // Infinite loop to handle arroy key event
 while(true){
     // Get the direction from the key pressed
@@ -54,9 +51,8 @@ while(true){
             case 'Objective':
                 takeObjective();
                 swapSprite($dir, 0, $dist);
-                $objectiveLeft -= 1;
                 // Open the door is no objective left
-                if($objectiveLeft == 0){
+                if((int)getObjectives() <= 0){
                     openDoor();
                 }
                 break;
