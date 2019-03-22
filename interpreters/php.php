@@ -32,7 +32,9 @@ function getElement($direction, int $distance) {
     return myEngine('getElement', [$direction, $distance]);
 }
 
-
+function writeConsole($value){
+    return myEngine('writeConsole', $value);
+}
 /**
  * Return true
  */
