@@ -1,0 +1,25 @@
+# Script to test write_console and if all functions works
+
+d = 37  # Left Key
+
+write_console("swapSprite : "..swap_sprite(37, 0, 1))
+write_console("getElement : "..get_element(d, 1))
+write_console("isInMap : "..is_in_map(get_pos_x(), get_pos_y(), get_x_map_size(), get_y_map_size(), d, 1))
+write_console("writeConsole : "..write_console(1))
+write_console("loadLevel : "..load_level(1))
+write_console("nextLevel : "..next_level())
+write_console("getXMapSize : "..get_x_map_size())
+write_console("getYMapSize : "..get_y_map_size())
+write_console("getPosX : "..get_pos_x())
+write_console("getPosY : "..get_pos_y())
+write_console("openDoor : "..open_door())
+write_console("closeDoor : "..close_door())
+write_console("isDoorOpen : "..is_door_open())
+write_console("getObjectives : "..get_objectives())
+write_console("takeObjective : "..take_objective())
+write_console("getCurrentLevelName : "..get_current_level_name())
+write_console("getLevelName : "..get_level_name(1))
+write_console("getMusicIndex : "..get_music_index())
+write_console("getCurrentMusic : "..get_current_music())
+write_console("setMusic : "..set_music('davide.mp3'))
+write_console(wait_until_key_pressed())

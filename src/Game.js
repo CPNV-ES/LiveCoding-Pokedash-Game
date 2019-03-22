@@ -3,7 +3,7 @@ import { DynamicElement } from './DynamicElement'
 import tutorial from './maps/pokemonTutorial'
 import { Road } from './elements/Road'
 import { ElementOutOfMapError } from './CustomError'
-import { PushOutOfMapError } from './CustomError'
+import { SwapOutOfMapError } from './CustomError'
 import pokemonTutorial from './maps/pokemonTutorial';
 import nemo from './maps/nemo';
 import pokemon1 from './maps/pokemon1';
@@ -13,19 +13,18 @@ import testHeavyMap from './maps/testHeavyMap';
 
 
 export class Game {
-
     /**
      *
      * @param {HTMLElement} el game base element
      * @param {String} assetsBasePath
      */
-    constructor(el, assetsBasePath) {
+    constructor({ element, assetsBasePath, console }) {
 
-        this.setProduction = false // Set true when in production
+        this.setProduction = true // Set true when in production
 
-        this.el = el
+        this.el = element
         this.assetsBasePath = assetsBasePath
-
+        this.console = console
         // Get height and width (shortcuts)
         this.HEIGHT = this.el.offsetHeight
         this.WIDTH = this.el.offsetWidth
@@ -58,13 +57,11 @@ export class Game {
         this.sounds = [
             `${this.assetsBasePath}/${this.musicBasePath}/pokemon.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/lostWoods.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/lullaby.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/nemo.mp3`,
-            `${this.assetsBasePath}/${this.musicBasePath}/pokemonGeneric.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/davide.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
         ]
+
         this.idx = 0 // Index to select a music file
         this.musicLoaded = [] // Array to stock all the loaded and processes by p5 music
         this.musicPlaying = false
@@ -129,7 +126,7 @@ export class Game {
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
-            this.idx = this.getMusicIndex('pokemonGeneric.mp3')
+            if (this.getMusicIndex('pokemon.mp3')) this.idx = this.getMusicIndex('pokemon.mp3')
             this.firstLaunch = false
         }
 
@@ -179,8 +176,33 @@ export class Game {
         }
     }
 
-
     //************************************* USER FUNCTIONS *************************************/
+
+    // Check Array Limit
+    isInMap(posX, posY, mapXSize, mapYSize, dir, distance) {
+        switch (dir) {
+            // LEFT
+            case 37:
+                if (posX - distance < 0) return false
+                return true
+            // UP
+            case 38:
+                if (posY - distance < 0) return false
+                return true
+
+            // RIGHT
+            case 39:
+                if (posX >= mapXSize - distance) return false
+                return true
+
+            // DOWN
+            case 40:
+                if (posY >= mapYSize - distance) return false
+                return true
+        }
+        console.warn('key code is not between 37 and 40')
+        return false
+    }
 
     // Get a specific element from protagonist
     getElement(direction, distance) {
@@ -188,26 +210,28 @@ export class Game {
         let x = this.protagonist.posX
         let y = this.protagonist.posY
         let element = null
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distance)) {
+            //throw new ElementOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            this.console.error("Can't get element out of map !")
+            return false
+        }
         if (direction === 'left' || direction === this.sketch.LEFT_ARROW) {
-            if (x < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x - distance][y]
             if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'right' || direction === this.sketch.RIGHT_ARROW) {
-            if (x >= this.columns - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x + distance][y]
             if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'up' || direction === this.sketch.UP_ARROW) {
-            if (y < 0 + distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y - distance]
             if (element.isObjective) this.objective = element
         }
 
         else if (direction === 'down' || direction === this.sketch.DOWN_ARROW) {
-            if (y >= this.rows - distance) throw new ElementOutOfMapError // If it's out of the map
             element = this.mapElement[x][y + distance]
             if (element.isObjective) this.objective = element
         }
@@ -226,26 +250,30 @@ export class Game {
         let y = this.protagonist.posY
         let s = this.sketch
 
+        if (!this.isInMap(x, y, this.columns, this.rows, direction, distanceTo)) {
+
+            //throw new SwapOutOfMapError
+            // You can avoid processus to stop if you remplace the throw error with the code below
+            this.console.error("Can't swap element out of map !")
+            return false
+        }
+
         if (direction === 'right' || direction === s.RIGHT_ARROW) {
-            if (x + distanceFrom > this.columns - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x + distanceFrom][y]
             this.mapElement[x + distanceFrom][y] = this.mapElement[x + distanceTo][y]
             this.mapElement[x + distanceTo][y] = temp
         }
         if (direction === 'left' || direction === s.LEFT_ARROW) {
-            if (x - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x - distanceFrom][y]
             this.mapElement[x - distanceFrom][y] = this.mapElement[x - distanceTo][y]
             this.mapElement[x - distanceTo][y] = temp
         }
         if (direction === 'down' || direction === s.DOWN_ARROW) {
-            if (y + distanceFrom > this.rows - distanceTo) throw new PushOutOfMapError
             let temp = this.mapElement[x][y + distanceFrom]
             this.mapElement[x][y + distanceFrom] = this.mapElement[x][y + distanceTo]
             this.mapElement[x][y + distanceTo] = temp
         }
         if (direction === 'up' || direction === s.UP_ARROW) {
-            if (y - distanceTo < 0) throw new PushOutOfMapError
             let temp = this.mapElement[x][y - distanceFrom]
             this.mapElement[x][y - distanceFrom] = this.mapElement[x][y - distanceTo]
             this.mapElement[x][y - distanceTo] = temp
@@ -280,9 +308,17 @@ export class Game {
 
     // Take objective and replace it with a road sprite
     takeObjective() {
-        this.objectives -= 1
-        this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
-        return true
+        try{
+            this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
+            this.objectives -= 1
+            this.objective.posX = null
+            this.objective.posY = null
+            return true
+        }
+        catch{
+            this.console.warning('No objective at this position')
+        } 
+        return false
     }
 
     isDoorOpen() {
@@ -290,18 +326,23 @@ export class Game {
     }
 
     openDoor() {
-        if (this.objectives != 0) throw "You can't open door while there is still existing objective"
+        if (this.objectives != 0) {
+            this.console.warning("You can't open door while there is still existing objective")
+            return false
+        }
         this.mapElement[this.door.posX][this.door.posY].open()
         return true
     }
 
     closeDoor() {
-        this.mapElement[this.doorPosX][this.doorPosY].close()
-        return true
+        if(!this.mapElement[this.door.posX][this.door.posY].isOpen){
+            this.mapElement[this.door.posX][this.door.posY].close()
+            return true
+        }
+        return false
     }
 
     loadLevel(level) {
-        console.log(this.levels.length)
         if (level >= 0 && level < this.levels.length) {
             this.level = level - 1
             this.nextLevel()
@@ -312,7 +353,10 @@ export class Game {
 
     // Change level depending on your current level.
     nextLevel() {
-        if (this.setProduction && !this.isDoorOpen()) throw "LA PORTE EST FERMEE"
+        if (this.setProduction && !this.isDoorOpen()) {
+            this.console.warning("You can't access the next level, the door is close.. Why ?")
+            return false
+        }
         this.level += 1
 
         if (this.level >= this.levels.length) this.level = 0
@@ -327,6 +371,11 @@ export class Game {
         this.objectives = 0
         this.preload(this.mapName)
         this.setup()
+        return true
+    }
+
+    writeConsole(value){
+        this.console.log(value.toString())
         return true
     }
 
@@ -349,6 +398,7 @@ export class Game {
     getCurrentMusic() {
         return this.musicLoaded[this.idx].url
     }
+
 
     getMusicIndex(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
@@ -430,7 +480,7 @@ export class Game {
                 this.setup(this.mapName)
                 break;
         }
-        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length-1) {
+        if (!this.setProduction && this.sketch.key >= 0 && this.sketch.key <= this.levels.length - 1) {
             this.loadLevel(this.sketch.key)
         }
     }
@@ -440,37 +490,6 @@ export class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
-        let s = this.sketch
-        if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-            let element = this.getElement(s.keyCode, 1)
-            switch (element) {
-                case "Road":
-                    this.swapSprite(s.keyCode, 0, 1)
-                    break
-
-                case "Boulder":
-                    if (this.getElement(s.keyCode, 2) != "Road") break
-                    this.swapSprite(s.keyCode, 1, 2)
-                    this.swapSprite(s.keyCode, 0, 1)
-                    break
-
-                case "Objective":
-                    this.takeObjective()
-                    this.swapSprite(s.keyCode, 0, 1)
-                    if (this.getObjectives() == 0) {
-                        this.openDoor()
-                        if (this.getCurrentLevelName() == 'davide'){
-                            this.setMusic('bonus.mp3')
-                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`)
-                        } 
-                    }
-                    break
-
-                case "Door":
-                    if (this.isDoorOpen()) this.nextLevel()
-                    break
-            }
-        }
         return true
     }
 
@@ -490,7 +509,7 @@ export class Game {
 
     // Wait for the user until he pressed a key
     waitUntilKeyPressed() {
-        console.log('Wait the user pres an arrow key !')
+        console.log('Wait the user to press an arrow key !')
         return new Promise(resolve => {
             document.addEventListener('keyup', resolve, { once: true });
         })
@@ -506,9 +525,14 @@ export class Game {
         command = JSON.parse(command)
 
         switch (command.action) {
+            // Check map limit
+            case 'isInMap':
+                return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
+
             // Movement
-            case 'keyPressed':
-                return this.keyPressed()
+            case 'waitUntilKeyPressed':
+                let tutu = await this.waitUntilKeyPressed()
+                return tutu.keyCode
 
             case 'getElement':
                 return this.getElement(command.params[0], command.params[1]) // Return string of the element
@@ -519,31 +543,35 @@ export class Game {
             // Objectives   
             case 'getObjectives':
                 return this.getObjectives() // Return numerical string
-            
+
             case 'takeObjective':
                 return this.takeObjective() // Return true
-            
+
             // Door
             case 'isDoorOpen':
                 return this.isDoorOpen()    // Return true
-            
+
             case 'openDoor':
                 return this.openDoor()  // Return true
-            
+
             case 'closeDoor':
                 return this.closeDoor() // Return true
-            
+
             // Level
             case 'nextLevel':
+                if (this.setProduction && !this.isDoorOpen()) {
+                    this.console.warning("Can't access next level")
+                    return false
+                }
                 return this.nextLevel() // Return true or false
-            
+
             case 'loadLevel':
                 return this.loadLevel(command.params)
 
             case 'getCurrentLevelName':
                 return this.getCurrentLevelName() // Return Int
 
-            case 'getLevelName': 
+            case 'getLevelName':
                 return this.getLevelName() // Return string
 
 
@@ -569,6 +597,9 @@ export class Game {
 
             case 'setMusic':
                 return this.setMusic(command.params) // Return true
+
+            case 'writeConsole':
+                return this.writeConsole(command.params)
         }
     }
 }

@@ -20,6 +20,10 @@ function swapSprite ($dir, $from, $to) {
     return $response;*/
 }
 
+function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){
+    return myEngine('isInMap', [$posX, $posY, $mapXSize, $mapYSize, $dir, $distance]);
+}
+
 /**
  * Return the name of the element
  */
@@ -28,7 +32,9 @@ function getElement($direction, int $distance) {
     return myEngine('getElement', [$direction, $distance]);
 }
 
-
+function writeConsole($value){
+    return myEngine('writeConsole', $value);
+}
 /**
  * Return true
  */
@@ -41,62 +47,60 @@ function loadLevel($level){
  * Return true
  */
 function nextLevel() {
-    return Engine::send('nextLevel');
+    return myEngine('nextLevel', null);
 }
 
 function getXMapSize(){
-    return Engine::Send('getXMapSize');
+    return myEngine('getXMapSize', null);
 }
 
 function getYMapSize(){
-    return Engine::Send('getYMapSize');
+    return myEngine('getYMapSize', null);
 }
 
 function getPosX(){
-    return Engine::Send('getPosX');
+    return myEngine('getPosX', null);
 }
 
 function getPosY(){
-    return Engine::Send('getPosY');
+    return myEngine('getPosY', null);
 }
 
 /**
  * Return true
  */
 function openDoor() {
-    return Engine::send('openDoor');
+    return myEngine('openDoor', null);
 }
 /**
  * Return true when we close the door
  */
 function closeDoor() {
-    return Engine::send('closeDoor');
+    return myEngine('closeDoor', null);
 }
 /**
  * Return true if the door is open or false it's closed
  */
 function isDoorOpen() {
-    return Engine::send('isDoorOpen');
+    return myEngine('isDoorOpen', null);
 }
 /**
  * Return the number of objective in the current game
  */
 function getObjectives() {
-    return Engine::send('getObjectives');
+    return myEngine('getObjectives', null);
+
+
 }
 /**
  * Take objective in game, return true
  */
 function takeObjective() {
-    return Engine::send('takeObjective');
-}
-
-function waitUntilKeyPressed() {
-    return Engine::send('waitUntilKeyPressed');
+    return myEngine('takeObjective', null);
 }
 
 function getCurrentLevelName(){
-    return Engine::send('getCurrentLevelName');
+    return myEngine('getCurrentLevelName', null);
 }
 
 function getLevelName($level){
@@ -104,15 +108,19 @@ function getLevelName($level){
 }
 
 function getCurrentMusic(){
-    return Engine::send('getCurrentMusic');
+    return myEngine('getCurrentMusic', null);
 }
 
 function getMusicIndex(){
-    return Engine::send('getMusicIndex');
+    return myEngine('getMusicIndex', null);
 }
 
 function setMusic($musicName){
     return myEngine('setMusic', $musicName);
+}
+
+function waitUntilKeyPressed() {
+    return myEngine('waitUntilKeyPressed', null);
 }
 
 ?>
