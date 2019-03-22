@@ -13,7 +13,6 @@ import testHeavyMap from './maps/testHeavyMap';
 
 
 export class Game {
-
     /**
      *
      * @param {HTMLElement} el game base element
@@ -21,7 +20,7 @@ export class Game {
      */
     constructor({ element, assetsBasePath, console }) {
 
-        this.setProduction = false // Set true when in production
+        this.setProduction = true // Set true when in production
 
         this.el = element
         this.assetsBasePath = assetsBasePath
@@ -62,6 +61,7 @@ export class Game {
             `${this.assetsBasePath}/${this.musicBasePath}/bonus.mp3`,
             `${this.assetsBasePath}/${this.musicBasePath}/zeldaRed.mp3`
         ]
+
         this.idx = 0 // Index to select a music file
         this.musicLoaded = [] // Array to stock all the loaded and processes by p5 music
         this.musicPlaying = false
@@ -308,9 +308,17 @@ export class Game {
 
     // Take objective and replace it with a road sprite
     takeObjective() {
-        this.objectives -= 1
-        this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
-        return true
+        try{
+            this.mapElement[this.objective.posX][this.objective.posY] = new Road(this, this.objective.x, this.objective.y, 'roadImg')
+            this.objectives -= 1
+            this.objective.posX = null
+            this.objective.posY = null
+            return true
+        }
+        catch{
+            this.console.warning('No objective at this position')
+        } 
+        return false
     }
 
     isDoorOpen() {
@@ -327,8 +335,11 @@ export class Game {
     }
 
     closeDoor() {
-        this.mapElement[this.doorPosX][this.doorPosY].close()
-        return true
+        if(!this.mapElement[this.door.posX][this.door.posY].isOpen){
+            this.mapElement[this.door.posX][this.door.posY].close()
+            return true
+        }
+        return false
     }
 
     loadLevel(level) {
@@ -387,6 +398,7 @@ export class Game {
     getCurrentMusic() {
         return this.musicLoaded[this.idx].url
     }
+
 
     getMusicIndex(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
@@ -478,37 +490,6 @@ export class Game {
 
     // To remove before pushing production: the user has to code it in php or ruby
     keyPressed() {
-        /*let s = this.sketch
-        if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-            let element = this.getElement(s.keyCode, 1)
-            switch (element) {
-                case "Road":
-                    this.swapSprite(s.keyCode, 0, 1)
-                    break
-
-                case "Boulder":
-                    if (this.getElement(s.keyCode, 2) != "Road") break
-                    this.swapSprite(s.keyCode, 1, 2)
-                    this.swapSprite(s.keyCode, 0, 1)
-                    break
-
-                case "Objective":
-                    this.takeObjective()
-                    this.swapSprite(s.keyCode, 0, 1)
-                    if (this.getObjectives() == 0) {
-                        this.openDoor()
-                        if (this.getCurrentLevelName() == 'davide'){
-                            this.setMusic('bonus.mp3')
-                            this.background = this.sketch.loadImage(`${this.assetsBasePath}/davide/background.jpg`)
-                        } 
-                    }
-                    break
-
-                case "Door":
-                    if (this.isDoorOpen()) this.nextLevel()
-                    break
-            }
-        }*/
         return true
     }
 
