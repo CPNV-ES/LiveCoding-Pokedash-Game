@@ -376,7 +376,7 @@ export class Game {
             this.background = this.mapName.background
         }
         else this.background = this.DEFAULTBGCOLOR
-        if (this.mapName.music != '' && typeof this.mapName.music === 'string') this.setMusic(this.mapName.music)
+        if (this.mapName.music != '' && typeof this.mapName.music === 'string') this.playMusicNamed(this.mapName.music)
 
         // Launch config to reload next level map
         this.objectives = 0
@@ -401,11 +401,15 @@ export class Game {
 
     //************************************* MUSIC *************************************/$
     // Get the current music name
-    getCurrentMusic() {
-        if (!this.music) return false
+    getCurrentMusicName() {
+        if (!this.musics) return false
         if (this.musicExists(this.idx)) return this.splitMusicUrl(this.idx)
     }
 
+    getCurrentMusicIndex(){
+        if(!this.musics) return false
+        if(this.musicExists(this.idx)) return this.idx
+    }
     // Get the name of a track 
     getMusicName(index) {
         if (this.musicExists(index)) return this.splitMusicUrl(index)
@@ -422,7 +426,7 @@ export class Game {
     }
 
     // Load a music by his name ('music.mp3')
-    setMusic(musicName) {
+    playMusicNamed(musicName) {
         for (const [index] of this.musicLoaded.entries()) {
             // If we find the music
 
@@ -430,7 +434,7 @@ export class Game {
                 if (this.musicPlaying) {
                     this.musicLoaded[this.idx].stop()
                     this.idx = index
-                    this.musicLoaded[this.idx].loop()
+                    this.musicLoaded[this.idx].loop(0, 1, this.volume)
                     return true
                 }
                 else {
@@ -440,6 +444,22 @@ export class Game {
             }
         }
         this.console.warning("This music does not exist in our library")
+        return false
+    }
+
+    playMusicIndex(index){
+        if(this.musicExists(index)){
+            if (this.musicPlaying) {
+                this.musicLoaded[this.idx].stop()
+                this.idx = index
+                this.musicLoaded[this.idx].loop(0, 1, this.volume)
+                return true
+            }
+            else {
+                this.idx = index
+                return true
+            }
+        }
         return false
     }
 
@@ -553,7 +573,7 @@ export class Game {
                         this.swapSprite(s.keyCode, 0, 1)
                         if (this.getObjectives() == 0) {
                             this.openDoor()
-                            if (this.getCurrentLevelName() == 'davide') this.setMusic('bonus.mp3')
+                            if (this.getCurrentLevelName() == 'davide') this.playMusicNamed('bonus.mp3')
                         }
                         break
 
@@ -659,15 +679,25 @@ export class Game {
                 return this.getPosY()   // Return Int
 
             // Music
-            case 'getCurrentMusic':
-                return this.getCurrentMusic() // Return string
+            case 'getCurrentMusicName':
+                return this.getCurrentMusicName() // Return string
+
+            case 'getCurrentMusicIndex':
+                return this.getCurrentMusicIndex()
 
             case 'getMusicIndex':
-                return this.getMusicIndex() // Return Int
+                return this.getMusicIndex(command.params) // Return Int
 
-            case 'setMusic':
-                return this.setMusic(command.params) // Return true
+            case 'getMusicName':
+                return this.getMusicName(command.params)            
 
+            case 'playMusicIndex':
+                return this.playMusicIndex(command.params)
+
+            case 'playMusicNamed':
+                return this.playMusicNamed(command.params) // Return true
+
+            // Console
             case 'writeConsole':
                 return this.writeConsole(command.params)
         }
