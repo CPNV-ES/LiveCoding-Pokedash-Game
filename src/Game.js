@@ -483,7 +483,6 @@ export class Game {
     //************************************* KEY EVENTS  *************************************/
     // Wait for the user until he pressed a key. Return a keycode
     waitUntilKeyPressed() {
-        console.log('Wait the user to press an arrow key !')
         return new Promise(resolve => {
             document.addEventListener('keyup', resolve, { once: true });
         })
@@ -618,7 +617,7 @@ export class Game {
         switch (command.action) {
             // Check map limit
             case 'isInMap':
-                return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5])
+                return this.isInMap(command.params[0], command.params[1], command.params[2], command.params[3], command.params[4], command.params[5]) // Params: posX, posY, limMapX, limMapY, direction, distance
 
             // Movement
             case 'waitUntilKeyPressed':
@@ -626,10 +625,10 @@ export class Game {
                 return tutu.keyCode
 
             case 'getElement':
-                return this.getElement(command.params[0], command.params[1]) // Return string of the element
+                return this.getElement(command.params[0], command.params[1]) // Params: direction, distance
 
             case 'swapSprite':
-                return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Return true
+                return this.swapSprite(command.params[0], command.params[1], command.params[2]) // Params: direction, distanceFrom, distanceTo
 
             // Objectives   
             case 'getObjectives':
@@ -657,7 +656,7 @@ export class Game {
                 return this.nextLevel() // Return true or false
 
             case 'loadLevel':
-                return this.loadLevel(command.params)
+                return this.loadLevel(command.params) // params: level (int)
 
             case 'getCurrentLevelName':
                 return this.getCurrentLevelName() // Return Int
@@ -686,20 +685,23 @@ export class Game {
                 return this.getCurrentMusicIndex()
 
             case 'getMusicIndex':
-                return this.getMusicIndex(command.params) // Return Int
+                return this.getMusicIndex(command.params) // params: name (string)
 
             case 'getMusicName':
-                return this.getMusicName(command.params)            
+                return this.getMusicName(command.params) // params: index (int)
 
             case 'playMusicIndex':
-                return this.playMusicIndex(command.params)
+                return this.playMusicIndex(command.params)  // params: name (string)
 
             case 'playMusicNamed':
-                return this.playMusicNamed(command.params) // Return true
+                return this.playMusicNamed(command.params) //  params: name
 
             // Console
             case 'writeConsole':
-                return this.writeConsole(command.params)
+                return this.writeConsole(command.params) // params: value
+
+            case 'error':
+                return this.console.error('Error occured in function ' + command.params)
         }
     }
 }
