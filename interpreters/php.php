@@ -9,40 +9,7 @@ function myEngine ($method, $params){
     return $response;
 }
 
-function swapSprite ($dir, $from, $to) {
-    return myEngine('swapSprite', [$dir, $from, $to]);
-}
-
-function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){
-    return myEngine('isInMap', [$posX, $posY, $mapXSize, $mapYSize, $dir, $distance]);
-}
-
-/**
- * Return the name of the element
- */
-function getElement($direction, int $distance) {
-    if (!is_int($distance) && $distance > 0) throw new Exception('distance only accepts int > 0');
-    return myEngine('getElement', [$direction, $distance]);
-}
-
-function writeConsole($value){
-    return myEngine('writeConsole', $value);
-}
-/**
- * Return true
- */
-function loadLevel($level){
-    if(!is_int($level)) throw new Exception('Level must be an int !');
-    return myEngine('loadLevel', $level);
-}
-
-/**
- * Return true
- */
-function nextLevel() {
-    return myEngine('nextLevel', null);
-}
-
+// MAP POSITIONS AND LIMIT
 function getXMapSize(){
     return myEngine('getXMapSize', null);
 }
@@ -59,37 +26,55 @@ function getPosY(){
     return myEngine('getPosY', null);
 }
 
-/**
- * Return true
- */
+function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){
+    return myEngine('isInMap', [$posX, $posY, $mapXSize, $mapYSize, $dir, $distance]);
+}
+
+// MOVEMENT
+function getElement($direction, int $distance) {
+    if (!is_int($distance) && $distance > 0) throw new Exception('distance only accepts int > 0');
+    return myEngine('getElement', [$direction, $distance]);
+}
+
+function swapSprite ($dir, $from, $to) {
+    return myEngine('swapSprite', [$dir, $from, $to]);
+}
+
+function waitUntilKeyPressed() {
+    return myEngine('waitUntilKeyPressed', null);
+}
+
+
+// OBJECTIVES
+function takeObjective() {
+    return myEngine('takeObjective', null);
+}
+
+function getObjectives() {
+    return myEngine('getObjectives', null);
+}
+
+// DOOR
 function openDoor() {
     return myEngine('openDoor', null);
 }
-/**
- * Return true when we close the door
- */
+
 function closeDoor() {
     return myEngine('closeDoor', null);
 }
-/**
- * Return true if the door is open or false it's closed
- */
+
 function isDoorOpen() {
     return myEngine('isDoorOpen', null);
 }
-/**
- * Return the number of objective in the current game
- */
-function getObjectives() {
-    return myEngine('getObjectives', null);
 
-
+// LEVEL
+function loadLevel($level){
+    if(!is_int($level)) throw new Exception('Level must be an int !');
+    return myEngine('loadLevel', $level);
 }
-/**
- * Take objective in game, return true
- */
-function takeObjective() {
-    return myEngine('takeObjective', null);
+
+function nextLevel() {
+    return myEngine('nextLevel', null);
 }
 
 function getCurrentLevelName(){
@@ -100,20 +85,36 @@ function getLevelName($level){
     return myEngine('getLevelName', $level);
 }
 
-function getCurrentMusic(){
-    return myEngine('getCurrentMusic', null);
+
+// CONSOLE
+function writeConsole($value){
+    return myEngine('writeConsole', $value);
 }
 
-function getMusicIndex(){
-    return myEngine('getMusicIndex', null);
+
+// MUSIC
+function getCurrentMusicName(){
+    return myEngine('getCurrentMusicName', null);
 }
 
-function setMusic($musicName){
-    return myEngine('setMusic', $musicName);
+function getCurrentMusicIndex(){
+    return myEngine('getCurrentMusicIndex', null);
 }
 
-function waitUntilKeyPressed() {
-    return myEngine('waitUntilKeyPressed', null);
+function getMusicIndex($musicName){
+    return myEngine('getMusicIndex', $musicName);
 }
 
+function getMusicName($index){
+    return myEngine('getMusicName', $index);
+}
+
+function playMusicNamed($musicName){
+    return myEngine('playMusicNamed', $musicName);
+}
+
+function playMusicIndex($index){
+    return myEngine('playMusicIndex', $index);
+}
 ?>
+
