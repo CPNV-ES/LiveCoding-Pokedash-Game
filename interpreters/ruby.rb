@@ -1,6 +1,6 @@
 require 'json'
 
-def my_engine (methd, param)
+def my_engine (method, param)
     response = Engine.send({action: method, params: param}.to_json)
     return response;
 end
@@ -72,6 +72,10 @@ end
 
 def get_current_level_name
     return my_engine('getCurrentLevelName', nil)
+end
+
+def get_current_level_index
+    return my_engine('getCurrentLevelIndex', nil)
 end
 
 def get_level_name(level)

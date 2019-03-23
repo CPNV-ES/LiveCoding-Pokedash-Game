@@ -85,6 +85,11 @@ function getLevelName(int $level){
     return myEngine('getLevelName', $level);
 }
 
+function getCurrentLevelIndex(){
+    return myEngine('getCurrentLevelIndex', null);
+}
+    
+
 
 // CONSOLE
 function writeConsole($value){

@@ -767,6 +767,11 @@ class Game {
         return this.levels[this.level].name
     }
 
+    // Return the level
+    getCurrentLevelIndex(){
+        return this.level
+    }
+
     // Get the name of a specific level (int)
     getLevelName(level) {
         if (level < this.levels.length)
@@ -1038,6 +1043,9 @@ class Game {
             case 'getCurrentLevelName':
                 return this.getCurrentLevelName() // Return Int
 
+            case 'getCurrentLevelIndex':
+                return this.getCurrentLevelIndex()
+    
             case 'getLevelName':
                 return this.getLevelName() // Return string
 
