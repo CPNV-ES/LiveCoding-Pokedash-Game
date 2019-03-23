@@ -26,17 +26,18 @@ function getPosY(){
     return myEngine('getPosY', null);
 }
 
-function isInMap($posX, $posY, $mapXSize, $mapYSize, $dir, $distance){
+function isInMap(int $posX, int $posY, int $mapXSize, int $mapYSize, int $dir, int $distance){
     return myEngine('isInMap', [$posX, $posY, $mapXSize, $mapYSize, $dir, $distance]);
+  
 }
 
 // MOVEMENT
-function getElement($direction, int $distance) {
-    if (!is_int($distance) && $distance > 0) throw new Exception('distance only accepts int > 0');
+function getElement(int $direction, int $distance) {
+    if ($distance < 0) throw new Exception('distance only accepts int > 0');
     return myEngine('getElement', [$direction, $distance]);
 }
 
-function swapSprite ($dir, $from, $to) {
+function swapSprite (int $dir, int $from, int $to) {
     return myEngine('swapSprite', [$dir, $from, $to]);
 }
 
@@ -68,8 +69,7 @@ function isDoorOpen() {
 }
 
 // LEVEL
-function loadLevel($level){
-    if(!is_int($level)) throw new Exception('Level must be an int !');
+function loadLevel(int $level){
     return myEngine('loadLevel', $level);
 }
 
@@ -81,7 +81,7 @@ function getCurrentLevelName(){
     return myEngine('getCurrentLevelName', null);
 }
 
-function getLevelName($level){
+function getLevelName(int $level){
     return myEngine('getLevelName', $level);
 }
 
@@ -101,19 +101,19 @@ function getCurrentMusicIndex(){
     return myEngine('getCurrentMusicIndex', null);
 }
 
-function getMusicIndex($musicName){
+function getMusicIndex(String $musicName){
     return myEngine('getMusicIndex', $musicName);
 }
 
-function getMusicName($index){
+function getMusicName(int $index){
     return myEngine('getMusicName', $index);
 }
 
-function playMusicNamed($musicName){
+function playMusicNamed(String $musicName){
     return myEngine('playMusicNamed', $musicName);
 }
 
-function playMusicIndex($index){
+function playMusicIndex(int $index){
     return myEngine('playMusicIndex', $index);
 }
 ?>
