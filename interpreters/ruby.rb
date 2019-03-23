@@ -93,7 +93,7 @@ def get_current_music_name
 end
 
 def get_current_music_index
-    return my_engine('getMusicCurrentIndex', nil)
+    return my_engine('getCurrentMusicIndex', nil)
 end
 
 def get_music_index(index)
