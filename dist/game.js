@@ -1076,9 +1076,6 @@ class Game {
             // Console
             case 'writeConsole':
                 return this.writeConsole(command.params) // params: value
-
-            case 'error':
-                return this.console.error('Error occured in function ' + command.params)
         }
     }
 }
