@@ -36,6 +36,7 @@ http-server -p 3333 --cors -c-1
 
 # Go to your LiveCoding/client repository
 cd ~/LiveCoding/client
+npm i
 npm run serve
 ```
 
@@ -51,25 +52,25 @@ Once in the page, change the Github loader (on the upper right) with the Pokedas
 ## Elements
 Pokedash game is generated in a 2D array. Each case of the array represents a specific element. 
 
-Here is a list of all the **[elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md)** with their properties/constraints.
+Here is a list of all the **[elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/elements.md)** with their properties/constraints.
 
 ## Functions
-Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/functions.md)** at your disposal to create a playable game and find the way to the exit !
+Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md)** at your disposal to create a playable game and find the way to the exit !
 
 ## Specificity of the "coding gameplay"
 ### Key Event
-To begin an interaction with the game, you have to press a key which will return a keyCode. There is a keyListener listening all keyUp events. 
+To begin an interaction with the game, you have to press a key which will return a keyCode. You have to call a function to listen to the key Event.
 
-Here is the list of all **[keyEvent](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md)** handled by the application.
+Here is the list of all **[keyEvent](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/keyEvents.md)** handled by the application.
 
 ### How to move
-You have to handle each element in Pokedash. You don't have functions to move left or right. If you want to move right, you'll have to check the element on your right and then code an action depending of the element. 
+You have to handle each element in Pokedash. If you want to move right, you'll have first to check the element on your right then code an action depending of the element. 
 
 ### Example
-You move with 'keyCode' direction. If there is a 'Road' element, use the function `swapSprite(keyCode, 0, 1)` to intervert the protagonist with the road.
+You move with a 'keyCode' direction. If there is a 'Road' element, use the function `swapSprite(keyCode, 0, 1)` to intervert the protagonist with the road.
 
 ### Game Objectives
-[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md) is a detailed list of the objective to respect in game.
+[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/keyEvents.md) is a detailed list of each objective in the game.
 
 ### Code Examples
-[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/docs/examples/) are some hints if you are blocked (incoming soon).
+[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/examples/) are some hints and solutions if you are blocked.
