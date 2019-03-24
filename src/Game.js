@@ -308,7 +308,7 @@ export class Game {
     //************* OBJECTIVES *************
     // Get all objectives on the current map
     getObjectives() {
-        return this.objectives.toString()
+        return this.objectives
     }
 
     // Take objective and replace it with a road sprite
