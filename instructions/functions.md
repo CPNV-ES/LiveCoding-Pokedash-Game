@@ -1,7 +1,5 @@
-Documentation in progress
-# Functions for user
-## Resume
-List of functions :
+# Functions
+## List of functions :
 
 ### Map positions and limit
 - [getMapSizeX()](#getmapsizex)
@@ -45,7 +43,7 @@ List of functions :
 
 
 
-### List of [elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md)
+### List of [elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md) :
 - 'Protagonist'
 - 'Road'
 - 'Boulder'
