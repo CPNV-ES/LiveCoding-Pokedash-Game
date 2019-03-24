@@ -1,10 +1,17 @@
 Documentation in progress
 # Functions for user
-
 ## Resume
 List of functions :
+
+### Map positions and limit
+- [getMapSizeX()](#getmapsizex)
+- [getMapSizeY()](#getmapsizey)
+- [getPosX()](#getposx)
+- [getPosY()](#getposy)
+- [isInMap(posX, posY, mapSizeX, mapSizeY, direction, distance)](#isinmap)
+
 ### Movement
-- [keyPressed()](#keypressed)
+- [waitUntilKeyPressed()](#waituntilkeypressed)
 - [getElement(direction, distance)](#getelement)
 - [swapSprite(direction, distanceFrom, distanceTo)](#swapsprite)
 
@@ -21,23 +28,24 @@ List of functions :
 - [nextLevel()](#nextlevel)
 - [loadLevel(level)](#loadlevel)
 - [getCurrentLevelName()](#getcurrentlevelname)
+- [getCurrentLevelIndex()](#getcurrentlevelindex)
 - [getLevelName(level)](#getlevelname)
-- [getNbLevels()](#getnblevels)
 
-### Position
-- [getMapSizeX()](#getmapsizex)
-- [getMapSizeY()](#getmapsizey)
-- [getPosX()](#getposx)
-- [getPosY()](#getposy)
+
+### Console
+- [writeConsole(value)](#writeconsole)
 
 ### Music
-- [getCurrentMusic()](#getcurrentmusic)
-- [getMusicIndex()](#getmusicindex)
-- [getNbMusics()](#getnbmusics)
-- [setMusic(musicName)](#setmusic)
+- [getCurrentMusicIndex()](#getcurrentmusicindex)
+- [getCurrentMusicName()](#getcurrentmusicname)
+- [getMusicIndex(musicName)](#getmusicindex)
+- [getMusicName(musicIndex)](#getmusicname)
+- [playMusicIndex(musicIndex)](#playMusicIndex)
+- [playMusicNamed(musicName)](#playmusicnamed)
 
 
-List of elements : 
+
+### List of [elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md)
 - 'Protagonist'
 - 'Road'
 - 'Boulder'
@@ -45,28 +53,125 @@ List of elements :
 - 'Door'
 - 'Tree'
 
-# Movement
-## keyPressed()
+# Map positions and limits
+## getMapSizeX()
 ### Description
-The keyPressed() function is called once every time a key is pressed. The keyPressed return a 'keyCode' int, representing a number of the key pressed.
-Example:
+Return the number of columns of the map (map size X).
 
+### Examples
+#### Php
+```php
+$limX = getMapSizeX();
+```
+
+#### Ruby
+```ruby
+lim_x = get_map_size_x
+```
+
+## getMapSizeY()
+### Description
+Return the number of rows of the map (map size Y).
+
+### Examples
+#### Php
+```php
+$limY = getMapSizeY();
+```
+
+#### Ruby
+```ruby
+lim_y = get_map_size_y
+```
+## getPosX()
+### Description
+Return the current X position of the protagonist.
+
+### Examples
+#### Php
+```php
+$posX = getPosX();
+```
+
+#### Ruby
+```ruby
+pos_x = get_pos_x 
+```
+## getPosY()
+### Description
+Return the current Y position of the protagonist.
+
+### Examples
+#### Php
+```php
+$posY = getPosY();
+```
+
+#### Ruby
+```ruby
+pos_y = get_pos_y 
+```
+## <a name="isinmap"></a>isInMap(posX, posY, mapSizeX, mapSizeY, direction, distance)
+### Description
+Check if an action will perform inside the map array from a specific position to a specific direction and distance.
+
+### Arguments
+* posX : int
+* posY : int
+* mapSizeX : int
+* direction : int
+* distance : int
+
+### Specification
+The boolean is returned as a string. You have to specify the full string in the condition which will be 'true' or 'false'.
+### Examples
+Check if the next move from the protagonist will occur in the map.
+#### Php
+```php
+$dir = 37 // Represent left arrow key
+
+if(isInMap(getPosX(), getPosY(), getMapSizeX(), getMapSizeY(), $dir, 1) == 'true'){
+    writeConsole('I am in the map');
+}
+```
+
+#### Ruby
+```ruby
+dir = 37 # Represent left arrow key
+
+if is_in_map(get_pos_x, get_pos_y, get_map_size_x, get_map_size_y, dir, 1) == 'true'
+    write_console('I am in the map')
+end
+```
+
+# Movement
+## waitUntilKeyPressed()
+Check the [Key Events Instructions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md)
+ for a better description of the arrow keys.
+### Description
+Wait until you press a key. The key pressed return a string keyCode, representing a number of the key pressed. **Don't forget to convert to int !**
+
+Example:
 - Left Arrow  -> 37
 - Up Arrow    -> 38
 - Right Arrow -> 39 
 - Down Arrow  -> 40
 
-### Usage
-    keyPressed();
-
 ### Examples
+Get the direction if you pressed some arrow keys.
+#### Php
 ```php
-$countMovement = 0;
-if(keyPressed()){
-    $keyCode = keyPressed();
-    $debug->log($keyCode); // Show the key pressed in log  
-    $countMovement += 1;  
-}
+$dir = (int)waitUntilKeyPressed(); // the processus will wait until you press a key...
+
+if ($dir == 37) writeConsole('I have pressed the left arrow key !');
+```
+#### Ruby
+```ruby
+dir = wait_until_key_pressed.to_i # the processus will wait until you press a key...
+
+if dir == 37
+    write_console('I have pressed the left arrow key !')
+end
 ```
 
 ## <a name="getelement"></a>getElement(direction, distance)
@@ -81,21 +186,18 @@ Here is a list of all the different element getElement() can returns :
 - 'Door'
 - 'Tree'
 
+You can also check a more detailed **[description](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md)**.
+
 ### Arguments
-* direction: int or specific string
+* direction: int
     
-    int :   best option is to send the keyCode
+    int :   best option is to send the keyCode of the arrow key
 
-    string : 'left', 'right', 'up', 'down'
-
-    > Indicate in which direction you want to get the element
+    > Indicate in which direction you want to get the element.
 
 * distance : int    
 
-    > The number of case from Pikachu you will target (Only >=0)
-
-### Usage
-    getElement(keyCode, 1);
+    > The number of case from Pikachu you will target (only >=0).
 
 ### Examples
 Case: if **0** is the protagonist and the others numbers are elements :
@@ -107,58 +209,73 @@ Case: if **0** is the protagonist and the others numbers are elements :
 | 2 | 3 | 2 |
 | 3 | 2 | 1 |
 
+
+Get the element next to the protagonist with the direction of the arrow key :
 #### Php
-Get an element 2 case below the protagonist 
 ```php
-$element = getElement('down', 2); // or getElement(keyCode, 2)
-// => $element = '2'
+$dir = (int)waitUntilKeyPressed();
+// Waiting for the user to press a key...
+// ... I press 'down arrow' (40) !
+$element = getElement($dir, 2); 
+// => $element = '2' (from the schema above)
 ```
-Get the protagonist 
-```php
-$element = getElement(keyCode, 0); // or getElement(keyCode, 2)
-// => $element = 0 (the protagonist)
+ 
+#### Ruby
+```ruby
+dir = wait_until_key_pressed.to_i
+# Waiting for the user to press a key...
+# ... I press 'up arrow' (38) !
+element = get_element(dir, 1)
+# => element = '1' (from the schema above)
 ```
 
 ## <a name="swapsprite"></a>swapSprite(direction, distanceFrom, distanceTo)
 ### Description
-The swapSprite function intervert two elements (or sprite) in the current map and will display them in the game. 
+The swapSprite function intervert two elements (or sprite) in the current map.
 
 ### Arguments
-* **direction**: int or specific string
-    
-    - int :   best option is to send the keyCode
+* **direction**: int  
+    - int :   best option is to send the keyCode (37, 38, 39, 40 or use the method waitUntilKeyPressed()).
 
-    - string : 'left', 'right', 'up', 'down'
 
-    > Indicate in which direction you want to get the element
+    > Indicate in which direction you want to get the element.
 
 * **distanceFrom** : int
 
-    > Indicate from the protagonist which starting element you want to swap (>=0)
+    > Indicate from the protagonist which starting element you want to swap (>=0).
 
 * **distanceTo** : int
 
     > Indicate from the protagonist the other element to swap. The argument **distanceTo must always be higher than distanceFrom**.
     
-### Usage
-    swapSprite(0, 1);
-
 ### Examples 
-#### php
-Swap sprite Pikachu and Road 
+Swap sprite Pikachu and Road :
 
 _If **0** is the protagonist (Pikachu) and 1 the road:_
 
+Before:
 |   |   |
 | - | - |
 | __0__ | 1 |
 
+#### Php
 ```php
-$element = getElement($keyCode, 1);
+$dir = 37; // Right direction
+$element = getElement($dir, 1);
 if ($element == 'Road'){
-    swapSprite($keyCode, 0, 1);
+    swapSprite($dir, 0, 1);
 }
 ```
+#### Ruby
+```ruby
+dir = 37 # Right direction
+element = getElement(dir, 1)
+if element == 'Road'
+    swap_sprite(dir, 0, 1)
+end
+```
+
+After:
 |   |   |
 | - | - |
 | 1 | __0__ |
@@ -167,187 +284,329 @@ if ($element == 'Road'){
 # Objective 
 ## getObjectives() 
 ### Description
-When the game is initialised, there is a variable counting all the objectives. The getObjectives() function return all those objectives in a numerical string.
-
-### Usage
-    getObjectives()
+Return all the objectives left in the map.
 
 ### Examples
 #### Php 
-Store objectives in a variable : 
 ```php
 $objectiveLeft = getObjectives();
-echo($objectiveLeft); // Will return '5' if 5 objectives left
+writeConsole($objectiveLeft); // Will print '5' if 5 objectives left
 ```
-If no objectives left
+If no objectives left :
 ```php
-if(getObjectives() == 0) {
+if (getObjectives() == 0) {
     echo('There is no objectif left !');
 }
+```
+#### Ruby
+```ruby
+objective_left = get_objectives
+write_console(objective_left) # Will print '5' if 5 objectives left
+```
+If no objectives left :
+```ruby
+if get_objectives == 0 
+    write_console('There is no objectif left !')
+end
 ```
 
 ## takeObjective() 
 ### Description 
-The takeObjective() function decrement one objectif for all the actual objectives. It can't goes lower than 0. 
-
-### Usage
+**Only working with the method getElement() !** 
+Take an objective on the map and replace it by a road. Decrement the getObjectives() method by 1.
 
 ### Example
 #### Php
 ```php
-$objectiveLeft = getObjectives();
-// objectiveLeft = 5
-takeObjective();
-// objectiveLeft = 4
-```
+$element = getElement(39, 1); // Get the element on the right of the protagonist
 
+// If the element we got is an objective
+if ($element == 'Objective'){
+    takeObjective(); // We take the objective and replace it by a road
+    swapSprite(39, 1); // We move on the road (was objective before)
+}
+```
+#### Ruby
+```ruby
+# Get the element on the right of the protagonist
+element = get_element(39, 1)
+
+# If the element we got is an objective
+if element == 'Objective'
+    take_objective # We take the objective and replace it by a road
+    swap_sprite(39, 1) # We move on the road (was objective before)
+end
+```
 # Door
 ## isDoorOpen()
 ### Description
 Return boolean if the door is open or not.
 
-### Usage
-    isDoorOpen();
-
 ### Example
 #### Php
 ```php
 if (isDoorOpen()){
-    echo('The Door is Open. You can access next level');
+    writeConsole('The Door is Open. You can access next level');
 }
 ```
-
+#### Ruby
+```ruby
+if is_door_open
+    write_console('The door is open. You can access next level.')
+end
+```
 ## openDoor() 
 ### Description
-Function to open the door and switch the sprite from a closeed door to an opened door. Warning: to open the door, you need to check if you got all the objectives !
+Open the door and change the sprite from a closed door to an opened door. Warning: to open the door, you need to check if you got all the objectives !
 
-### Usage
-    openDoor();
-    
 ### Example
+If we have all the objectives, we can open the door :
 #### Php
-If we have all the objectives, we can open the door:
 ```php
-    if (getObjectives() == 0) {
-        openDoor();
-    }
+if (getObjectives() == 0) {
+    openDoor();
+}
 ```
-
+#### Ruby
+```ruby
+if get_objectives == 0
+    open_door
+end
+```
 ## closeDoor()
 ### Description
-Function to close the door and switch the sprite from an opened door to a closed door
+Function to close the door and change the sprite from an opened door to a closed door.
 
-### Usage
-    closeDoor();
-    
 ### Example
+Count how many times we hit keyPressed() and close the door if it's >100 :
 #### Php
-Count how many times we hit keyPressed() and close the door if it's >100
 ```php
-    if($countMovement >= 100){
-        closeDoor();
-    }
+if($countMovement > 100){
+    closeDoor();
+}
+```
+#### Ruby
+```ruby
+if count_movement > 100
+    close_door
+end
 ```
 
 # Level
-## getlevel()
-### Description
-Get the current level (int)
-
-### Usage
-    getLevel();
-### Example
-#### Php
-```php
-Get the current level
-$currentLevel = getLevel();
-```
-
 ## nextLevel()
 ### Description
-Load the next level when you call this function
-### Usage
-    nextLevel();
+Load the next level when you call this function. You need to get all the objectives to use this method. Else a warning will occur in the console.
+
 ### Example
+Go to next level :
 #### Php
-Go to next level
 ```php
 if(isDoorOpen()){
     nextLevel();
 }
 ```
 
+#### Ruby
+```ruby
+if is_door_open
+    next_level
+end
+```
+
 ## <a name="loadlevel"></a>loadLevel(level)
 ### Description
-Load the given level in paramaeters. Goes from 0 to max level of the game.
-### Usage
-    loadLevel(5);
+Load the level given in argument. Goes from 0 to max level of the game.
+
+### Argument
+* level : int
+
 ### Example
+Load the first level :
 #### Php
-Load next level
 ```php
-$currentLevel = getLevel();
-loadLevel($currentLevel + 1);
+loadLevel(0);
+```
+#### Ruby
+```ruby
+load_level(0)
 ```
 
 ## getCurrentLevelName()
 ### Description
-Return the level name (url string). Normally not a very useful function.
-
-### Usage
-    getCurrentLevelName();
-    
+Get the current level name (string).
 ### Example
+Get the current level name :
 #### Php
-If the level is Zelda, put another logic
 ```php
-if(getCurrentLevelName() == 'zelda') {
-    // Some game logic here
-}
+writeConsole(getCurrentLevelName());
+// 'pokemonTutorial'
+```
+#### Ruby
+```ruby
+write_console(get_current_level_name)
+# 'pokemonTutorial'
+```
+
+## getCurrentlevelIndex()
+### Description
+Get the current level (int).
+### Example
+Get the current level :
+#### Php
+```php
+writeConsole(getCurrentLevelIndex());
+// 0
+```
+#### Ruby
+```ruby
+write_console(get_current_level_index)
+# 0
 ```
 
 ## <a name="getlevelname"></a>getLevelName(level)
 ### Description
-Return the name of a level (url string) given in parameter (int). Normally not a very useful function
-### Usage
-    getLevelName(4);
-    
+Return the name of a level given in argument (int).
+
+### Argument
+* level : int
 ### Example
-#### Php
-Just to have an idea about the name level. 
+#### Php 
 ```php
-    $nameLevel1 = getLevelName(1);
+writeConsole(getLevelName(1));
+// 'pokemon1'
 ```
 
+#### Ruby
+```ruby
+write_console(get_level_name(1))
+# 'pokemon1'
+```
+# Console
+## <a name="writeconsole"></a>writeConsole(value)
+### description
+Write a value in the debugger or console. 
+
+### Argument
+* value : all type
+
+### Example
+#### Php
+```php
+consoleWrite('Hello World !');
+// Hello World !
+```
+#### Ruby
+```ruby
+console_write('Hello World !')
+# Hello World !
+```
 # Music
-## getCurrentMusic()
+Check the [Key Events ](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md) disponible to use shortcuts for the music library.
+## getCurrentMusicIndex()
 ### Description
-Return a string url of the current song playing
+Return the index of the current song (int).
 ### Example
 #### Php
 ``` php
-    $whatIsThisMusic = getCurrentMusic();
-    echo($whatIsThisMusic);
+consoleWrite(getCurrentMusicIndex());
+// 0
+```
+#### Ruby
+```ruby
+console_write(get_current_music_index)
+# 0
+```
+## getCurrentMusicName()
+### Description
+Return the name of the current song (string).
+### Example
+#### Php
+``` php
+consoleWrite(getCurrentMusicName());
+// 'pokemon.mp3'
+```
+#### Ruby
+```ruby
+console_write(get_current_music_name)
+# 'pokemon.mp3'
 ```
 
 ## <a name="getmusicindex"></a>getMusicIndex(musicName)
 ### description
-Return the index of the music given in parameter (string). The index changes randomly at the preload time.
+Return the index of the music given in argument. The index changes randomly at the preload time.
+
+### Argument
+* musicName : String
 
 ### Example
 #### Php
 ```php
-echo(getMusicIndex('zelda'));
-## => 5
+consoleWrite(getMusicIndex('lostWoods.mp3'));
+// => 4
 ```
 
-## <a name="setmusic"></a>setMusic(musicName)
+#### Ruby
+```ruby
+console_write(get_music_index('lostWoods.mp3'))
+# => 4
+```
+
+## <a name="getmusicname"></a>getMusicName(musicIndex)
+### description
+Return the name of the music index given in argument.
+### Argument
+* musicIndex : int
+
+### Example
+#### Php
+```php
+consoleWrite(getMusicName(4);
+// => 'lostWoods.mp3'
+```
+
+#### Ruby
+```ruby
+console_write(get_music_name(4))
+# => 'lostWoods.mp3'
+```
+
+## <a name="playmusicindex"></a>playMusicIndex(musicIndex)
 ### Description
-You can change a music when you give an existing song in the parameter (string).
+Play a song disponible in the library by his index.
+
+### Argument
+* musicIndex : int
 
 ### Example
 #### Php
 ```php
-setMusic('zelda');
-## => Will start playing zelda
+playMusicIndex(4)
+## => Will start playing 'lostWoods.mp3'
 ```
+
+#### Ruby
+```ruby
+play_music_index(4)
+# => Will start playing 'lostWoods.mp3'
+```
+
+## <a name="playmusicnamed"></a>playMusicNamed(musicName)
+### Description
+Play a song disponible in the library by his name.
+
+### Argument
+* musicName : String
+
+### Example
+#### Php
+```php
+playMusicNamed('lostWoods.mp3');
+## => Will start playing 'lostWoods.mp3'
+```
+
+#### Ruby
+```ruby
+play_music_named('lostWoods.mp3')
+# => Will start playing 'lostWoods.mp3'
+```
+
