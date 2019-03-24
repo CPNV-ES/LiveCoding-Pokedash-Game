@@ -18,7 +18,7 @@
     {
       "name": "Objectifs",
       "description": "Les objectifs du jeu.",
-      "path": "instructions/gameObjectives.md"
+      "path": "instructions/tutorial.md"
     },
     {
       "name": "Elements",
