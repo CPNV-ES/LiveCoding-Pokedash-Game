@@ -1,5 +1,5 @@
-LIM_X = get_x_map_size.to_i
-LIM_Y = get_y_map_size.to_i
+LIM_X = get_map_size_x.to_i
+LIM_Y = get_map_size_y.to_i
 DIST = 1
 dir = 37 # Start direction = left
 element = nil

@@ -182,12 +182,12 @@ export class Game {
 
     //************* MAP POSITIONS AND LIMITS *************
     // Get Max WIDTH of the map
-    getXMapSize() {
+    getMapSizeX() {
         return this.columns
     }
 
     // Get MAX HEIGHT of the map
-    getYMapSize() {
+    getMapSizeY() {
         return this.rows
     }
 
@@ -558,7 +558,7 @@ export class Game {
         if (this.debugMode) {
             let s = this.sketch
             if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-                if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 1)) return false
+                if (!this.isInMap(this.getPosX(), this.getPosY(), this.getMapSizeX(), this.getMapSizeY(), s.keyCode, 1)) return false
                 let element = this.getElement(s.keyCode, 1)
                 switch (element) {
                     case "Road":
@@ -566,7 +566,7 @@ export class Game {
                         break
 
                     case "Boulder":
-                        if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 2)) break
+                        if (!this.isInMap(this.getPosX(), this.getPosY(), this.getMapSizeX(), this.getMapSizeY(), s.keyCode, 2)) break
                         if (this.getElement(s.keyCode, 2) != "Road") break
                         this.swapSprite(s.keyCode, 1, 2)
                         this.swapSprite(s.keyCode, 0, 1)
@@ -673,11 +673,11 @@ export class Game {
                 return this.getLevelName() // Return string
 
             // Position
-            case 'getXMapSize':
-                return this.getXMapSize() // Return Int
+            case 'getMapSizeX':
+                return this.getMapSizeX() // Return Int
 
-            case 'getYMapSize':
-                return this.getYMapSize() // Return Int
+            case 'getMapSizeY':
+                return this.getMapSizeY() // Return Int
 
             case 'getPosX':
                 return this.getPosX()   // Return Int

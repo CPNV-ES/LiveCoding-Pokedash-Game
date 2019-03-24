@@ -12,8 +12,8 @@
 */
 
 // Get the size of the map
-$limX = getXMapSize();
-$limY = getYMapSize();
+$limX = getMapSizeX();
+$limY = getMapSizeY();
 
 // Set a distance to do an action from the protagonist (example: move 1 case)
 $dist = 1;

@@ -25,8 +25,8 @@ List of functions :
 - [getNbLevels()](#getnblevels)
 
 ### Position
-- [getXMapSize()](#getxmapsize)
-- [getYMapSize()](#getymapsize)
+- [getMapSizeX()](#getmapsizex)
+- [getMapSizeY()](#getmapsizey)
 - [getPosX()](#getposx)
 - [getPosY()](#getposy)
 

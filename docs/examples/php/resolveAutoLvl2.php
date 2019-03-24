@@ -1,6 +1,6 @@
 <?php
-define('LIMX', (int)getXMapSize());
-define('LIMY', (int)getYMapSize());
+define('LIMX', (int)getMapSizeX());
+define('LIMY', (int)getMapSizeY());
 define('DIST', 1);
 
 $dir = 37; // Start direction = left

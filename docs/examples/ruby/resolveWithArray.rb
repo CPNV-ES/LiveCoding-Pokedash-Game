@@ -11,8 +11,8 @@ Be careful of :
 =end
 
 #Get the size of the map
-lim_x = get_x_map_size
-lim_y = get_y_map_size
+lim_x = get_map_size_x
+lim_y = get_map_size_y
 
 # Set a distance to do an action from the protagonist (example: move 1 case)
 dist = 1
