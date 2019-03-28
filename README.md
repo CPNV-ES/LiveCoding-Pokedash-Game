@@ -70,7 +70,7 @@ You have to handle each element in Pokedash. If you want to move right, you'll h
 You move with a 'keyCode' direction. If there is a 'Road' element, use the function `swapSprite(keyCode, 0, 1)` to intervert the protagonist with the road.
 
 ### Game Objectives
-[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/keyEvents.md) is a detailed list of each objective in the game.
+[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/gameObjectives.md) is a detailed list of the objective in the game.
 
 ### Code Examples
 [Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/examples/) are some hints and solutions if you are blocked.
