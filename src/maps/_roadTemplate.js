@@ -1,3 +1,5 @@
+// Import all elements you want to use in the game
+
 import { Boulder } from '../elements/Boulder'
 import { Door } from '../elements/Door'
 import { Protagonist } from '../elements/Protagonist'
@@ -20,10 +22,10 @@ export default {
 
     name: 'default',    // name of the map
     template: 'pokemon',    // the asset's template
-    background: '#77ff33',  // the background color
-    music: 'pokemon.mp3',   // the level music
+    background: '#77ff33',  // OPTIONNAL the background color
+    music: 'pokemon.mp3',   // OPTIONNAL the level music
 
-    // Represent the game map with each element
+    // Represent the game map with each element inside
     pattern: [
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
@@ -43,7 +45,7 @@ export default {
         [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
     ],
 
-    // Element of the map
+    // Elements of the map
     e: {
         0: Protagonist, //There can be only one protagonist in the pattern
         1: Objective,

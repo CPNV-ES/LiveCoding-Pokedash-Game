@@ -478,8 +478,6 @@ class Game {
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
-
-
     }
 
     // Create canvas and height of element
@@ -989,7 +987,7 @@ class Game {
     }
 
     /**
-     * Execute php or ruby functions got in response from the server to execute them lolally
+     * Execute php or ruby functions got in response from the server to execute them locally
      * 
      * @param {string} command
      * @return {string} command output

@@ -1,9 +1,11 @@
 import { DynamicElement } from './DynamicElement'
 
-import tutorial from './maps/pokemonTutorial'
 import { Road } from './elements/Road'
 import { ElementOutOfMapError } from './CustomError'
 import { SwapOutOfMapError } from './CustomError'
+
+// Import all your level here
+import tutorial from './maps/pokemonTutorial'
 import pokemonTutorial from './maps/pokemonTutorial';
 import nemo from './maps/nemo';
 import pokemon1 from './maps/pokemon1';
@@ -101,8 +103,6 @@ export class Game {
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
-
-
     }
 
     // Create canvas and height of element
@@ -612,7 +612,7 @@ export class Game {
     }
 
     /**
-     * Execute php or ruby functions got in response from the server to execute them lolally
+     * Execute php or ruby functions got in response from the server to execute them locally
      * 
      * @param {string} command
      * @return {string} command output
