@@ -102,14 +102,7 @@ export class Game {
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
 
-        // Load Music
-        // Only load music at first launch to avoid reloading music each time we change a level
-        if (this.firstLaunch) {
-            this.sketch.shuffle(this.musics, true);
-            for (let m of this.musics) {
-                this.musicLoaded.push(this.sketch.loadSound(m))
-            }
-        }
+
     }
 
     // Create canvas and height of element
@@ -122,6 +115,15 @@ export class Game {
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows)
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns)
         this.iterateOverMap()
+
+        // Load Music
+        // Only load music at first launch to avoid reloading music each time we change a level
+        if (this.firstLaunch) {
+            this.sketch.shuffle(this.musics, true);
+            for (let m of this.musics) {
+                this.musicLoaded.push(this.sketch.loadSound(m))
+            }
+        }
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {

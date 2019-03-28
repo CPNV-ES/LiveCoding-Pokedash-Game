@@ -366,7 +366,7 @@ var zeldaRed = {
         [4,9,9,9,4,1,1,3,1,3,9,3,9,3,9,4],
         [4,9,4,9,4,1,9,9,3,9,3,9,3,4,1,4],
         [4,9,4,9,4,3,9,3,9,3,9,9,9,3,9,9],
-        [4,1,4,9,4,9,3,9,3,9,1,9,1,3,4,4],
+        [4,1,4,9,4,3,3,9,3,9,1,9,1,3,4,4],
         [4,9,4,1,4,3,9,3,4,4,4,4,4,9,3,4],
         [4,9,4,9,4,9,9,9,3,9,4,4,9,4,9,4],
         [4,9,4,9,4,3,4,3,4,9,4,4,9,2,9,4],
@@ -479,14 +479,7 @@ class Game {
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`); // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
 
-        // Load Music
-        // Only load music at first launch to avoid reloading music each time we change a level
-        if (this.firstLaunch) {
-            this.sketch.shuffle(this.musics, true);
-            for (let m of this.musics) {
-                this.musicLoaded.push(this.sketch.loadSound(m));
-            }
-        }
+
     }
 
     // Create canvas and height of element
@@ -499,6 +492,15 @@ class Game {
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows);
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
         this.iterateOverMap();
+
+        // Load Music
+        // Only load music at first launch to avoid reloading music each time we change a level
+        if (this.firstLaunch) {
+            this.sketch.shuffle(this.musics, true);
+            for (let m of this.musics) {
+                this.musicLoaded.push(this.sketch.loadSound(m));
+            }
+        }
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
@@ -685,7 +687,7 @@ class Game {
     //************* OBJECTIVES *************
     // Get all objectives on the current map
     getObjectives() {
-        return this.objectives.toString()
+        return this.objectives
     }
 
     // Take objective and replace it with a road sprite
