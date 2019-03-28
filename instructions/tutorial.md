@@ -28,7 +28,7 @@ You can imagine and develop your own game logic. However, here is a list of prec
 ```php
 while(true){
     $dir = (int)waitUntilKeyPressed();
-    consoleWrite($dir);
+    writeConsole($dir);
 }
 ```
 
@@ -36,7 +36,7 @@ while(true){
 ```ruby
 while true do
     dir = wai_until_key_pressed.to_i
-    console_write(dir)
+    write_console(dir)
 end
 ```
 
@@ -48,9 +48,9 @@ Once you get a direction each you time press a key, you can then know the elemen
 ```php
 while(true){
     $dir = (int)waitUntilKeyPressed();
-    consoleWrite($dir);
+    writeConsole($dir);
 
-    $consoleWrite(getElement($dir, 1));
+    $writeConsole(getElement($dir, 1));
     
 }
 
@@ -59,7 +59,7 @@ while(true){
 ```ruby
 while true do
     dir = wai_until_key_pressed.to_i
-    console_write(get_element(dir, 1)
+    write_console(get_element(dir, 1)
 end
 ```
 
@@ -71,7 +71,7 @@ Once you get a direction and an element, you can interact with it. Here is an ex
 ```php
 while(true){
     $dir = (int)waitUntilKeyPressed();
-    consoleWrite($dir);
+    writeConsole($dir);
     $element = getElement($dir, 1);
     switch($element){
         // The element next to me is type 'Road'. I have to swap his sprite with mine to move.

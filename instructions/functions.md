@@ -490,12 +490,12 @@ Write a value in the debugger or console.
 ### Example
 #### Php
 ```php
-consoleWrite('Hello World !');
+writeConsole('Hello World !');
 // Hello World !
 ```
 #### Ruby
 ```ruby
-console_write('Hello World !')
+write_console('Hello World !')
 # Hello World !
 ```
 # Music
@@ -506,12 +506,12 @@ Return the index of the current song (int).
 ### Example
 #### Php
 ``` php
-consoleWrite(getCurrentMusicIndex());
+writeConsole(getCurrentMusicIndex());
 // 0
 ```
 #### Ruby
 ```ruby
-console_write(get_current_music_index)
+write_console(get_current_music_index)
 # 0
 ```
 ## getCurrentMusicName()
@@ -520,12 +520,12 @@ Return the name of the current song (string).
 ### Example
 #### Php
 ``` php
-consoleWrite(getCurrentMusicName());
+writeConsole(getCurrentMusicName());
 // 'pokemon.mp3'
 ```
 #### Ruby
 ```ruby
-console_write(get_current_music_name)
+write_console(get_current_music_name)
 # 'pokemon.mp3'
 ```
 
@@ -539,13 +539,13 @@ Return the index of the music given in argument. The index changes randomly at t
 ### Example
 #### Php
 ```php
-consoleWrite(getMusicIndex('lostWoods.mp3'));
+writeConsole(getMusicIndex('lostWoods.mp3'));
 // => 4
 ```
 
 #### Ruby
 ```ruby
-console_write(get_music_index('lostWoods.mp3'))
+write_console(get_music_index('lostWoods.mp3'))
 # => 4
 ```
 
@@ -558,13 +558,13 @@ Return the name of the music index given in argument.
 ### Example
 #### Php
 ```php
-consoleWrite(getMusicName(4);
+writeConsole(getMusicName(4);
 // => 'lostWoods.mp3'
 ```
 
 #### Ruby
 ```ruby
-console_write(get_music_name(4))
+write_console(get_music_name(4))
 # => 'lostWoods.mp3'
 ```
 
