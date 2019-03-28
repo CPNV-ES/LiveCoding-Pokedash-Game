@@ -43,7 +43,7 @@
 
 
 
-### List of [elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md) :
+### List of [elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/elements.md) :
 - 'Protagonist'
 - 'Road'
 - 'Boulder'
@@ -144,7 +144,7 @@ end
 
 # Movement
 ## waitUntilKeyPressed()
-Check the [Key Events Instructions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md)
+Check the [Key Events Instructions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/keyEvents.md)
  for a better description of the arrow keys.
 ### Description
 Wait until you press a key. The key pressed return a string keyCode, representing a number of the key pressed. **Don't forget to convert to int !**
@@ -184,7 +184,7 @@ Here is a list of all the different element getElement() can returns :
 - 'Door'
 - 'Tree'
 
-You can also check a more detailed **[description](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/elements.md)**.
+You can also check a more detailed **[description](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/elements.md)**.
 
 ### Arguments
 * direction: int
@@ -499,7 +499,7 @@ console_write('Hello World !')
 # Hello World !
 ```
 # Music
-Check the [Key Events ](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blop/master/instructions/keyEvents.md) disponible to use shortcuts for the music library.
+Check the [Key Events ](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/keyEvents.md) disponible to use shortcuts for the music library.
 ## getCurrentMusicIndex()
 ### Description
 Return the index of the current song (int).
