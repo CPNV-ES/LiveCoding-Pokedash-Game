@@ -8,6 +8,7 @@ This method will let the user load manually a level with the index of the level 
 
 ## Procedure
 ## 1. Create your new method in `src/Game.js`:
+Don't forget to return a value for the server response (true, false, int, string. Objects need to be jsonify).
 ```javascript
 
 //Load a specific level
