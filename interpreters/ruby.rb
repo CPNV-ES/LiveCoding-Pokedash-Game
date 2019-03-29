@@ -6,12 +6,12 @@ def my_engine (method, param)
 end
 
 # MAP POSITIONS AND LIMIT
-def get_x_map_size
-    return my_engine('getXMapSize', nil)
+def get_map_size_x
+    return my_engine('getMapSizeX', nil)
 end
 
-def get_y_map_size
-    return my_engine('getYMapSize', nil)
+def get_map_size_y
+    return my_engine('getMapSizeY', nil)
 end
 
 def get_pos_x
@@ -22,8 +22,8 @@ def get_pos_y
     return my_engine('getPosY', nil)
 end
 
-def is_in_map(pos_x, pos_y, get_x_map_size, get_y_map_size, direction, distance)
-    return my_engine('isInMap', [pos_x, pos_y, get_x_map_size, get_y_map_size, direction, distance])
+def is_in_map(pos_x, pos_y, get_map_size_x, get_map_size_y, direction, distance)
+    return my_engine('isInMap', [pos_x, pos_y, get_map_size_x, get_map_size_y, direction, distance])
 end
 
 # MOVEMENT

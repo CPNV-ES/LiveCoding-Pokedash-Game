@@ -10,12 +10,12 @@ Be careful of :
     - Take care of boolean response ! If you need to check if it's true or false in a Pokedash function, stringify the boolean ! -> if($test == 'true')  
 =end
 
-#Get the size of the map
-lim_x = get_x_map_size
-lim_y = get_y_map_size
+# Get the size of the map
+LIM_X = get_map_size_x
+LIM_Y = get_map_size_y
 
 # Set a distance to do an action from the protagonist (example: move 1 case)
-dist = 1
+DIST = 1
 
 # Infinite loop to handle arroy key event
 while true do
@@ -27,22 +27,22 @@ while true do
     y = get_pos_y
 
     # Check if the action we are going to perform will happen in the map array
-    if is_in_map(x, y, lim_x, lim_y, dir, dist) == 'true' # The boolean has to be in string (server response)
+    if is_in_map(x, y, LIM_X, LIM_Y, dir, DIST) == 'true' # The boolean has to be in string (server response)
         
         # Checking the element next to the protagonist to do a specific action :
-        element = get_element(dir, dist)
+        element = get_element(dir, DIST)
         
         case element
         # Moving Pikachu 1 case
         when 'Road'
-            swap_sprite(dir, 0, dist)
+            swap_sprite(dir, 0, DIST)
 
         #If we can push boulder, move boulder and pikachu one case further 
         when 'Boulder'
-            if is_in_map(x, y, lim_x, lim_y, dir, dist+1) == 'true'
-                if get_element(dir, dist + 1) == 'Road' 
-                    swap_sprite(dir, dist, dist + 1) # Swapping the boulder with the road
-                    swap_sprite(dir, 0, dist) # Swapping the protagonist with the road
+            if is_in_map(x, y, LIM_X, LIM_Y, dir, DIST+1) == 'true'
+                if get_element(dir, DIST + 1) == 'Road' 
+                    swap_sprite(dir, DIST, DIST + 1) # Swapping the boulder with the road
+                    swap_sprite(dir, 0, DIST) # Swapping the protagonist with the road
                 else
                 end
             end
@@ -50,10 +50,9 @@ while true do
         # Take the objective
         when 'Objective'
             take_objective
-            swap_sprite(dir, 0, dist)
+            swap_sprite(dir, 0, DIST)
             # Open the door is no objective left
-            write_console(get_objectives)
-            if get_objectives.to_i == 0 # Again, dont forget to convert to int
+            if get_objectives == 0 # Again, dont forget to convert to int
                 open_door
             end
             

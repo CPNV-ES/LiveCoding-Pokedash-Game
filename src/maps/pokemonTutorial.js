@@ -17,7 +17,7 @@ export default {
     */
     name: 'pokemonTutorial',
     template: 'pokemon',
-    background: '#77ff33',
+    background: '',
     music: 'pokemon.mp3',
    
     pattern: [

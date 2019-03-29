@@ -1,9 +1,11 @@
 import { DynamicElement } from './DynamicElement'
 
-import tutorial from './maps/pokemonTutorial'
 import { Road } from './elements/Road'
 import { ElementOutOfMapError } from './CustomError'
 import { SwapOutOfMapError } from './CustomError'
+
+// Import all your level here
+import tutorial from './maps/pokemonTutorial'
 import pokemonTutorial from './maps/pokemonTutorial';
 import nemo from './maps/nemo';
 import pokemon1 from './maps/pokemon1';
@@ -29,7 +31,7 @@ export class Game {
         this.HEIGHT = this.el.offsetHeight
         this.WIDTH = this.el.offsetWidth
 
-        this.DEFAULTBGCOLOR = '#77ff33'
+        this.DEFAULTBGCOLOR = '#EAB543' // Sand color
 
         this.background = this.DEFAULTBGCOLOR
         this.firstLaunch = true
@@ -101,15 +103,6 @@ export class Game {
             // Create new image attribute
             this[eName + "Img"] = this.sketch.loadImage(`${this.assetsBasePath}/${this.mapName.template}/${eName}Img.png`) // -> this.protagonistImg = loadImg(assets/protagonistImg.png)
         }
-
-        // Load Music
-        // Only load music at first launch to avoid reloading music each time we change a level
-        if (this.firstLaunch) {
-            this.sketch.shuffle(this.musics, true);
-            for (let m of this.musics) {
-                this.musicLoaded.push(this.sketch.loadSound(m))
-            }
-        }
     }
 
     // Create canvas and height of element
@@ -121,7 +114,16 @@ export class Game {
         this.rows = this.mapName.pattern[0].length
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows)
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns)
+        this.sketch.frameRate(30) // Reduce the frame tick of the draw() function
         this.iterateOverMap()
+        // Load Music
+        // Only load music at first launch to avoid reloading music each time we change a level
+        if (this.firstLaunch) {
+            this.sketch.shuffle(this.musics, true);
+            for (let m of this.musics) {
+                this.musicLoaded.push(this.sketch.loadSound(m))
+            }
+        }
 
         // Set Pokemon generic for the first launch
         if (this.mapName == tutorial && this.firstLaunch) {
@@ -182,12 +184,12 @@ export class Game {
 
     //************* MAP POSITIONS AND LIMITS *************
     // Get Max WIDTH of the map
-    getXMapSize() {
+    getMapSizeX() {
         return this.columns
     }
 
     // Get MAX HEIGHT of the map
-    getYMapSize() {
+    getMapSizeY() {
         return this.rows
     }
 
@@ -308,7 +310,7 @@ export class Game {
     //************* OBJECTIVES *************
     // Get all objectives on the current map
     getObjectives() {
-        return this.objectives.toString()
+        return this.objectives
     }
 
     // Take objective and replace it with a road sprite
@@ -558,7 +560,7 @@ export class Game {
         if (this.debugMode) {
             let s = this.sketch
             if (s.keyCode === s.LEFT_ARROW || s.keyCode === s.RIGHT_ARROW || s.keyCode === s.UP_ARROW || s.keyCode === s.DOWN_ARROW) {
-                if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 1)) return false
+                if (!this.isInMap(this.getPosX(), this.getPosY(), this.getMapSizeX(), this.getMapSizeY(), s.keyCode, 1)) return false
                 let element = this.getElement(s.keyCode, 1)
                 switch (element) {
                     case "Road":
@@ -566,7 +568,7 @@ export class Game {
                         break
 
                     case "Boulder":
-                        if (!this.isInMap(this.getPosX(), this.getPosY(), this.getXMapSize(), this.getYMapSize(), s.keyCode, 2)) break
+                        if (!this.isInMap(this.getPosX(), this.getPosY(), this.getMapSizeX(), this.getMapSizeY(), s.keyCode, 2)) break
                         if (this.getElement(s.keyCode, 2) != "Road") break
                         this.swapSprite(s.keyCode, 1, 2)
                         this.swapSprite(s.keyCode, 0, 1)
@@ -610,7 +612,7 @@ export class Game {
     }
 
     /**
-     * Execute php or ruby functions got in response from the server to execute them lolally
+     * Execute php or ruby functions got in response from the server to execute them locally
      * 
      * @param {string} command
      * @return {string} command output
@@ -673,11 +675,11 @@ export class Game {
                 return this.getLevelName() // Return string
 
             // Position
-            case 'getXMapSize':
-                return this.getXMapSize() // Return Int
+            case 'getMapSizeX':
+                return this.getMapSizeX() // Return Int
 
-            case 'getYMapSize':
-                return this.getYMapSize() // Return Int
+            case 'getMapSizeY':
+                return this.getMapSizeY() // Return Int
 
             case 'getPosX':
                 return this.getPosX()   // Return Int

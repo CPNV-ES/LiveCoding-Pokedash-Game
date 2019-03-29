@@ -10,12 +10,12 @@ function myEngine ($method, $params){
 }
 
 // MAP POSITIONS AND LIMIT
-function getXMapSize(){
-    return myEngine('getXMapSize', null);
+function getMapSizeX(){
+    return myEngine('getMapSizeX', null);
 }
 
-function getYMapSize(){
-    return myEngine('getYMapSize', null);
+function getMapSizeY(){
+    return myEngine('getMapSizeY', null);
 }
 
 function getPosX(){

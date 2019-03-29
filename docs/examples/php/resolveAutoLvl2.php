@@ -1,14 +1,16 @@
 <?php
-define('LIMX', (int)getXMapSize());
-define('LIMY', (int)getYMapSize());
+define('LIMX', getMapSizeX());
+define('LIMY', getMapSizeY());
 define('DIST', 1);
 
 $dir = 37; // Start direction = left
 $element = null;
 $out = false;
 
+
 while ($out == false) {
-    if (isInMap((int)getPosX(), (int)getPosY(), LIMX, LIMY, $dir, DIST) == 'true') {
+    // If next move is in the map
+    if (isInMap(getPosX(), getPosY(), LIMX, LIMY, $dir, DIST) == 'true') {
         $element = getElement($dir, DIST);
         switch ($element) {
             case 'Road':
@@ -17,7 +19,7 @@ while ($out == false) {
             case 'Objective':
                 takeObjective();
                 swapSprite($dir, 0, DIST);
-                if ((int)getObjectives() == 0) {
+                if (getObjectives() == 0) {
                     openDoor();
                 }
                 break;
@@ -31,7 +33,9 @@ while ($out == false) {
                 $dir += 1;
                 if ($dir > 40) $dir = 37;
         }
-    } else {
+    } 
+    // If next move is out of the map, change direction
+    else {
         $dir += 1;
         if ($dir > 40) $dir = 37;
     }

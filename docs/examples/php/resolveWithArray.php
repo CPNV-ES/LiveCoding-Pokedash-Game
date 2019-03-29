@@ -1,5 +1,5 @@
 <?php
-/*
+ /*
     Author : Julien Richoz
     Date: 20.03.2019
     
@@ -12,58 +12,57 @@
 */
 
 // Get the size of the map
-$limX = getXMapSize();
-$limY = getYMapSize();
+define('LIMX', getMapSizeX());
+define('LIMY', getMapSizeY());
 
 // Set a distance to do an action from the protagonist (example: move 1 case)
-$dist = 1;
+define('DIST', 1);
 
 // Infinite loop to handle arroy key event
-while(true){
+while (true) {
     // Get the direction from the key pressed
-    $dir = (int)waitUntilKeyPressed(); 
-    
+    $dir = (int)waitUntilKeyPressed();
+
     // Get the current position of the protagonist
     $x = getPosX();
     $y = getPosY();
-        
+
     // Check if the action we are going to perform will happen in the map array
-    if(isInMap($x, $y, $limX, $limY, $dir, $dist) == 'true'){ // The boolean has to be in string (server response)
-        
+    if (isInMap($x, $y, LIMX, LIMY, $dir, DIST) == 'true') { // The boolean has to be in string (server response)
+
         // Checking the element next to the protagonist to do a specific action :
-        $element = getElement($dir, $dist);
-        switch($element){
-            // Moving Pikachu 1 case
+        $element = getElement($dir, DIST);
+        switch ($element) {
+                // Moving Pikachu 1 case
             case 'Road':
-                swapSprite($dir, 0, $dist);
+                swapSprite($dir, 0, DIST);
                 break;
-                
-            //If we can push boulder, move boulder and pikachu one case further 
+
+                //If we can push boulder, move boulder and pikachu one case further 
             case 'Boulder':
-                if(isInMap($x, $y, $limX, $limY, $dir, $dist+1) == 'true'){
-                    if (getElement($dir, $dist + 1) != "Road") break;
-                    swapSprite($dir, $dist, $dist + 1); //Swapping the boulder with the road
-                    swapSprite($dir, 0, $dist); // Swapping the protagonist with the road
+                if (isInMap($x, $y, LIMX, LIMY, $dir, DIST + 1) == 'true') {
+                    if (getElement($dir, DIST + 1) != "Road") break;
+                    swapSprite($dir, DIST, DIST + 1); //Swapping the boulder with the road
+                    swapSprite($dir, 0, DIST); // Swapping the protagonist with the road
                 }
                 break;
-            
-            // Take the objective
+
+                // Take the objective
             case 'Objective':
                 takeObjective();
-                swapSprite($dir, 0, $dist);
+                swapSprite($dir, 0, DIST);
                 // Open the door is no objective left
-                if((int)getObjectives() <= 0){
+                if (getObjectives() == 0) {
                     openDoor();
                 }
                 break;
-            
-            // If the door is open, access to the next level
+
+                // If the door is open, access to the next level
             case 'Door':
-                if(isDoorOpen()){
+                if (isDoorOpen()) {
                     nextLevel();
                 }
                 break;
         }
     }
 }
-
