@@ -129,7 +129,7 @@ var tutorial = {
     */
     name: 'pokemonTutorial',
     template: 'pokemon',
-    background: '#77ff33',
+    background: '',
     music: 'pokemon.mp3',
    
     pattern: [
@@ -406,7 +406,7 @@ class Game {
         this.HEIGHT = this.el.offsetHeight;
         this.WIDTH = this.el.offsetWidth;
 
-        this.DEFAULTBGCOLOR = '#77ff33';
+        this.DEFAULTBGCOLOR = '#EAB543'; // Sand color
 
         this.background = this.DEFAULTBGCOLOR;
         this.firstLaunch = true;

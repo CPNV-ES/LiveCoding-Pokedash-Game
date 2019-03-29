@@ -31,7 +31,7 @@ export class Game {
         this.HEIGHT = this.el.offsetHeight
         this.WIDTH = this.el.offsetWidth
 
-        this.DEFAULTBGCOLOR = '#77ff33'
+        this.DEFAULTBGCOLOR = '#EAB543' // Sand color
 
         this.background = this.DEFAULTBGCOLOR
         this.firstLaunch = true
