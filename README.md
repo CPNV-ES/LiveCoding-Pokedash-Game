@@ -47,9 +47,13 @@ You can run the game from [cpnv-es.github.io/LiveCoding](https://cpnv-es.github.
 
 Once in the page, change the Github loader (on the upper right) with the Pokedash Game : `CPNV-ES/LiveCoding-Pokedash-Game@master`
 
-## v1.0.1 changelog
+## v1.1.0 changelog
 
-- Can use keys arrow in debug mode
+- Add full documentation
+- Add Ruby functions
+- Add Php functions
+- Add tutorial for users
+- Optimize framerate
 
 ## Documentation
 
