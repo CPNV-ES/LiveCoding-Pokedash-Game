@@ -1,6 +1,6 @@
 # LiveCoding-Pokedash-Game
 ## Description
-Pokedash is a game where to help beginners to code with a funny and playful game. They can choose multiple languages and use the [functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md) available to create the logic of the game. By this methodology, they will learn variable, types, basic structures and functions of a language while "developping" a funny game.
+Pokedash is a game to help beginners to code with a funny and playfull game. They can choose multiple languages and use the [functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md) available to create the logic of the game. By this methodology, they will learn variable, types, basic structures and functions of a language while "developping" a funny game.
 
 ![LiveCoding Pokedash Game](docs/assets/LiveCodingPokedashGame.PNG)
 
