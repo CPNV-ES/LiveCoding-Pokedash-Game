@@ -1,7 +1,8 @@
 # LiveCoding-Pokedash-Game
-
 ## Description
 Pokedash is a game where to help beginners to code with a funny and playful game. They can choose multiple languages and use the [functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md) available to create the logic of the game. By this methodology, they will learn variable, types, basic structures and functions of a language while "developping" a funny game.
+
+![LiveCoding Pokedash Game](docs/assets/LiveCodingPokedashGame.PNG)
 
 You can check the main [LiveCoding application](https://github.com/CPNV-ES/LiveCoding).
 
@@ -11,7 +12,7 @@ The goal of the game is to take all the objectives to open a door to access the 
 You can check in game the different instructions of the game.
 
 ## Setup for development
-> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed
+> Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed.
 
 ### Installation
 ```sh
@@ -43,9 +44,9 @@ npm run serve
 ```
 
 ### Run the game without server
-You can run the game from [cpnv-es.github.io/LiveCoding](https://cpnv-es.github.io/LiveCoding/)
+You can run the game from [cpnv-es.github.io/LiveCoding](https://cpnv-es.github.io/LiveCoding/).
 
-Once in the page, change the Github loader (on the upper right) with the Pokedash Game : `CPNV-ES/LiveCoding-Pokedash-Game@master`
+Once in the page, change the Github loader (on the upper right) with the Pokedash Game : `CPNV-ES/LiveCoding-Pokedash-Game@master`.
 
 ## v1.1.0 changelog
 
@@ -57,7 +58,7 @@ Once in the page, change the Github loader (on the upper right) with the Pokedas
 
 ## Documentation
 
-You can find all the documentation in the docs folder, or a resume [here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/developer/resume.md)
+You can find all the documentation in the docs folder, or a resume [here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/developer/resume.md).
 
 ## Elements
 Pokedash game is generated in a 2D array. Each case of the array represents a specific element. 
@@ -79,8 +80,8 @@ You have to handle each element in Pokedash. If you want to move right, you'll h
 ### Example
 You move with a 'keyCode' direction. If there is a 'Road' element, use the function `swapSprite(keyCode, 0, 1)` to intervert the protagonist with the road.
 
-### Game Objectives
-[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/gameObjectives.md) is a detailed list of the objective in the game.
+### Game Objectives and tutorial
+[Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/tutorial.md) is a detailed list of the objective in the game and a tutorial to begin with.
 
 ### Code Examples
 [Here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/examples/) are some hints and solutions if you are blocked.
