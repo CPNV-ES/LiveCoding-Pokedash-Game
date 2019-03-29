@@ -1,5 +1,13 @@
 # Game Structure
-Pokemon-dash was develop in a dynamical way. It means you can easily add new elements or method to the game. Here is how it works :
+Pokemon-dash was develop in a dynamical way. It means you can easily add new elements or method to the game.
+
+## Resume
+The game class handles the assets import and the mapLevel imports. Then, from the mapLevel file, the game class will instanciate all element from the map in a 2D array through a factory class called `DynamicElement`. All this process take part in the P5 functions.
+
+The game interface and structure is now ready, the rest of file are methods to implement a logic to the game. It also handles the commands received from the backend (processor) and interpret/translate them so the user can use our methods. 
+
+**Game Interaction**
+![Alt text](./../../diagrams/pokedash_interaction.svg)
 ## 1. Class Game
 The Game class constructor of LiveCoding will give us 3 parameters to the Game class:
 
@@ -9,7 +17,7 @@ The Game class constructor of LiveCoding will give us 3 parameters to the Game c
 
 Here's a diagram of the Game class :
 
-**INSERER DIAGRAM MACHIN DE Game**
+![Alt text](./../../diagrams/game_class.svg)
 
 In the Game constructor, we also handle the different levels which will be loaded during the p5.js execution, the musics, the p5 functions and some game logic variable.
 
@@ -60,7 +68,7 @@ Each element is represented by his own class. They herit from a StaticElement or
 
 Each elements contains their position in pixel, their logic position (position in the 2D array), and their sprite. You can also add some specific method or variables in each class, like create a method to open a door.
 
-**INSERER CLASS DIAGRAM OF ELEMENT**
+![Alt text](./../../diagrams/elements_class.svg)
 
 To instanciate an element in the game, you just have to put it in a level pattern and the element will load automatically on the map. You can also instanciate manually an element in the game. 
 
