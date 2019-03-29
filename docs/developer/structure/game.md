@@ -24,7 +24,7 @@ In the Game constructor, we also handle the different levels which will be loade
 The Game class also provide a method named executeGameCommand to execute the game commands sent by the processor. This method must accept a string (the command), and return the result in string format.
 
 ## 2. P5.js 
-Once the class is instancied, we give the hand to p5.js which will create the game structure (set the canvas size, load the sprite according to the box size, load music etc.) through a preload, setup and draw processus.
+Once the class is instancied, we give the hand to [p5.js](https://p5js.org/) which will create the game structure (set the canvas size, load the sprite according to the box size, load music etc.) through a preload, setup and draw processus.
 
 Here is the order in which P5 works, and what we do in each of these steps:
 
@@ -58,7 +58,7 @@ We will then have a 2D structure full of elements (objects) ready to work with.
 
 ### 2.3 draw()
 #### Description
-Called directly after setup(), the draw() function continuously executes the lines of code contained inside its block until the program is stopped or noLoop() is called.
+Called directly after setup(), the draw() function continuously executes the lines of code contained inside his block until the program is stopped or noLoop() is called.
 
 #### In Pokedash :
 The draw run continously. We set the framerate to 30 to improve the performance on the processor. The draw function will draw the background and loop through the 2D array previously created to draw each element.
@@ -66,11 +66,11 @@ The draw run continously. We set the framerate to 30 to improve the performance 
 ## 3. Elements
 Each element is represented by his own class. They herit from a StaticElement or MovableElement class, which herits from the Element class. 
 
-Each elements contains their position in pixel, their logic position (position in the 2D array), and their sprite. You can also add some specific method or variables in each class, like create a method to open a door.
+Each element contains their position in pixel, their logic position (position in the 2D array) and their sprite. You can also add some specific method or variables in each class, like a method to open a door.
 
 ![Alt text](./../../diagrams/elements_class.svg)
 
-To instanciate an element in the game, you just have to put it in a level pattern and the element will load automatically on the map. You can also instanciate manually an element in the game. 
+To instanciate an element in the game, you just have to put it in a map level pattern and the element will automatically load on the map. You can also instanciate manually an element in the game. 
 
 In the original version of Pokedash-Game, there are 6 interactives elements. All those elements are explained [here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/elements.md).
 
@@ -86,10 +86,14 @@ However, you can also [add your owns methods](https://github.com/CPNV-ES/LiveCod
 ## 5. Interpretors
 We need to translate the user's methods in the language availables. The `interpreters` folder contains all the methods for the user, written in a specific language. 
 
+The engine game listen to the response returned by the server, translate the function to javascript to be interpreted on the client side.
+
+Check this [link](https://github.com/CPNV-ES/LiveCoding/blob/master/docs/games/game_commands_execution.md) for more information.
+
 
 ## 6. Assets
 - The image assets are load in the preload() method, or can also be called in game (like the openDoor() method).
-- The sounds assets are load in the setup() method, to reduce the loading game time and because they are all loaded once.
+- The sounds assets are load in the setup() method, to reduce the loading game time.
 - All assets are stored in the `assets` folder. You can then create your own templates game or add specific music.
 - Please check [here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/addContent/method.md) if you want to add new assets to the game.
 

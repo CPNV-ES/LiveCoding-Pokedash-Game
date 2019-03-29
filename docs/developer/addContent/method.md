@@ -88,5 +88,7 @@ async executeGameCommand(command) {
             // All the others function below...
 ```
 
-## 4. It's done ! 
+## 4. It's done !
+Don't forget to add your new method in the [instructions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md).
+
 Your method is now available ! Don't forget you can only send string to the server. If you want to send an object, you have to jsonify it first.

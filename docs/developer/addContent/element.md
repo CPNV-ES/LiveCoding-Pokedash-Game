@@ -116,4 +116,6 @@ If your level use the template `pokemon`, go in this folder and add your sprite 
 - the game will resize your image. However, it's better to have lightweight image in a 64x64 pixel.
 
 ## 6. It's done !
+Don't forget to add your new method in the [instructions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/element.md)
+
 Your element is now ready to be loaded in the game !
