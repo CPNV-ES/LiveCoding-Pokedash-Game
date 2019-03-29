@@ -489,8 +489,8 @@ class Game {
         this.rows = this.mapName.pattern[0].length;
         this.blockHeight = this.sketch.floor(this.HEIGHT / this.rows);
         this.blockWidth = this.sketch.floor(this.WIDTH / this.columns);
+        this.sketch.frameRate(30); // Reduce the frame tick of the draw() function
         this.iterateOverMap();
-
         // Load Music
         // Only load music at first launch to avoid reloading music each time we change a level
         if (this.firstLaunch) {
