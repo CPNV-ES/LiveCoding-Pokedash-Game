@@ -1,12 +1,14 @@
 # LiveCoding-Pokedash-Game
 
 ## Description
-Pokedash is a game where the user has to code the logic of the game with a chosable programming language (php or ruby) to render a functionnable game.
+Pokedash is a game where to help beginners to code with a funny and playful game. They can choose multiple languages and use the [functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md) available to create the logic of the game. By this methodology, they will learn variable, types, basic structures and functions of a language while "developping" a funny game.
 
 You can check the main [LiveCoding application](https://github.com/CPNV-ES/LiveCoding).
 
 ## Goal
-The goal of the game is to take all the objectives (objective) to open a door to access the next level. You will certainly need to move boulder to access to the objectives/door.
+The goal of the game is to take all the objectives to open a door to access the next level. You will certainly need to move boulder to access to the objectives/door.
+
+You can check in game the different instructions of the game.
 
 ## Setup for development
 > Be sure you have the last version of **[LiveCoding](https://github.com/CPNV-ES/LiveCoding)** installed
@@ -49,12 +51,16 @@ Once in the page, change the Github loader (on the upper right) with the Pokedas
 
 - Can use keys arrow in debug mode
 
+## Documentation
+
+You can find all the documentation in the docs folder, or a resume [here](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/docs/developer/resume.md)
+
 ## Elements
 Pokedash game is generated in a 2D array. Each case of the array represents a specific element. 
 
 Here is a list of all the **[elements](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/elements.md)** with their properties/constraints.
 
-## Functions
+## Methods
 Use the **[functions](https://github.com/CPNV-ES/LiveCoding-Pokedash-Game/blob/master/instructions/functions.md)** at your disposal to create a playable game and find the way to the exit !
 
 ## Specificity of the "coding gameplay"
