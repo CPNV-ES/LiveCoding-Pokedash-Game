@@ -52,7 +52,7 @@ while true do
             take_objective
             swap_sprite(dir, 0, DIST)
             # Open the door is no objective left
-            if get_objectives == 0 # Again, dont forget to convert to int
+            if get_objectives.to_i == 0 # Again, dont forget to convert to int
                 open_door
             end
             
